@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "655819791251",
+    "project_id": "ahorrapp-79bef",
+    "storage_bucket": "ahorrapp-79bef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655819791251:android:ec136e6f75fbbd2fa86666",
+        "android_client_info": {
+          "package_name": "com.udea.ahorra_app.ahorra_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655819791251-sro2g0si44dqssavgp5io70tg046mbn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGYYRAVMb_DcIpGX7nHwPxwRBIVrAs87Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655819791251-sro2g0si44dqssavgp5io70tg046mbn9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "655819791251-77bdi983oh5rojk0cfaa4s479l3ps1e0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.udea.ahorraapp.ahorraApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
