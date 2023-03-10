@@ -94,7 +94,6 @@ class _RegistroState extends State<Registro> {
                         'nombre': _nombreController.text,
                         'telefono': _telefonoController.text,
                         'correo': _correoController.text,
-                        'contraseña': _contrasenaController.text,
                       };
                       dbRef.push().set(usuarios);
                       FirebaseAuth.instance
