@@ -1,3 +1,4 @@
+import 'package:ahorra_app/vistas/Menu/menu.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: LoginPage()
+      home: MenuPrincipal()
     );
   }
 }
