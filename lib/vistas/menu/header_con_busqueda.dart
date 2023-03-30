@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HeaderConBusqueda extends StatelessWidget {
@@ -10,6 +14,33 @@ class HeaderConBusqueda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    // Obtener el usuario actualmente autenticado
+    final User? user = auth.currentUser;
+
+    // Obtener el correo electrónico del usuario actual
+    final String? userEmail = user?.email;
+
+    final DatabaseReference dbRef =
+    FirebaseDatabase.instance.ref().child('usuarios');
+
+    String userId = 'Usuario';
+
+    Future<String> getUsername() async {
+      final snapshot = await dbRef.get();
+      final values = snapshot.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (value['correo'] == userEmail) {
+          userId = value['nombre'];
+          print(value['nombre']);
+        }
+      });
+
+      String userIdNew = userId.split(" ")[0];
+      return userIdNew;
+    }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0 * 2.5),
       // It will cover 20% of our total height
@@ -32,10 +63,19 @@ class HeaderConBusqueda extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                Text(
-                  'Hola Esteban!',
-                  style: Theme.of(context).textTheme.headline5?.copyWith(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                FutureBuilder<String>(
+                  future: getUsername(),
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        'Hola, ' + (snapshot.data ?? 'error'),
+                        style: Theme.of(context).textTheme.headline5?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
                 ),
                 const Spacer(),
                 Image.asset("assets/image/logo.png")

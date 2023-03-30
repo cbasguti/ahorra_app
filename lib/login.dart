@@ -1,8 +1,7 @@
+import 'package:ahorra_app/vistas/Menu/menu.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,11 +18,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Stack(children: <Widget>[
       Container(
-        margin: EdgeInsets.only(top: 150),
+        margin: const EdgeInsets.only(top: 150),
         width: double.infinity,
         decoration:
             BoxDecoration(border: Border.all(color: Colors.transparent)),
-        child: Text(
+        child: const Text(
           "¡Bienvenido de vuelta!",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 60, color: Color(0xff082652)),
@@ -31,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       Transform.translate(
-          offset: Offset(0, -80),
+          offset: const Offset(0, -80),
           child: Center(
               child: SingleChildScrollView(
                   child: Card(
@@ -55,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                   return null;
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.email),
                                   labelText: 'Correo electrónico',
                                 ),
@@ -69,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                   return null;
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   prefixIcon: Icon(Icons.lock),
                                   labelText: 'Contraseña',
                                 ),
@@ -83,26 +82,26 @@ class _LoginPageState extends State<LoginPage> {
                                         password: _passwordController.text)
                                         .then((value) {
                                       Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => const MyApp2()));
+                                          MaterialPageRoute(builder: (context) => MenuPrincipal()));
                                     }).onError((error, stackTrace) {
                                       print("Error ${error.toString()}");
                                     });
                                   }
                                 },
-                                child: Text("Iniciar sesión"),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xff082652),
+                                  backgroundColor: const Color(0xff082652),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50)),
                                 ),
+                                child: const Text("Iniciar sesión"),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
+                                  const Text(
                                     "¿Todavia no tienes una cuenta?",
                                   ),
                                   ElevatedButton(
@@ -110,12 +109,12 @@ class _LoginPageState extends State<LoginPage> {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) => Registro()));
                                     },
-                                    child: Text("Registrate"),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.transparent,
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(50)),
                                     ),
+                                    child: const Text("Registrate"),
                                   ),
                                 ],
                               )

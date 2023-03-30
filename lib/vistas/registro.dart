@@ -31,7 +31,7 @@ class _RegistroState extends State<Registro> {
           width: double.infinity,
           decoration:
           BoxDecoration(border: Border.all(color: Colors.transparent)),
-          child: Text(
+          child: const Text(
             "Crea tu cuenta",
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 60, color: Color(0xff082652)),
@@ -40,7 +40,7 @@ class _RegistroState extends State<Registro> {
 
         ),
         Transform.translate(offset:
-        Offset(0,-80),
+        const Offset(0,-80),
             child: Center(
             child: SingleChildScrollView(
             child: Card(
@@ -63,7 +63,7 @@ class _RegistroState extends State<Registro> {
               }
               return null;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
               labelText: 'Nombre',
               ),
               ),
@@ -75,7 +75,7 @@ class _RegistroState extends State<Registro> {
               }
               return null;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
               labelText: 'Telefono',
               ),
               ),
@@ -88,7 +88,7 @@ class _RegistroState extends State<Registro> {
               }
               return null;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
               labelText: 'Correo electronico',
               ),
               ),
@@ -101,7 +101,7 @@ class _RegistroState extends State<Registro> {
               }
               return null;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
               labelText: 'Contraseña',
               ),
               ),
@@ -129,12 +129,12 @@ class _RegistroState extends State<Registro> {
               });
               }
               },
-              child: Text('Registrarse'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff082652),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50)),
                 ),
+              child: const Text('Registrarse'),
               ),
 
 
@@ -142,7 +142,7 @@ class _RegistroState extends State<Registro> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "¿Ya tienes una cuenta?",
                     ),
                     ElevatedButton(
@@ -150,12 +150,12 @@ class _RegistroState extends State<Registro> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Registro()));
                       },
-                      child: Text("Inicia sesión"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                       ),
+                      child: const Text("Inicia sesión"),
                     ),
                   ],
                 )
