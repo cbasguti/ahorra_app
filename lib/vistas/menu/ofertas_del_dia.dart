@@ -89,6 +89,52 @@ class OfertasDelDia extends StatelessWidget {
               }
             },
           ),
+          FutureBuilder<Map<String, dynamic>>(
+            future: getDetails('2'),
+            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.hasData) {
+                return Ofertas(
+                  imagen: NetworkImage(snapshot.data?['image_path']),
+                  nombre: snapshot.data?['nombre'] ?? '',
+                  tienda: "Exito",
+                  precio: snapshot.data?['precio'] ?? 0,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetallesEnPantalla(),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+          FutureBuilder<Map<String, dynamic>>(
+            future: getDetails('3'),
+            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (snapshot.hasData) {
+                return Ofertas(
+                  imagen: NetworkImage(snapshot.data?['image_path']),
+                  nombre: snapshot.data?['nombre'] ?? '',
+                  tienda: "Exito",
+                  precio: snapshot.data?['precio'] ?? 0,
+                  press: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetallesEnPantalla(),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
         ],
       ),
     );
