@@ -74,6 +74,12 @@ flutter:
      - assets/image/menu/marcas/logo_euro.png
      - assets/image/menu/marcas/logo_makro.png
      - assets/image/menu/marcas/logo_d1.png
+     - assets/image/menu/categorias/aseo.png
+     - assets/image/menu/categorias/carnes.png
+     - assets/image/menu/categorias/cereales.png
+     - assets/image/menu/categorias/frutas.png
+     - assets/image/menu/categorias/lacteos.png
+     - assets/image/menu/categorias/panaderia.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
