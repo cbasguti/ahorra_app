@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ahorra_app/vistas/my_bottom_nav_bar.dart';
-import 'package:ahorra_app/vistas/menu/body.dart';
+import 'package:ahorra_app/vistas/home/body.dart';
 
 class MenuPrincipal extends StatelessWidget {
   @override
@@ -16,7 +16,7 @@ class MenuPrincipal extends StatelessWidget {
     return AppBar(
       elevation: 0,
       leading: IconButton(
-        icon: Image.asset("assets/image/logo.png"),
+        icon: Icon(Icons.menu),
         onPressed: () {},
       ),
     );

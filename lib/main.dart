@@ -1,5 +1,6 @@
-import 'package:ahorra_app/vistas/Menu/menu.dart';
+import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/vistas/Sidebar/side_menu.dart';
+import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,10 +35,24 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: const MaterialColor(
+          0xFF254587,
+          <int, Color>{
+            50: Color(0xFFE1E6ED),
+            100: Color(0xFFB3C2D6),
+            200: Color(0xFF809EBD),
+            300: Color(0xFF4D7AA4),
+            400: Color(0xFF255E8F),
+            500: Color(0xFF254587),
+            600: Color(0xFF223F7D),
+            700: Color(0xFF1E3773),
+            800: Color(0xFF1A2F69),
+            900: Color(0xFF122259),
+          },
+        ),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: LoginPage()
+      home: DetallesProducto()
     );
   }
 }

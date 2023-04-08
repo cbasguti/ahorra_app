@@ -16,7 +16,7 @@ class TituloYBoton extends StatelessWidget {
       child: Row(
         children: <Widget>[
           TituloConInterlineado(texto: titulo),
-          Spacer(),
+          const Spacer(),
           TextButton(
             style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -25,7 +25,7 @@ class TituloYBoton extends StatelessWidget {
               backgroundColor: Color(0xFF254587),
             ),
             onPressed: () {},
-            child: Text(
+            child: const Text(
               "Más",
               style: TextStyle(color: Colors.white),
             ),
