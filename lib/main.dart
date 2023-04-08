@@ -1,5 +1,5 @@
 import 'package:ahorra_app/vistas/home/home.dart';
-import 'package:ahorra_app/vistas/Sidebar/side_menu.dart';
+import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
 import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +52,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: DetallesProducto()
+      home: Scaffold(
+        body: Stack(
+          children: [
+            MenuLateral(),
+            MenuPrincipal(),
+          ],
+        ),
+      ),
     );
   }
 }
