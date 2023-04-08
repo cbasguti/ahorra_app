@@ -12,7 +12,7 @@ class DetallesProducto extends StatefulWidget {
 class _DetallesProductoState extends State<DetallesProducto> {
   int _cantidad = 0;
 
-  List<String> _tiendas = List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
+  final List<String> _tiendas = List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
               child: ListView(
                 children: [
                   Image.asset(
-                    "assets/image/menu/productos/producto1.png",
+                    "assets/image/menu/productos/producto1.png", //Acá poner el path de la imagen del producto
                     width: 300,
                     height: 300,
                     fit: BoxFit.contain,
@@ -71,7 +71,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                               children: [
                                 const Expanded(
                                   child: Text(
-                                    "Nombre del producto",
+                                    "Nombre del producto", // Acá poner el nombre del producto
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: const Text(
-                                    "\$19.99",
+                                    "\$19.99", // Acá poner el precio del producto
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -104,6 +104,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                             const SizedBox(height: 20),
                             const Text(
                               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                              //Acá poner la descripción del producto
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 color: Colors.grey,
@@ -111,7 +112,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            Row(
+                            Row( // Row con las tiendas que cambien el precio del producto, todavia hay que cambiar cosas
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 for (int index = 0;

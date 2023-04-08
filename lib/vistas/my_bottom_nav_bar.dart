@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Sidebar/side_menu.dart';
+import 'sidebar/sidebar.dart';
 
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
@@ -31,10 +31,7 @@ class MyBottomNavBar extends StatelessWidget {
         children: <Widget>[
           IconButton(
             icon: const Icon(Icons.house_outlined),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const SideMenu()));
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(Icons.add_alert_outlined),
