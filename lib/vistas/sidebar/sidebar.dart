@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class MenuLateral extends StatefulWidget {
@@ -8,6 +10,32 @@ class MenuLateral extends StatefulWidget {
 class _MenuLateralState extends State<MenuLateral> {
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    // Obtener el usuario actualmente autenticado
+    final User? user = auth.currentUser;
+
+    // Obtener el correo electrónico del usuario actual
+    final String? userEmail = user?.email;
+
+    final DatabaseReference dbRef =
+    FirebaseDatabase.instance.ref().child('usuarios');
+
+    String userId = 'Usuario';
+
+    Future<String> getUsername() async {
+      final snapshot = await dbRef.get();
+      final values = snapshot.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (value['correo'] == userEmail) {
+          userId = value['nombre'];
+          print(value['nombre']);
+        }
+      });
+
+      String userIdNew = userId;
+      return userIdNew;
+    }
     return Container(
       color: Colors.blueGrey,
       child: Padding(
@@ -29,12 +57,21 @@ class _MenuLateralState extends State<MenuLateral> {
                 const SizedBox(
                   width: 10,
                 ),
-                const Text(
-                  'Esteban Salas',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold),
+                FutureBuilder<String>(
+                  future: getUsername(),
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(
+                        (snapshot.data ?? 'error'),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
                 ),
               ],
             ),
