@@ -42,100 +42,23 @@ class OfertasDelDia extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: <Widget>[
-          FutureBuilder<Map<String, dynamic>>(
-            future: getDetails('0'),
+        children: List.generate(13, (index) {
+          return FutureBuilder<Map<String, dynamic>>(
+            future: getDetails(index.toString()),
             builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
               if (snapshot.hasData) {
                 return Ofertas(
-                  imagen: NetworkImage(snapshot.data?['image_path']),
+                  imagen: snapshot.data?['image_path'] ?? '',
                   nombre: snapshot.data?['nombre'] ?? '',
                   tienda: "Exito",
                   precio: snapshot.data?['precio'] ?? 0,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetallesProducto(),
-                      ),
-                    );
-                  },
                 );
               } else {
                 return CircularProgressIndicator();
               }
             },
-          ),
-          FutureBuilder<Map<String, dynamic>>(
-            future: getDetails('1'),
-            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-              if (snapshot.hasData) {
-                return Ofertas(
-                  imagen: NetworkImage(snapshot.data?['image_path']),
-                  nombre: snapshot.data?['nombre'] ?? '',
-                  tienda: "Exito",
-                  precio: snapshot.data?['precio'] ?? 0,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetallesProducto(),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-          FutureBuilder<Map<String, dynamic>>(
-            future: getDetails('2'),
-            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-              if (snapshot.hasData) {
-                return Ofertas(
-                  imagen: NetworkImage(snapshot.data?['image_path']),
-                  nombre: snapshot.data?['nombre'] ?? '',
-                  tienda: "Exito",
-                  precio: snapshot.data?['precio'] ?? 0,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetallesProducto(),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-          FutureBuilder<Map<String, dynamic>>(
-            future: getDetails('3'),
-            builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-              if (snapshot.hasData) {
-                return Ofertas(
-                  imagen: NetworkImage(snapshot.data?['image_path']),
-                  nombre: snapshot.data?['nombre'] ?? '',
-                  tienda: "Exito",
-                  precio: snapshot.data?['precio'] ?? 0,
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetallesProducto(),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return CircularProgressIndicator();
-              }
-            },
-          ),
-        ],
+          );
+        }),
       ),
     );
   }
@@ -148,13 +71,10 @@ class Ofertas extends StatelessWidget {
     required this.nombre,
     required this.tienda,
     required this.precio,
-    required this.press,
   }) : super(key: key);
 
-  final NetworkImage imagen;
-  final nombre, tienda;
+  final imagen, nombre, tienda;
   final int precio;
-  final Function press;
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +88,36 @@ class Ofertas extends StatelessWidget {
       width: size.width * 0.4,
       child: Column(
         children: <Widget>[
-          Image(image: imagen),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetallesProducto(
+                    imagen: imagen,
+                    tienda: tienda,
+                    nombre: nombre,
+                    precio: precio,
+                  ),
+                ),
+              );
+            },
+            child: Image(image: NetworkImage(imagen)),
+          ),
           GestureDetector(
-            //onTap: press,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetallesProducto(
+                    imagen: imagen,
+                    tienda: tienda,
+                    nombre: nombre,
+                    precio: precio,
+                  ),
+                ),
+              );
+            },
             child: Container(
               padding: EdgeInsets.all(20.0 / 2),
               decoration: BoxDecoration(
@@ -214,7 +161,7 @@ class Ofertas extends StatelessWidget {
                         .textTheme
                         .button
                         ?.copyWith(color: Color(0xFF254587)),
-                  )
+                  ),
                 ],
               ),
             ),

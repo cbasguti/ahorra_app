@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       home: Scaffold(
         body: Stack(
           children: [

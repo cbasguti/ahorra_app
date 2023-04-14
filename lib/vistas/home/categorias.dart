@@ -7,41 +7,49 @@ class CategoriasDestacadas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categorias = [
+      "Frutas",
+      "Lacteos",
+      "Granos",
+      "Congelados",
+      "Carnes",
+      "Aseo",
+      "Personal",
+      "Bebés",
+      "Pasabocas",
+      "Bebidas",
+      "Mascotas",
+      "Licores",
+      "Droguería",
+      "Panadería"
+    ];
+
+    List<String> imagenes = [
+      "assets/image/menu/categorias/1_frutas.png",
+      "assets/image/menu/categorias/2_lacteos.png",
+      "assets/image/menu/categorias/3_arroz.png",
+      "assets/image/menu/categorias/4_congelados.png",
+      "assets/image/menu/categorias/5_carnes.png",
+      "assets/image/menu/categorias/6_aseo.png",
+      "assets/image/menu/categorias/7_cuidado.png",
+      "assets/image/menu/categorias/8_bebes.png",
+      "assets/image/menu/categorias/9_mecato.png",
+      "assets/image/menu/categorias/10_bebidas.png",
+      "assets/image/menu/categorias/11_mascotas.png",
+      "assets/image/menu/categorias/12_licores.png",
+      "assets/image/menu/categorias/13_drogas.png",
+      "assets/image/menu/categorias/14_panaderia.png",
+    ];
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: <Widget>[
-          Categoria(
-            imagen: "assets/image/menu/categorias/lacteos.png",
-            titulo: "Lacteos",
-            press: () {},
-          ),
-          Categoria(
-            imagen: "assets/image/menu/categorias/frutas.png",
-            titulo: "Frutas",
-            press: () {},
-          ),
-          Categoria(
-            imagen: "assets/image/menu/categorias/carnes.png",
-            titulo: "Carnes",
-            press: () {},
-          ),
-          Categoria(
-            imagen: "assets/image/menu/categorias/aseo.png",
-            titulo: "Aseo",
-            press: () {},
-          ),
-          Categoria(
-            imagen: "assets/image/menu/categorias/panaderia.png",
-            titulo: "Panaderia",
-            press: () {},
-          ),
-          Categoria(
-            imagen: "assets/image/menu/categorias/cereales.png",
-            titulo: "Cereales",
-            press: () {},
-          ),
-        ],
+        children: List.generate(categorias.length, (index) {
+          return Categoria(
+            imagen: imagenes[index],
+            titulo: categorias[index],
+          );
+        }),
       ),
     );
   }
@@ -52,12 +60,9 @@ class Categoria extends StatelessWidget {
     Key? key,
     required this.imagen,
     required this.titulo,
-    required this.press,
   }) : super(key: key);
 
-  final String imagen;
-  final String titulo;
-  final Function press;
+  final imagen, titulo;
 
   @override
   Widget build(BuildContext context) {

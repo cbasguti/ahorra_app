@@ -15,7 +15,10 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeaderConBusqueda(size: size),
-          TituloYBoton(titulo: "Categorias destacadas", press: () {}),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: TituloConInterlineado(texto: "Categorías"),
+          ),
           CategoriasDestacadas(),
           TituloYBoton(titulo: "Ofertas del día", press: () {}),
           OfertasDelDia(),

@@ -1,9 +1,19 @@
 import 'dart:math';
 
+import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:flutter/material.dart';
 
 class DetallesProducto extends StatefulWidget {
-  const DetallesProducto({Key? key}) : super(key: key);
+  const DetallesProducto({
+    Key? key,
+    required this.imagen,
+    required this.nombre,
+    required this.tienda,
+    required this.precio,
+}) : super(key: key);
+
+  final imagen, nombre, tienda;
+  final int precio;
 
   @override
   State<DetallesProducto> createState() => _DetallesProductoState();
@@ -11,7 +21,6 @@ class DetallesProducto extends StatefulWidget {
 
 class _DetallesProductoState extends State<DetallesProducto> {
   int _cantidad = 0;
-
   final List<String> _tiendas = List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
 
   @override
@@ -26,7 +35,14 @@ class _DetallesProductoState extends State<DetallesProducto> {
           title: const Text("Detalles del Producto"),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MenuPrincipal(),
+                ),
+              );
+            },
           ),
           actions: [
             IconButton(
@@ -44,8 +60,8 @@ class _DetallesProductoState extends State<DetallesProducto> {
             Center(
               child: ListView(
                 children: [
-                  Image.asset(
-                    "assets/image/menu/productos/producto1.png", //Acá poner el path de la imagen del producto
+                  Image.network(
+                    widget.imagen, //Acá poner el path de la imagen del producto
                     width: 300,
                     height: 300,
                     fit: BoxFit.contain,
@@ -69,10 +85,10 @@ class _DetallesProductoState extends State<DetallesProducto> {
                           children: [
                             Row(
                               children: [
-                                const Expanded(
+                                Expanded(
                                   child: Text(
-                                    "Nombre del producto", // Acá poner el nombre del producto
-                                    style: TextStyle(
+                                    widget.nombre, // Acá poner el nombre del producto
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -87,12 +103,12 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                     vertical: 14,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF254587),
+                                    color: const Color(0xFF254587),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
-                                  child: const Text(
-                                    "\$19.99", // Acá poner el precio del producto
-                                    style: TextStyle(
+                                  child: Text(
+                                    '\$${widget.precio}', // Acá poner el precio del producto
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -174,12 +190,12 @@ class _DetallesProductoState extends State<DetallesProducto> {
                       child: CircleAvatar(
                         radius: 22,
                         backgroundColor: Colors.grey.shade900,
-                        child: Icon(Icons.remove),
+                        child: const Icon(Icons.remove),
                       ),
                     ),
                     Text(
                       "$_cantidad",
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     InkWell(
                       onTap: () => setState(() {
@@ -188,7 +204,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                       child: CircleAvatar(
                         radius: 22,
                         backgroundColor: Colors.grey.shade900,
-                        child: Icon(Icons.add),
+                        child: const Icon(Icons.add),
                       ),
                     ),
                   ],
