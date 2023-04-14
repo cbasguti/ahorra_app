@@ -1,4 +1,4 @@
-import 'package:ahorra_app/vistas/Menu/menu.dart';
+import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

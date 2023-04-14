@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:ahorra_app/vistas/menu/detalles/detalles_en_pantalla.dart';
+import 'package:ahorra_app/vistas/producto/producto.dart';
 
 class OfertasDelDia extends StatelessWidget {
   const OfertasDelDia({
@@ -56,7 +56,7 @@ class OfertasDelDia extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetallesEnPantalla(),
+                        builder: (context) => DetallesProducto(),
                       ),
                     );
                   },
@@ -79,7 +79,7 @@ class OfertasDelDia extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetallesEnPantalla(),
+                        builder: (context) => DetallesProducto(),
                       ),
                     );
                   },
@@ -102,7 +102,7 @@ class OfertasDelDia extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetallesEnPantalla(),
+                        builder: (context) => DetallesProducto(),
                       ),
                     );
                   },
@@ -125,7 +125,7 @@ class OfertasDelDia extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetallesEnPantalla(),
+                        builder: (context) => DetallesProducto(),
                       ),
                     );
                   },

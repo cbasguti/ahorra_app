@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Sidebar/side_menu.dart';
+import 'sidebar/sidebar.dart';
 
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
@@ -20,9 +20,9 @@ class MyBottomNavBar extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, -10),
+            offset: const Offset(0, -10),
             blurRadius: 35,
-            color: Color(0xFF254587).withOpacity(0.38),
+            color: const Color(0xFF254587).withOpacity(0.38),
           ),
         ],
       ),
@@ -30,27 +30,24 @@ class MyBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.house_outlined),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SideMenu()));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.add_alert_outlined),
+            icon: const Icon(Icons.house_outlined),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.add_box_outlined),
+            icon: const Icon(Icons.add_alert_outlined),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.bookmarks_outlined),
+            icon: const Icon(Icons.add_box_outlined),
             onPressed: () {},
           ),
           IconButton(
-              icon: Icon(Icons.person_outline),
-              onPressed: () {},
+            icon: const Icon(Icons.bookmarks_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.person_outline),
+            onPressed: () {},
           ),
         ],
       ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'nuestras_marcas.dart';
-import 'header_con_busqueda.dart';
-import 'ofertas_del_dia.dart';
-import 'titulo_y_boton.dart';
-import 'categorias_destacadas.dart';
+import 'marcas.dart';
+import 'buscar.dart';
+import 'ofertas.dart';
+import 'seccion.dart';
+import 'categorias.dart';
 
 class Body extends StatelessWidget {
   @override
