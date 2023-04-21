@@ -13,10 +13,9 @@ class OfertasDelDia extends StatelessWidget {
     var nProductos = 0;
 
     Future<int> getProducts() async {
-      final dbProductos = FirebaseDatabase.instance.ref().child('productos');
+      final dbProductos = FirebaseDatabase.instance.ref().child('productos').child('Ofertas');
       dbProductos.once().then((event) {
         nProductos = event.snapshot.children.length;
-        print('Hay $nProductos productos.');
       });
       return nProductos;
     }
@@ -24,7 +23,7 @@ class OfertasDelDia extends StatelessWidget {
     getProducts();
 
     Future<Map<String, dynamic>> getDetails(childN) async {
-      final dbRef = FirebaseDatabase.instance.ref().child('productos').child(childN);
+      final dbRef = FirebaseDatabase.instance.ref().child('productos').child('Ofertas').child(childN);
       final snapshot = await dbRef.get();
       final values = snapshot.value as Map<dynamic, dynamic>;
       final detalles = <String, dynamic>{};

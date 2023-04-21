@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import '../home/home.dart';
 
 class ListaProductos extends StatefulWidget {
+  final String collectionName;
+
   const ListaProductos({
     Key? key,
+    required this.collectionName,
   }) : super(key: key);
 
   @override
@@ -16,39 +19,42 @@ class ListaProductos extends StatefulWidget {
 class _ListaProductosState extends State<ListaProductos> {
 
   final List<String> _tiendas = List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
+  int _nProductos = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getProducts();
+  }
+
+  Future<void> getProducts() async {
+    final dbProductos = FirebaseDatabase.instance.ref().child('productos').child(widget.collectionName);
+    dbProductos.once().then((event) {
+      setState(() {
+        _nProductos = event.snapshot.children.length;
+      });
+    });
+  }
+
+  Future<Map<String, dynamic>> getDetails(childN) async {
+    final dbRef = FirebaseDatabase.instance.ref().child('productos').child(widget.collectionName).child(childN);
+    final snapshot = await dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    final detalles = <String, dynamic>{};
+    values.forEach((key, value) {
+      if (key == 'nombre') {
+        detalles['nombre'] = value;
+      } else if (key == 'image_path') {
+        detalles['image_path'] = value;
+      } else if (key == 'precios') {
+        detalles['precio'] = value['euro'];
+      }
+    });
+    return detalles;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var nProductos = 0;
-
-    Future<int> getProducts() async {
-      final dbProductos = FirebaseDatabase.instance.ref().child('productos');
-      dbProductos.once().then((event) {
-        nProductos = event.snapshot.children.length;
-        print('Hay $nProductos productos.');
-      });
-      return nProductos;
-    }
-
-    getProducts();
-
-    Future<Map<String, dynamic>> getDetails(childN) async {
-      final dbRef = FirebaseDatabase.instance.ref().child('productos').child(childN);
-      final snapshot = await dbRef.get();
-      final values = snapshot.value as Map<dynamic, dynamic>;
-      final detalles = <String, dynamic>{};
-      values.forEach((key, value) {
-        if (key == 'nombre') {
-          detalles['nombre'] = value;
-        } else if (key == 'image_path') {
-          detalles['image_path'] = value;
-        } else if (key == 'precios') {
-          detalles['precio'] = value['euro'];
-        }
-      });
-      return detalles;
-    }
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
@@ -109,7 +115,7 @@ class _ListaProductosState extends State<ListaProductos> {
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.all(13.0),
-                itemCount: 20,
+                itemCount: _nProductos,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 1.66,

@@ -75,7 +75,7 @@ class Categoria extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ListaProductos(),
+          builder: (context) => ListaProductos(collectionName: titulo),
         ),
       );
     },

@@ -33,7 +33,6 @@ class HeaderConBusqueda extends StatelessWidget {
       values.forEach((key, value) {
         if (value['correo'] == userEmail) {
           userId = value['nombre'];
-          print(value['nombre']);
         }
       });
 

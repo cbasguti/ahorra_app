@@ -29,7 +29,6 @@ class _MenuLateralState extends State<MenuLateral> {
       values.forEach((key, value) {
         if (value['correo'] == userEmail) {
           userId = value['nombre'];
-          print(value['nombre']);
         }
       });
 
