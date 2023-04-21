@@ -1,5 +1,6 @@
 import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
+import 'package:ahorra_app/vistas/listas.dart';
 import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
