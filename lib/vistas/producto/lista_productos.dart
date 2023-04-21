@@ -100,7 +100,7 @@ class _ListaProductosState extends State<ListaProductos> {
           foregroundColor: Colors.black,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text("Todos los productos"),
+          title: Text(widget.collectionName),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
