@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../listas.dart';
+
 class MenuLateral extends StatefulWidget {
   @override
   _MenuLateralState createState() => _MenuLateralState();
@@ -75,47 +77,55 @@ class _MenuLateralState extends State<MenuLateral> {
               ],
             ),
             Column(
-              children: const <Widget>[
-                NewRow(
+              children: <Widget>[
+                const NewRow(
                   text: 'Perfil',
                   icon: Icons.person_outline,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                NewRow(
-                  text: 'Mis Listas',
-                  icon: Icons.bookmark_border,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Listas()),
+                    );
+                  },
+                  child: const NewRow(
+                    text: 'Mis Listas',
+                    icon: Icons.bookmark_border,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                NewRow(
+                const NewRow(
                   text: 'Preguntas',
                   icon: Icons.question_mark_outlined,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                NewRow(
+                const NewRow(
                   text: 'Favoritos',
                   icon: Icons.favorite_border,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                NewRow(
+                const NewRow(
                   text: 'Programados',
                   icon: Icons.alarm,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                NewRow(
+                const NewRow(
                   text: 'Configuración',
                   icon: Icons.settings,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
