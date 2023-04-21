@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,11 @@ class ListaProductos extends StatefulWidget {
 }
 
 class _ListaProductosState extends State<ListaProductos> {
-
-  final List<String> _tiendas = List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
+  final List<String> _tiendas =
+      List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
   int _nProductos = 0;
+  String _busqueda = '';
+  List<Map<dynamic, dynamic>> _productos = [];
 
   @override
   void initState() {
@@ -27,30 +31,64 @@ class _ListaProductosState extends State<ListaProductos> {
     getProducts();
   }
 
-  Future<void> getProducts() async {
-    final dbProductos = FirebaseDatabase.instance.ref().child('productos').child(widget.collectionName);
-    dbProductos.once().then((event) {
-      setState(() {
-        _nProductos = event.snapshot.children.length;
-      });
+  void _actualizarBusqueda(String busqueda) {
+    setState(() {
+      _busqueda = busqueda;
+      getProductsBySearch(busqueda);
     });
   }
 
-  Future<Map<String, dynamic>> getDetails(childN) async {
-    final dbRef = FirebaseDatabase.instance.ref().child('productos').child(widget.collectionName).child(childN);
+  Future<void> getProductsBySearch(String busqueda) async {
+    final dbRef = FirebaseDatabase.instance
+        .ref()
+        .child('productos')
+        .child(widget.collectionName);
     final snapshot = await dbRef.get();
-    final values = snapshot.value as Map<dynamic, dynamic>;
-    final detalles = <String, dynamic>{};
-    values.forEach((key, value) {
-      if (key == 'nombre') {
-        detalles['nombre'] = value;
-      } else if (key == 'image_path') {
-        detalles['image_path'] = value;
-      } else if (key == 'precios') {
-        detalles['precio'] = value['euro'];
+    bool cumple = false;
+    int count = 0;
+    List<Map<dynamic, dynamic>> productos = [];
+    snapshot.children.forEach((element) {
+      final values = element.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (key == 'nombre') {
+          if (RegExp(_busqueda, caseSensitive: false).hasMatch(value)) {
+            cumple = true;
+            count++;
+          }
+        }
+      });
+      if (cumple) {
+        productos.add(values);
       }
+      cumple = false;
     });
-    return detalles;
+    setState(() {
+      _nProductos = count;
+      _productos = productos;
+    });
+  }
+
+  Future<void> getProducts() async {
+    final dbRef = FirebaseDatabase.instance
+        .ref()
+        .child('productos')
+        .child(widget.collectionName);
+    final snapshot = await dbRef.get();
+    int count = 0;
+    List<Map<dynamic, dynamic>> productos = [];
+    snapshot.children.forEach((element) {
+      final values = element.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (key == 'nombre') {
+            count++;
+        }
+      });
+        productos.add(values);
+    });
+    setState(() {
+      _nProductos = count;
+      _productos = productos;
+    });
   }
 
   @override
@@ -97,7 +135,7 @@ class _ListaProductosState extends State<ListaProductos> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      onChanged: (value) {},
+                      onChanged: _actualizarBusqueda,
                       decoration: InputDecoration(
                         hintText: "Busca aquí tus productos",
                         hintStyle: TextStyle(
@@ -116,25 +154,18 @@ class _ListaProductosState extends State<ListaProductos> {
               child: GridView.builder(
                 padding: EdgeInsets.all(13.0),
                 itemCount: _nProductos,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 1 / 1.66,
                 ),
                 itemBuilder: (context, index) {
-                  return FutureBuilder<Map<String, dynamic>>(
-                    future: getDetails(index.toString()), // Pasa el índice como parámetro
-                    builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                      if (snapshot.hasData) {
-                        return Productos(
-                          imagen: snapshot.data?['image_path'] ?? '',
-                          nombre: snapshot.data?['nombre'] ?? '',
-                          tienda: "Exito",
-                          precio: snapshot.data?['precio'] ?? 0,
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
+                  final producto = _productos[index];
+
+                  return Productos(
+                    imagen: producto['image_path'] ?? '',
+                    nombre: producto['nombre'] ?? '',
+                    tienda: "Exito",
+                    precio: producto['precios']['euro'] ?? 0,
                   );
                 },
               ),
@@ -248,11 +279,14 @@ class Productos extends StatelessWidget {
                               ),
                               TextSpan(
                                 text: '\$$precio',
-                                style: Theme.of(context).textTheme.button?.copyWith(
-                                  color: Color(0xFF254587),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    ?.copyWith(
+                                      color: Color(0xFF254587),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                               ),
                             ],
                           ),
