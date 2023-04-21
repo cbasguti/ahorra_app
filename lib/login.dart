@@ -1,3 +1,4 @@
+import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
 import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/vistas/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -78,11 +79,20 @@ class _LoginPageState extends State<LoginPage> {
                                   if (_formKey.currentState!.validate()) {
                                     FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                        email: _emailController.text,
-                                        password: _passwordController.text)
+                                            email: _emailController.text,
+                                            password: _passwordController.text)
                                         .then((value) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => MenuPrincipal()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Scaffold(
+                                                    body: Stack(
+                                                      children: [
+                                                        MenuLateral(),
+                                                        MenuPrincipal(),
+                                                      ],
+                                                    ),
+                                                  )));
                                     }).onError((error, stackTrace) {
                                       print("Error ${error.toString()}");
                                     });
@@ -106,13 +116,17 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) => Registro()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Registro()));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.transparent,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(50)),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
                                     ),
                                     child: const Text("Registrate"),
                                   ),

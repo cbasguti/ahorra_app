@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +17,6 @@ class ListaProductos extends StatefulWidget {
 }
 
 class _ListaProductosState extends State<ListaProductos> {
-  final List<String> _tiendas =
-      List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
   int _nProductos = 0;
   String _busqueda = '';
   List<Map<dynamic, dynamic>> _productos = [];
@@ -78,12 +74,8 @@ class _ListaProductosState extends State<ListaProductos> {
     List<Map<dynamic, dynamic>> productos = [];
     snapshot.children.forEach((element) {
       final values = element.value as Map<dynamic, dynamic>;
-      values.forEach((key, value) {
-        if (key == 'nombre') {
-            count++;
-        }
-      });
-        productos.add(values);
+      productos.add(values);
+      count++;
     });
     setState(() {
       _nProductos = count;
@@ -107,7 +99,7 @@ class _ListaProductosState extends State<ListaProductos> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MenuPrincipal(),
+                  builder: (context) => MenuPrincipal(), //TODO: REVISAR VUELTA ATRÁS
                 ),
               );
             },
@@ -160,7 +152,6 @@ class _ListaProductosState extends State<ListaProductos> {
                 ),
                 itemBuilder: (context, index) {
                   final producto = _productos[index];
-
                   return Productos(
                     imagen: producto['image_path'] ?? '',
                     nombre: producto['nombre'] ?? '',

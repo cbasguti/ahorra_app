@@ -52,14 +52,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: Scaffold(
-        body: Stack(
-          children: [
-            MenuLateral(),
-            MenuPrincipal(),
-          ],
-        ),
-      ),
+      home: LoginPage()
     );
   }
 }
