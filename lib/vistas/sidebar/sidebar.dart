@@ -37,7 +37,7 @@ class _MenuLateralState extends State<MenuLateral> {
       return userIdNew;
     }
     return Container(
-      color: Colors.blueGrey,
+      color: Colors.grey.shade500,
       child: Padding(
         padding: const EdgeInsets.only(top: 200, left: 40, bottom: 70),
         child: Column(

@@ -1,3 +1,4 @@
+import 'package:ahorra_app/vistas/producto/lista_productos.dart';
 import 'package:flutter/material.dart';
 
 class CategoriasDestacadas extends StatelessWidget {
@@ -70,7 +71,14 @@ class Categoria extends StatelessWidget {
         .of(context)
         .size;
     return GestureDetector(
-      //onTap: press,
+      onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListaProductos(),
+        ),
+      );
+    },
       child: Column(
         children: [
           Container(
@@ -91,7 +99,7 @@ class Categoria extends StatelessWidget {
           ),
           Text(
             titulo,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
