@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:flutter/material.dart';
 
+import '../Sidebar/sidebar.dart';
+
 class DetallesProducto extends StatefulWidget {
   const DetallesProducto({
     Key? key,
@@ -39,7 +41,14 @@ class _DetallesProductoState extends State<DetallesProducto> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MenuPrincipal(),
+                  builder: (context) => Scaffold(
+                    body: Stack(
+                      children: [
+                        MenuLateral(),
+                        MenuPrincipal(),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },

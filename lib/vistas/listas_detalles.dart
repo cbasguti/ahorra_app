@@ -24,7 +24,6 @@ class ListasDetalles extends StatelessWidget {
                child: Text(
                    'Aca va todo el detalle de su lista'
                ),
-
              )
            ],
          ),

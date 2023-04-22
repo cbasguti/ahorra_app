@@ -42,7 +42,7 @@ class OfertasDelDia extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(13, (index) {
+        children: List.generate(4, (index) {
           return FutureBuilder<Map<String, dynamic>>(
             future: getDetails(index.toString()),
             builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {

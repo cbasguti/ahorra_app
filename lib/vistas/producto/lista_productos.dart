@@ -2,6 +2,7 @@ import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../Sidebar/sidebar.dart';
 import '../home/home.dart';
 
 class ListaProductos extends StatefulWidget {
@@ -99,7 +100,14 @@ class _ListaProductosState extends State<ListaProductos> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MenuPrincipal(), //TODO: REVISAR VUELTA ATRÁS
+                  builder: (context) => Scaffold(
+                    body: Stack(
+                      children: [
+                        MenuLateral(),
+                        MenuPrincipal(),
+                      ],
+                    ),
+                  ), //TODO: REVISAR VUELTA ATRÁS
                 ),
               );
             },
