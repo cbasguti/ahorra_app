@@ -34,7 +34,7 @@ class _ListasState extends State<Listas> {
                     subtitle: Text('Precio total:${listado.precio}'),
                     leading: Image.network(listado.imagen),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ListasDetalles(listado)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ListasDetalles()));
 
                     },
                   ),

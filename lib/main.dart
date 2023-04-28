@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: MenuPrincipal()
+      home: Listas()
     );
   }
 }
