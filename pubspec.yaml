@@ -70,6 +70,9 @@ flutter:
      - assets/image/menu/productos/
      - assets/image/menu/marcas/
      - assets/image/menu/categorias/
+     - assets/image/splash/
+     - assets/image/splash/logodark.png
+     - assets/image/splash/patron.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -1,3 +1,4 @@
+import 'package:ahorra_app/screens/splash_screen.dart';
 import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
 import 'package:ahorra_app/vistas/listas.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: Listas()
+      home: const SplashScreen(),
     );
   }
 }
