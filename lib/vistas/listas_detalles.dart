@@ -2,10 +2,27 @@ import 'package:ahorra_app/vistas/producto/lista_productos.dart';
 import 'package:flutter/material.dart';
 import 'package:ahorra_app/listado.dart';
 import 'package:ahorra_app/listado_detalle.dart';
+import 'dart:math';
 
 
-class ListasDetalles extends StatelessWidget {
+class ListasDetalles extends StatefulWidget {
 
+  @override
+  _ListasDetallesState createState() => _ListasDetallesState();
+}
+
+
+class _ListasDetallesState extends State<ListasDetalles> {
+
+  int _cantidad = 1;
+
+  void _decrementCounter() {
+    if (_cantidad > 0) {
+      setState(() {
+        _cantidad--;
+      });
+    }
+  }
    @override
    Widget build(BuildContext context) {
      return Scaffold(
@@ -69,24 +86,62 @@ class ListasDetalles extends StatelessWidget {
                          child: ListTile(
                            title: Text(listado2.nombre_producto,
                              style: TextStyle(
-                                 color: Color(0xFF254587),
-                                 fontWeight: FontWeight.bold,
+                               color: Color(0xFF254587),
+                               fontWeight: FontWeight.bold,
                              ),
                            ),
                            subtitle: Text('Precio unitario: ${listado2.precio}'),
                            leading: Image.network(listado2.imagen),
                          ),
                        ),
-                       Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Text(listado2.cantidad.toString()),
-                           Image.network(
-                             listado2.tienda,
-                             width: 30,
-                             height: 30,
-                           ),
-                         ],
+                       Expanded(
+                         child: Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             Image.network(
+                               listado2.tienda,
+                               width: 30,
+                               height: 30,
+                             ),
+                             SizedBox(width: 2),
+                             IconButton(
+                               onPressed: _decrementCounter,
+                               icon: SizedBox(
+                                 width: 24.0,
+                                 height: 24.0,
+                                 child: CircleAvatar(
+                                   backgroundColor: Colors.grey[600],
+                                   child: Icon(
+                                     Icons.remove,
+                                     color: Colors.white,
+                                     size: 16.0, // tamaño del icono dentro del CircleAvatar
+                                   ),
+                                 ),
+                               ),
+                             ),
+                             SizedBox(width: 2),
+                             Text(
+                               listado2.cantidad.toString(),
+                               style: TextStyle(fontSize: 20),
+                             ),
+                             SizedBox(width: 2),
+                             IconButton(
+                               onPressed: _decrementCounter,
+                               icon: SizedBox(
+                                 width: 24.0,
+                                 height: 24.0,
+                               child: CircleAvatar(
+                                 backgroundColor: Color(0xFF254587),
+                                 child: Icon(
+                                   Icons.add,
+                                   color: Colors.white,
+                                   size: 16.0,
+                                 ),
+                               ),
+                             ),
+                             ),
+                           ],
+                         ),
                        ),
                      ],
                    ),
