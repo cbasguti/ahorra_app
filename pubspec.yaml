@@ -73,6 +73,10 @@ flutter:
      - assets/image/splash/
      - assets/image/splash/logodark.png
      - assets/image/splash/patron.png
+     - assets/image/start/
+     - assets/image/start/compradora.png
+     - assets/image/start/logo_facebook.png
+     - assets/image/start/logo_google.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -100,3 +104,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Overpass
+      fonts:
+        - asset: assets/fonts/Overpass-Regular.ttf
+        - asset: assets/fonts/Overpass-Light.ttf
+        - asset: assets/fonts/Overpass-Bold.ttf
+          weight: 700

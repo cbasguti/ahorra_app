@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ahorra_app/login.dart';
+import 'package:ahorra_app/start/welcome.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(
         context,
         PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => LoginPage(),
+          pageBuilder: (context, animation1, animation2) => const WelcomePage(),
           transitionsBuilder: (context, animation1, animation2, child) {
             return FadeTransition(
               opacity: animation1,
