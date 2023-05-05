@@ -16,6 +16,12 @@ class _ListasDetallesState extends State<ListasDetalles> {
 
   int _cantidad = 1;
 
+  void _incrementCounter() {
+    setState(() {
+      _cantidad++;
+    });
+  }
+
   void _decrementCounter() {
     if (_cantidad > 0) {
       setState(() {
@@ -104,41 +110,34 @@ class _ListasDetallesState extends State<ListasDetalles> {
                                height: 30,
                              ),
                              SizedBox(width: 2),
-                             IconButton(
-                               onPressed: _decrementCounter,
-                               icon: SizedBox(
-                                 width: 20.0,
-                                 height: 20.0,
-                                 child: CircleAvatar(
-                                   backgroundColor: Colors.grey[600],
-                                   child: Icon(
-                                     Icons.remove,
-                                     color: Colors.white,
-                                     size: 16.0, // tamaño del icono dentro del CircleAvatar
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 IconButton(
+                                   onPressed: _decrementCounter,
+                                   icon: CircleAvatar(
+                                     backgroundColor: Colors.grey[600],
+                                     child: Icon(
+                                       Icons.remove,
+                                       color: Colors.white,
+                                     ),
                                    ),
                                  ),
-                               ),
-                             ),
-                             SizedBox(width: 2),
-                             Text(
-                               listado2.cantidad.toString(),
-                               style: TextStyle(fontSize: 20),
-                             ),
-                             SizedBox(width: 2),
-                             IconButton(
-                               onPressed: _decrementCounter,
-                               icon: SizedBox(
-                                 width: 20.0,
-                                 height: 20.0,
-                               child: CircleAvatar(
-                                 backgroundColor: Color(0xFF254587),
-                                 child: Icon(
-                                   Icons.add,
-                                   color: Colors.white,
-                                   size: 16.0,
+                                 Text(
+                                   '$_cantidad',
+                                   style: TextStyle(fontSize: 24),
                                  ),
-                               ),
-                             ),
+                                 IconButton(
+                                   onPressed: _incrementCounter,
+                                   icon: CircleAvatar(
+                                     backgroundColor: Color(0xFF254587),
+                                     child: Icon(
+                                       Icons.add,
+                                       color: Colors.white,
+                                     ),
+                                   ),
+                                 ),
+                               ],
                              ),
                            ],
                          ),
