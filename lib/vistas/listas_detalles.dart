@@ -96,7 +96,7 @@ class _ListasDetallesState extends State<ListasDetalles> {
                        ),
                        Expanded(
                          child: Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                            children: [
                              Image.network(
                                listado2.tienda,
@@ -107,8 +107,8 @@ class _ListasDetallesState extends State<ListasDetalles> {
                              IconButton(
                                onPressed: _decrementCounter,
                                icon: SizedBox(
-                                 width: 24.0,
-                                 height: 24.0,
+                                 width: 20.0,
+                                 height: 20.0,
                                  child: CircleAvatar(
                                    backgroundColor: Colors.grey[600],
                                    child: Icon(
@@ -128,8 +128,8 @@ class _ListasDetallesState extends State<ListasDetalles> {
                              IconButton(
                                onPressed: _decrementCounter,
                                icon: SizedBox(
-                                 width: 24.0,
-                                 height: 24.0,
+                                 width: 20.0,
+                                 height: 20.0,
                                child: CircleAvatar(
                                  backgroundColor: Color(0xFF254587),
                                  child: Icon(
