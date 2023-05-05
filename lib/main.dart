@@ -18,21 +18,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var producto = const Producto(
-      nombre: 'Leche',
-      imagen: 'https://i.ibb.co/9Nx3hMy/colanta.jpg',
-      categoria: 'Lacteos',
-      prices: [
-        {
-          'carulla': 4400,
-          'euro': 3790,
-          'exito': 4540,
-          'jumbo': 4100,
-        },
-      ],
-    );
-
-    print(producto.toString());
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
