@@ -1,3 +1,4 @@
+import 'package:ahorra_app/start/welcome.dart';
 import 'package:ahorra_app/vistas/listas_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -78,7 +79,7 @@ class _MenuLateralState extends State<MenuLateral> {
                             fontWeight: FontWeight.bold),
                       );
                     } else {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                   },
                 ),
@@ -166,10 +167,21 @@ class _MenuLateralState extends State<MenuLateral> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  'Cerrar Sesion',
-                  style: TextStyle(color: Colors.white.withOpacity(0.5)),
-                )
+                ElevatedButton(
+                  child: const Text(
+                    'Cerrar Sesion',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then((value) {
+                      print("Signed Out");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WelcomePage()));
+                    });
+                  },
+                ),
               ],
             )
           ],

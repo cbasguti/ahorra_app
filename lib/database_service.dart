@@ -61,7 +61,6 @@ class DatabaseService {
         }
       }
     });
-    print(lists);
     return lists;
   }
 }

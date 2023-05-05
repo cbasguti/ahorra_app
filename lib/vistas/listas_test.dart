@@ -17,15 +17,6 @@ class _ListaTestState extends State<ListaTest> {
     final String? userEmail = user?.email;
     final dbService = DatabaseService();
 
-    void getLists() async {
-      // Utilización:
-      final count = await dbService.getListsCount(userEmail!);
-      // ignore: avoid_print
-      print(count);
-    }
-
-    getLists();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

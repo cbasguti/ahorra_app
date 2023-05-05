@@ -36,7 +36,10 @@ class _ListasState extends State<Listas> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Listas'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text('Mis Listas', style: TextStyle(color: Colors.black)),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Column(
         children: [
