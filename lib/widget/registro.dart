@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../model/usuario.dart';
+
 class Registro extends StatefulWidget {
+  const Registro({super.key});
+
   @override
   _RegistroState createState() => _RegistroState();
 }
@@ -112,18 +116,17 @@ class _RegistroState extends State<Registro> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              Map<String, String> usuarios = {
-                                'nombre': _nombreController.text,
-                                'telefono': _telefonoController.text,
-                                'correo': _correoController.text,
-                              };
-                              dbRef.push().set(usuarios);
+                              Usuario usuario = Usuario(
+                                nombre: _nombreController.text,
+                                correo: _correoController.text,
+                                telefono: _telefonoController.text,
+                              );
+                              dbRef.push().set(usuario.toMap());
                               FirebaseAuth.instance
                                   .createUserWithEmailAndPassword(
                                       email: _correoController.text,
                                       password: _contrasenaController.text)
                                   .then((value) {
-                                print("Created New Account");
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
