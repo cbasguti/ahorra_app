@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.udea.ahorra_app.ahorra_app">
    <application
-        android:label="ahorra_app"
+        android:label="AhorrAPP"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/logo_app">
         <activity
             android:name=".MainActivity"
             android:exported="true"

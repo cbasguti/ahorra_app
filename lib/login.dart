@@ -26,7 +26,11 @@ class _LoginPageState extends State<LoginPage> {
         child: const Text(
           "¡Bienvenido de vuelta!",
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 60, color: Color(0xff082652)),
+          style: TextStyle(
+              fontFamily: 'Overpass',
+              fontWeight: FontWeight.bold,
+              fontSize: 60,
+              color: Color(0xff082652)),
           textScaleFactor: 0.5,
         ),
       ),
@@ -47,6 +51,10 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               TextFormField(
+                                style: const TextStyle(
+                                    fontFamily: 'Arial',
+                                    fontSize: 15,
+                                    color: Color(0xff082652)),
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
@@ -61,6 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               TextFormField(
+                                style: const TextStyle(
+                                    fontFamily: 'Arial',
+                                    fontSize: 15,
+                                    color: Color(0xff082652)),
                                 controller: _passwordController,
                                 obscureText: true,
                                 validator: (value) {
@@ -73,6 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                                   prefixIcon: Icon(Icons.lock),
                                   labelText: 'Contraseña',
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 20,
                               ),
                               ElevatedButton(
                                 onPressed: () {
@@ -100,10 +115,16 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xff082652),
+                                  fixedSize: const Size(300, 50),
+                                  textStyle: const TextStyle(
+                                    fontFamily: 'Overpass',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50)),
                                 ),
-                                child: const Text("Iniciar sesión"),
+                                child: const Text("INICIAR SESIÓN"),
                               ),
                               const SizedBox(
                                 height: 20,

@@ -67,50 +67,63 @@ class Categoria extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListaProductos(collectionName: titulo),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListaProductos(collectionName: titulo),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(
+          left: 15.0,
+          top: 20.0 / 2,
+          bottom: 20.0 / 2,
         ),
-      );
-    },
-      child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(
-              left: 20.0,
-              top: 20.0 / 2,
-              bottom: 20.0 / 2,
+        width: 80,
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(100),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
             ),
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              image: DecorationImage(
-                //fit: BoxFit.cover,
-                image: AssetImage(imagen),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                image: DecorationImage(
+                  image: AssetImage(imagen),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Text(
-            titulo,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 15),
+            Text(
+              titulo,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontFamily: 'Overpass',
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-
-
-
-
-

@@ -23,7 +23,7 @@ class HeaderConBusqueda extends StatelessWidget {
     final String? userEmail = user?.email;
 
     final DatabaseReference dbRef =
-    FirebaseDatabase.instance.ref().child('usuarios');
+        FirebaseDatabase.instance.ref().child('usuarios');
 
     String userId = 'Usuario';
 
@@ -41,7 +41,7 @@ class HeaderConBusqueda extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 20.0 * 2.5),
+      margin: const EdgeInsets.only(bottom: 15.0 * 2.5),
       // It will cover 20% of our total height
       height: size.height * 0.2,
       child: Stack(
@@ -50,11 +50,15 @@ class HeaderConBusqueda extends StatelessWidget {
             padding: const EdgeInsets.only(
               left: 20.0,
               right: 20.0,
-              bottom: 36 + 20.0,
+              bottom: 20 + 20.0,
             ),
             height: size.height * 0.2 - 27,
             decoration: const BoxDecoration(
-              color: Color(0xFF254587),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFF082652), Color(0xFF3E61B9)],
+              ),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(36),
                 bottomRight: Radius.circular(36),
@@ -64,20 +68,37 @@ class HeaderConBusqueda extends StatelessWidget {
               children: <Widget>[
                 FutureBuilder<String>(
                   future: getUsername(),
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.hasData) {
-                      return Text(
-                        'Hola, ' + (snapshot.data ?? 'error'),
-                        style: Theme.of(context).textTheme.headline5?.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                AssetImage('assets/image/user.png'),
+                            radius: 28.0,
+                          ),
+                          Text(
+                            'Hola, ${snapshot.data ?? 'error'}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Overpass'),
+                          ),
+                        ],
                       );
                     } else {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     }
                   },
                 ),
                 const Spacer(),
-                Image.asset("assets/image/logo.png")
+                Image.asset("assets/image/menu/moneda.png")
               ],
             ),
           ),
@@ -87,17 +108,17 @@ class HeaderConBusqueda extends StatelessWidget {
             right: 0,
             child: Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               height: 54,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                     blurRadius: 50,
-                    color: Color(0xFF254587).withOpacity(0.23),
+                    color: const Color(0xFF082652).withOpacity(0.23),
                   ),
                 ],
               ),
@@ -109,14 +130,14 @@ class HeaderConBusqueda extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: "Busca aquí tus productos",
                         hintStyle: TextStyle(
-                          color: Color(0xFF254587).withOpacity(0.5),
+                          color: const Color(0xFF254587).withOpacity(0.5),
                         ),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
                     ),
                   ),
-                 Icon(Icons.search),
+                  const Icon(Icons.search),
                 ],
               ),
             ),

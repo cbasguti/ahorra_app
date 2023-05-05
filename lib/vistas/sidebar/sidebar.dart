@@ -1,7 +1,9 @@
+import 'package:ahorra_app/vistas/listas_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../../database_service.dart';
 import '../listas.dart';
 
 class MenuLateral extends StatefulWidget {
@@ -12,17 +14,12 @@ class MenuLateral extends StatefulWidget {
 class _MenuLateralState extends State<MenuLateral> {
   @override
   Widget build(BuildContext context) {
+    bool listCreated = false;
     final FirebaseAuth auth = FirebaseAuth.instance;
-
-    // Obtener el usuario actualmente autenticado
     final User? user = auth.currentUser;
-
-    // Obtener el correo electrónico del usuario actual
     final String? userEmail = user?.email;
-
     final DatabaseReference dbRef =
-    FirebaseDatabase.instance.ref().child('usuarios');
-
+        FirebaseDatabase.instance.ref().child('usuarios');
     String userId = 'Usuario';
 
     Future<String> getUsername() async {
@@ -37,6 +34,16 @@ class _MenuLateralState extends State<MenuLateral> {
       String userIdNew = userId;
       return userIdNew;
     }
+
+    Future<int> getLists() async {
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      final User? user = auth.currentUser;
+      final String? userEmail = user?.email;
+      final dbService = DatabaseService();
+      final count = await dbService.getListsCount(userEmail!);
+      return count;
+    }
+
     return Container(
       color: Colors.grey.shade500,
       child: Padding(
@@ -60,7 +67,8 @@ class _MenuLateralState extends State<MenuLateral> {
                 ),
                 FutureBuilder<String>(
                   future: getUsername(),
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.hasData) {
                       return Text(
                         (snapshot.data ?? 'error'),
@@ -85,17 +93,36 @@ class _MenuLateralState extends State<MenuLateral> {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Listas()),
-                    );
+                FutureBuilder<int>(
+                  future: getLists(),
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                    if (snapshot.hasData) {
+                      return GestureDetector(
+                        onTap: () {
+                          getLists();
+                          if (snapshot.data == 0 && listCreated == false) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ListaTest()),
+                            );
+                            listCreated = true;
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Listas()),
+                            );
+                          }
+                        },
+                        child: const NewRow(
+                          text: 'Mis Listas',
+                          icon: Icons.bookmark_border,
+                        ),
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
                   },
-                  child: const NewRow(
-                    text: 'Mis Listas',
-                    icon: Icons.bookmark_border,
-                  ),
                 ),
                 const SizedBox(
                   height: 20,
