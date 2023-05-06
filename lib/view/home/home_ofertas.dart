@@ -21,7 +21,7 @@ class OfertasDelDia extends StatelessWidget {
             builder:
                 (BuildContext context, AsyncSnapshot<List<Producto>> snapshot) {
               if (snapshot.hasData) {
-                return Productos(
+                return ProductosCard(
                   producto: snapshot.data![index],
                 );
               } else {

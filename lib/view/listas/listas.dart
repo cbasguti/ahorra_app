@@ -58,8 +58,9 @@ class ListasState extends State<Listas> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ListasDetalles()));
+                                    builder: (context) => ListasDetalles(
+                                        lista:
+                                            snapshot.data![index].toString())));
                           },
                         ),
                       );

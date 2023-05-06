@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/view/home/home.dart';
-import 'package:ahorra_app/view/sidebar/sidebar.dart';
+import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:ahorra_app/widget/listas_popup.dart';
 import 'package:flutter/material.dart';
 
@@ -186,6 +186,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                               ),
                                             ),
                                             ListasPopUp(
+                                              producto: widget.producto,
                                               cantidad: _cantidad,
                                             ),
                                           ],

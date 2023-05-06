@@ -4,6 +4,7 @@ class Producto {
   String imagen;
   String categoria;
   Map precios;
+  int? cantidad;
 
   Producto({
     required this.id,
@@ -11,6 +12,7 @@ class Producto {
     required this.imagen,
     required this.categoria,
     required this.precios,
+    this.cantidad,
   });
 
   // Getter for prices

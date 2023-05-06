@@ -1,7 +1,7 @@
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/view/producto/producto_detalle.dart';
-import 'package:ahorra_app/view/sidebar/sidebar.dart';
+import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -166,7 +166,7 @@ class _ListaProductosState extends State<ListaProductos> {
                 ),
                 itemBuilder: (context, index) {
                   final producto = _productosLista[index];
-                  return Productos(
+                  return ProductosCard(
                     producto: producto,
                   );
                 },
@@ -179,8 +179,8 @@ class _ListaProductosState extends State<ListaProductos> {
   }
 }
 
-class Productos extends StatelessWidget {
-  const Productos({
+class ProductosCard extends StatelessWidget {
+  const ProductosCard({
     Key? key,
     required this.producto,
   }) : super(key: key);
@@ -250,7 +250,7 @@ class Productos extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Image.asset(
-                            'assets/image/menu/marcas/logo_exito.png', // Que no sea estatica
+                            'assets/image/menu/marcas/logo_${producto.getLowestPriceStore()}.png', // Que no sea estatica
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
@@ -270,7 +270,7 @@ class Productos extends StatelessWidget {
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                               TextSpan(
-                                text: '\$2000',
+                                text: '\$${producto.getLowestPrice()}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge

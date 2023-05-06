@@ -15,6 +15,9 @@ class DatabaseService {
     _getUserKey();
   }
 
+  // Getter para obtener el userKey
+  String get userKey => _userKey;
+
   Future<void> _getUserKey() async {
     final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
@@ -46,14 +49,34 @@ class DatabaseService {
     final listaDbRef = _dbRef.child(_userKey).child('listas');
     final snapshot = await listaDbRef.get();
     final values = snapshot.value as Map<dynamic, dynamic>;
-    values.forEach((key, value) {
+    late final DatabaseReference productDbRef;
+
+    bool productoExiste = false;
+
+    values.forEach((key, value) async {
       if (value['titulo'] == lista) {
-        final productDbRef = listaDbRef.child(key).child('productos');
-        productDbRef.push().set({
-          'categoria': producto.categoria,
-          'id': producto.id,
-          'cantidad': cantidad,
-        });
+        productDbRef = listaDbRef.child(key).child('productos');
+
+        final snapshot2 = await productDbRef.get();
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+          values2.forEach((key, value) {
+            if (value['categoria_id'] ==
+                '${producto.categoria}_${producto.id}') {
+              final int cantidadActual = value['cantidad'] as int;
+              final int cantidadNueva = cantidadActual + cantidad;
+              productDbRef.child(key).update({'cantidad': cantidadNueva});
+              productoExiste = true;
+            }
+          });
+        }
+
+        if (!productoExiste) {
+          productDbRef.push().set({
+            'categoria_id': '${producto.categoria}_${producto.id}',
+            'cantidad': cantidad,
+          });
+        }
       }
     });
   }
@@ -74,10 +97,79 @@ class DatabaseService {
         }
       }
     });
-    if (kDebugMode) {
-      print('DatabaseService.getLists: $count');
-    }
     return count;
+  }
+
+  Future<int> getProductCount(String lista) async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+
+    int productCount = 0;
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        if (value['listas'] != null) {
+          final listas = value['listas'] as Map<dynamic, dynamic>;
+          listas.forEach((key, value) {
+            if (value['titulo'] == lista) {
+              if (value['productos'] != null) {
+                final productos = value['productos'] as Map<dynamic, dynamic>;
+                productos.forEach((key, value) {
+                  productCount++;
+                });
+              }
+            }
+          });
+        }
+      }
+    });
+    return productCount;
+  }
+
+  Future<List<Producto>> getProducts(String lista) async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+
+    List productosLista = [];
+    List<Producto> productos = [];
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        if (value['listas'] != null) {
+          final listas = value['listas'] as Map<dynamic, dynamic>;
+          listas.forEach((key, value) {
+            if (value['titulo'] == lista) {
+              if (value['productos'] != null) {
+                final productos = value['productos'] as Map<dynamic, dynamic>;
+                productos.forEach((key, value) {
+                  productosLista.add(value['categoria_id'] +
+                      '_' +
+                      value['cantidad'].toString());
+                });
+              }
+            }
+          });
+        }
+      }
+    });
+
+    for (var element in productosLista) {
+      final String categoria = element.split('_')[0];
+      final String id = element.split('_')[1];
+      final String cantidad = element.split('_')[2];
+      final productoRef = _productosRef.child(categoria).child(id);
+      final snapshot = await productoRef.get();
+      final values = snapshot.value as Map<dynamic, dynamic>;
+      productos.add(Producto(
+          id: int.parse(id),
+          nombre: values['nombre'],
+          categoria: categoria,
+          precios: values['precios'],
+          imagen: values['image_path'],
+          cantidad: int.parse(cantidad)));
+    }
+
+    return productos;
   }
 
   Future<List> getLists() async {
@@ -134,6 +226,7 @@ class DatabaseService {
         categoria: 'Ofertas',
         precios: values['precios'],
       );
+      count++;
       productosLista.add(producto);
     }
     return productosLista;

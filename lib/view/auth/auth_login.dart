@@ -1,5 +1,5 @@
 import 'package:ahorra_app/view/home/home.dart';
-import 'package:ahorra_app/view/sidebar/sidebar.dart';
+import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:ahorra_app/view/auth/auth_registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';

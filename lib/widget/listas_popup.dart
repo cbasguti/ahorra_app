@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 class ListasPopUp extends StatefulWidget {
   const ListasPopUp({
     Key? key,
+    required this.producto,
     required this.cantidad,
   }) : super(key: key);
 
+  final Producto producto;
   final int cantidad;
 
   @override
@@ -50,16 +52,7 @@ class ListasPopUpState extends State<ListasPopUp> {
                               onTap: () {
                                 _dbService.addProductoToLista(
                                     snapshot.data![index].toString(),
-                                    Producto(
-                                        id: 0,
-                                        nombre: 'leche',
-                                        imagen: 'url',
-                                        categoria: 'Lacteos',
-                                        precios: {
-                                          'Jumbo': 1000,
-                                          'Lider': 2000,
-                                          'Tottus': 3000
-                                        }),
+                                    widget.producto,
                                     widget.cantidad);
                                 Navigator.pop(context);
                                 showDialog(
