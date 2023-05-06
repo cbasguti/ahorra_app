@@ -1,10 +1,9 @@
+import 'package:ahorra_app/main.dart';
+import 'package:ahorra_app/model/usuario.dart';
+import 'package:ahorra_app/service/auth/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../main.dart';
-import '../model/usuario.dart';
-import '../service/auth/auth_service.dart';
 
 class Registro extends StatefulWidget {
   const Registro({super.key});

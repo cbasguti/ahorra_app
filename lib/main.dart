@@ -1,7 +1,7 @@
+import 'package:ahorra_app/service/firebase_options.dart';
+import 'package:ahorra_app/view/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'service/firebase_options.dart';
-import 'view/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

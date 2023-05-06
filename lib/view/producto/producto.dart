@@ -1,10 +1,9 @@
 import 'dart:math';
 
+import 'package:ahorra_app/view/home/home.dart';
+import 'package:ahorra_app/view/sidebar/sidebar.dart';
+import 'package:ahorra_app/widget/listas_popup.dart';
 import 'package:flutter/material.dart';
-
-import '../../widget/listas_popup.dart';
-import '../Sidebar/sidebar.dart';
-import '../home/home.dart';
 
 class DetallesProducto extends StatefulWidget {
   const DetallesProducto({

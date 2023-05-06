@@ -1,6 +1,5 @@
+import 'package:ahorra_app/model/listado_detalle.dart';
 import 'package:flutter/material.dart';
-
-import '../model/listado_detalle.dart';
 
 class ListasDetalles extends StatefulWidget {
   const ListasDetalles({super.key});

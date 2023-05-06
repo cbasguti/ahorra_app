@@ -1,11 +1,10 @@
+import 'package:ahorra_app/service/auth/auth_service.dart';
+import 'package:ahorra_app/service/database_service.dart';
+import 'package:ahorra_app/view/listas.dart';
+import 'package:ahorra_app/view/listas_test.dart';
+import 'package:ahorra_app/view/start/welcome.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../service/auth/auth_service.dart';
-import '../../service/database_service.dart';
-import '../listas_test.dart';
-import '../listas.dart';
-import '../start/welcome.dart';
 
 class MenuLateral extends StatefulWidget {
   const MenuLateral({super.key});

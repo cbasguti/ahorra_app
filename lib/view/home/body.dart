@@ -1,10 +1,9 @@
+import 'package:ahorra_app/view/home/buscar.dart';
+import 'package:ahorra_app/view/home/categorias.dart';
+import 'package:ahorra_app/view/home/marcas.dart';
+import 'package:ahorra_app/view/home/ofertas.dart';
+import 'package:ahorra_app/view/home/seccion.dart';
 import 'package:flutter/material.dart';
-
-import 'marcas.dart';
-import 'buscar.dart';
-import 'ofertas.dart';
-import 'seccion.dart';
-import 'categorias.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});

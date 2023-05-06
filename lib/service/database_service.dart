@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:ahorra_app/service/auth/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-
-import 'auth/auth_service.dart';
 
 class DatabaseService {
   final _dbRef = FirebaseDatabase.instance.ref().child('usuarios');

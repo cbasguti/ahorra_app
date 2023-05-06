@@ -1,9 +1,8 @@
+import 'package:ahorra_app/view/home/home.dart';
+import 'package:ahorra_app/view/producto/producto.dart';
+import 'package:ahorra_app/view/sidebar/sidebar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
-import '../Sidebar/sidebar.dart';
-import '../home/home.dart';
-import 'producto.dart';
 
 class ListaProductos extends StatefulWidget {
   final String collectionName;

@@ -1,10 +1,9 @@
+import 'package:ahorra_app/view/home/home.dart';
+import 'package:ahorra_app/view/sidebar/sidebar.dart';
+import 'package:ahorra_app/widget/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../vistas/Sidebar/sidebar.dart';
-import '../widget/registro.dart';
-import 'home/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
