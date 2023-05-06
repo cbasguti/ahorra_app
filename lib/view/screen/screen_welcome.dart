@@ -1,5 +1,5 @@
-import 'package:ahorra_app/view/login.dart';
-import 'package:ahorra_app/widget/registro.dart';
+import 'package:ahorra_app/view/auth/auth_login.dart';
+import 'package:ahorra_app/view/auth/auth_registro.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {

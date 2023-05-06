@@ -1,5 +1,5 @@
 import 'package:ahorra_app/view/home/body.dart';
-import 'package:ahorra_app/widget/my_bottom_nav_bar.dart';
+import 'package:ahorra_app/widget/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class MenuPrincipal extends StatefulWidget {

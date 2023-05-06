@@ -1,4 +1,4 @@
-import 'package:ahorra_app/view/producto/lista_productos.dart';
+import 'package:ahorra_app/view/producto/producto_lista.dart';
 import 'package:flutter/material.dart';
 
 class CategoriasDestacadas extends StatelessWidget {

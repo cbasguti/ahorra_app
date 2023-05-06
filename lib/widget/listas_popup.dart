@@ -1,5 +1,5 @@
 import 'package:ahorra_app/service/database_service.dart';
-import 'package:ahorra_app/view/listas_test.dart';
+import 'package:ahorra_app/view/listas/listas_vacia.dart';
 import 'package:flutter/material.dart';
 
 class ListasPopUp extends StatefulWidget {

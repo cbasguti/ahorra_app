@@ -1,8 +1,8 @@
 import 'package:ahorra_app/service/auth/auth_service.dart';
 import 'package:ahorra_app/service/database_service.dart';
-import 'package:ahorra_app/view/listas.dart';
-import 'package:ahorra_app/view/listas_test.dart';
-import 'package:ahorra_app/view/start/welcome.dart';
+import 'package:ahorra_app/view/listas/listas.dart';
+import 'package:ahorra_app/view/listas/listas_vacia.dart';
+import 'package:ahorra_app/view/screen/screen_welcome.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
