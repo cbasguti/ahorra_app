@@ -44,7 +44,7 @@ class _ListaProductosState extends State<ListaProductos> {
     bool cumple = false;
     int count = 0;
     List<Map<dynamic, dynamic>> productos = [];
-    snapshot.children.forEach((element) {
+    for (var element in snapshot.children) {
       final values = element.value as Map<dynamic, dynamic>;
       values.forEach((key, value) {
         if (key == 'nombre') {
@@ -58,7 +58,7 @@ class _ListaProductosState extends State<ListaProductos> {
         productos.add(values);
       }
       cumple = false;
-    });
+    }
     setState(() {
       _nProductos = count;
       _productos = productos;
@@ -73,11 +73,11 @@ class _ListaProductosState extends State<ListaProductos> {
     final snapshot = await dbRef.get();
     int count = 0;
     List<Map<dynamic, dynamic>> productos = [];
-    snapshot.children.forEach((element) {
+    for (var element in snapshot.children) {
       final values = element.value as Map<dynamic, dynamic>;
       productos.add(values);
       count++;
-    });
+    }
     setState(() {
       _nProductos = count;
       _productos = productos;
@@ -104,10 +104,10 @@ class _ListaProductosState extends State<ListaProductos> {
                     body: Stack(
                       children: [
                         MenuLateral(),
-                        MenuPrincipal(),
+                        const MenuPrincipal(),
                       ],
                     ),
-                  ), //TODO: REVISAR VUELTA ATRÁS
+                  ),
                 ),
               );
             },
@@ -117,17 +117,17 @@ class _ListaProductosState extends State<ListaProductos> {
           children: <Widget>[
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              margin: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               height: 54,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                     blurRadius: 50,
-                    color: Color(0xFF254587).withOpacity(0.23),
+                    color: const Color(0xFF254587).withOpacity(0.23),
                   ),
                 ],
               ),
@@ -139,20 +139,20 @@ class _ListaProductosState extends State<ListaProductos> {
                       decoration: InputDecoration(
                         hintText: "Busca aquí tus productos",
                         hintStyle: TextStyle(
-                          color: Color(0xFF254587).withOpacity(0.5),
+                          color: const Color(0xFF254587).withOpacity(0.5),
                         ),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
                     ),
                   ),
-                  Icon(Icons.search),
+                  const Icon(Icons.search),
                 ],
               ),
             ),
             Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(13.0),
+                padding: const EdgeInsets.all(13.0),
                 itemCount: _nProductos,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -185,7 +185,7 @@ class Productos extends StatelessWidget {
     required this.precio,
   }) : super(key: key);
 
-  final imagen, nombre, tienda;
+  final String imagen, nombre, tienda;
   final int precio;
 
   @override
@@ -231,7 +231,7 @@ class Productos extends StatelessWidget {
               );
             },
             child: Container(
-              padding: EdgeInsets.all(20.0 / 2),
+              padding: const EdgeInsets.all(20.0 / 2),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: const BorderRadius.only(
@@ -240,9 +240,9 @@ class Productos extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0, 10),
+                    offset: const Offset(0, 10),
                     blurRadius: 50,
-                    color: Color(0xFF254587).withOpacity(0.23),
+                    color: const Color(0xFF254587).withOpacity(0.23),
                   ),
                 ],
               ),
@@ -253,11 +253,11 @@ class Productos extends StatelessWidget {
                     child: ClipRect(
                       clipBehavior: Clip.antiAlias,
                       child: FractionalTranslation(
-                        translation: Offset(0.0, 0.3),
+                        translation: const Offset(0.0, 0.3),
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Image.asset(
-                            'assets/image/menu/marcas/logo_exito.png', // TODO: CAMBIAR ESTO PARA QUE LA IMAGEN NO SEA ESTATICA
+                            'assets/image/menu/marcas/logo_exito.png', // Que no sea estatica
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
@@ -274,15 +274,15 @@ class Productos extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: "$nombre\n".toUpperCase(),
-                                style: Theme.of(context).textTheme.button,
+                                style: Theme.of(context).textTheme.labelLarge,
                               ),
                               TextSpan(
                                 text: '\$$precio',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button
+                                    .labelLarge
                                     ?.copyWith(
-                                      color: Color(0xFF254587),
+                                      color: const Color(0xFF254587),
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),

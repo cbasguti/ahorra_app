@@ -22,7 +22,7 @@ class TituloYBoton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
-              backgroundColor: Color(0xFF254587),
+              backgroundColor: const Color(0xFF254587),
             ),
             onPressed: () {},
             child: const Text(
@@ -46,7 +46,7 @@ class TituloConInterlineado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 24,
       child: Stack(
         children: <Widget>[
@@ -54,7 +54,7 @@ class TituloConInterlineado extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20.0 / 4),
             child: Text(
               texto,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           Positioned(
@@ -62,9 +62,9 @@ class TituloConInterlineado extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              margin: EdgeInsets.only(right: 20.0 / 4),
+              margin: const EdgeInsets.only(right: 20.0 / 4),
               height: 7,
-              color: Color(0xFF254587).withOpacity(0.2),
+              color: const Color(0xFF254587).withOpacity(0.2),
             ),
           )
         ],

@@ -1,19 +1,17 @@
-import 'dart:ffi';
-
 import 'package:ahorra_app/vistas/listas_detalles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ahorra_app/listado.dart';
-import 'package:ahorra_app/main.dart';
 
 import '../database_service.dart';
 
 class Listas extends StatefulWidget {
+  const Listas({super.key});
+
   @override
-  _ListasState createState() => _ListasState();
+  ListasState createState() => ListasState();
 }
 
-class _ListasState extends State<Listas> {
+class ListasState extends State<Listas> {
   @override
   Widget build(BuildContext context) {
     Future<int> getLists() async {
@@ -77,7 +75,8 @@ class _ListasState extends State<Listas> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ListasDetalles()));
+                                    builder: (context) =>
+                                        const ListasDetalles()));
                           },
                         ),
                       );

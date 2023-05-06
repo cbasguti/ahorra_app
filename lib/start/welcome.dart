@@ -63,7 +63,7 @@ class WelcomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Registro(),
+                            builder: (context) => const Registro(),
                           ),
                         );
                       },
@@ -137,7 +137,7 @@ class WelcomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => const LoginPage(),
                         ),
                       );
                     },
@@ -145,7 +145,7 @@ class WelcomePage extends StatelessWidget {
                       'INICIAR SESIÓN',
                       style: TextStyle(
                         fontFamily: 'Overpass',
-                        fontSize: 14  ,
+                        fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),

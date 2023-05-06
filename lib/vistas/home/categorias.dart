@@ -63,11 +63,10 @@ class Categoria extends StatelessWidget {
     required this.titulo,
   }) : super(key: key);
 
-  final imagen, titulo;
+  final String imagen, titulo;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         Navigator.push(

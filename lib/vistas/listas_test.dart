@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../database_service.dart';
 import 'listas.dart';
 
 class ListaTest extends StatefulWidget {
+  const ListaTest({super.key});
+
   @override
-  _ListaTestState createState() => _ListaTestState();
+  ListaTestState createState() => ListaTestState();
 }
 
-class _ListaTestState extends State<ListaTest> {
+class ListaTestState extends State<ListaTest> {
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final String? userEmail = user?.email;
     final dbService = DatabaseService();
 
     return Scaffold(
@@ -84,7 +82,8 @@ class _ListaTestState extends State<ListaTest> {
                             Navigator.of(context).pop();
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => Listas()),
+                              MaterialPageRoute(
+                                  builder: (context) => const Listas()),
                             );
                           },
                           child: const Text('Crear'),

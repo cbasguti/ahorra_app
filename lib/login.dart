@@ -2,14 +2,17 @@ import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
 import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:ahorra_app/widget/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -104,12 +107,14 @@ class _LoginPageState extends State<LoginPage> {
                                                     body: Stack(
                                                       children: [
                                                         MenuLateral(),
-                                                        MenuPrincipal(),
+                                                        const MenuPrincipal(),
                                                       ],
                                                     ),
                                                   )));
                                     }).onError((error, stackTrace) {
-                                      print("Error ${error.toString()}");
+                                      if (kDebugMode) {
+                                        print("Error ${error.toString()}");
+                                      }
                                     });
                                   }
                                 },
@@ -141,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  Registro()));
+                                                  const Registro()));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.transparent,

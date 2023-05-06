@@ -1,6 +1,7 @@
 import 'package:ahorra_app/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../model/usuario.dart';
@@ -9,10 +10,10 @@ class Registro extends StatefulWidget {
   const Registro({super.key});
 
   @override
-  _RegistroState createState() => _RegistroState();
+  RegistroState createState() => RegistroState();
 }
 
-class _RegistroState extends State<Registro> {
+class RegistroState extends State<Registro> {
   final _formKey = GlobalKey<FormState>();
   final _nombreController = TextEditingController();
   final _telefonoController = TextEditingController();
@@ -31,7 +32,7 @@ class _RegistroState extends State<Registro> {
     return Scaffold(
       body: Stack(children: <Widget>[
         Container(
-          margin: EdgeInsets.only(top: 110, left: 20),
+          margin: const EdgeInsets.only(top: 110, left: 20),
           width: double.infinity,
           decoration:
               BoxDecoration(border: Border.all(color: Colors.transparent)),
@@ -132,7 +133,9 @@ class _RegistroState extends State<Registro> {
                                     MaterialPageRoute(
                                         builder: (context) => const MyApp()));
                               }).onError((error, stackTrace) {
-                                print("Error ${error.toString()}");
+                                if (kDebugMode) {
+                                  print("Error ${error.toString()}");
+                                }
                               });
                             }
                           },
@@ -161,7 +164,7 @@ class _RegistroState extends State<Registro> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Registro()));
+                                      builder: (context) => const Registro()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,

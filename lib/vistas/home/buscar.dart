@@ -42,107 +42,108 @@ class HeaderConBusqueda extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 15.0 * 2.5),
-      // It will cover 20% of our total height
-      height: size.height * 0.2,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              right: 20.0,
-              bottom: 20 + 20.0,
-            ),
-            height: size.height * 0.2 - 27,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF082652), Color(0xFF3E61B9)],
+      child: SizedBox(
+        height: size.height * 0.2 + 20,
+        child: Stack(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                right: 20.0,
+                bottom: 20 + 20.0,
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36),
-                bottomRight: Radius.circular(36),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                FutureBuilder<String>(
-                  future: getUsername(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                AssetImage('assets/image/user.png'),
-                            radius: 28.0,
-                          ),
-                          Text(
-                            'Hola, ${snapshot.data ?? 'error'}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Overpass'),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
+              height: size.height * 0.2,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFF082652), Color(0xFF3E61B9)],
                 ),
-                const Spacer(),
-                Image.asset("assets/image/menu/moneda.png")
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.symmetric(horizontal: 20.0),
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              height: 54,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    offset: const Offset(0, 10),
-                    blurRadius: 50,
-                    color: const Color(0xFF082652).withOpacity(0.23),
-                  ),
-                ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(36),
+                  bottomRight: Radius.circular(36),
+                ),
               ),
               child: Row(
                 children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                        hintText: "Busca aquí tus productos",
-                        hintStyle: TextStyle(
-                          color: const Color(0xFF254587).withOpacity(0.5),
-                        ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
+                  FutureBuilder<String>(
+                    future: getUsername(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.hasData) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  AssetImage('assets/image/user.png'),
+                              radius: 28.0,
+                            ),
+                            Text(
+                              'Hola, ${snapshot.data ?? 'error'}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Overpass'),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
                   ),
-                  const Icon(Icons.search),
+                  const Spacer(),
+                  Image.asset("assets/image/menu/moneda.png")
                 ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                height: 54,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: const Offset(0, 10),
+                      blurRadius: 50,
+                      color: const Color(0xFF082652).withOpacity(0.23),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          hintText: "Busca aquí tus productos",
+                          hintStyle: TextStyle(
+                            color: const Color(0xFF254587).withOpacity(0.5),
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    const Icon(Icons.search),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

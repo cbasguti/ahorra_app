@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'sidebar/sidebar.dart';
-
 class MyBottomNavBar extends StatelessWidget {
   const MyBottomNavBar({
     Key? key,

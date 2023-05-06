@@ -3,11 +3,13 @@ import 'package:ahorra_app/vistas/my_bottom_nav_bar.dart';
 import 'package:ahorra_app/vistas/home/body.dart';
 
 class MenuPrincipal extends StatefulWidget {
+  const MenuPrincipal({super.key});
+
   @override
-  _MenuPrincipalState createState() => _MenuPrincipalState();
+  MenuPrincipalState createState() => MenuPrincipalState();
 }
 
-class _MenuPrincipalState extends State<MenuPrincipal> {
+class MenuPrincipalState extends State<MenuPrincipal> {
   double xOffset = 0;
   double yOffset = 0;
 
@@ -25,7 +27,7 @@ class _MenuPrincipalState extends State<MenuPrincipal> {
       ),
       child: Scaffold(
         appBar: buildAppBar(),
-        body: Body(),
+        body: const Body(),
         bottomNavigationBar: const MyBottomNavBar(),
       ),
     );

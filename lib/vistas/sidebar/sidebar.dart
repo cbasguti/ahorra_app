@@ -2,17 +2,20 @@ import 'package:ahorra_app/start/welcome.dart';
 import 'package:ahorra_app/vistas/listas_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../database_service.dart';
 import '../listas.dart';
 
 class MenuLateral extends StatefulWidget {
+  const MenuLateral({super.key});
+
   @override
-  _MenuLateralState createState() => _MenuLateralState();
+  MenuLateralState createState() => MenuLateralState();
 }
 
-class _MenuLateralState extends State<MenuLateral> {
+class MenuLateralState extends State<MenuLateral> {
   @override
   Widget build(BuildContext context) {
     bool listCreated = false;
@@ -105,13 +108,14 @@ class _MenuLateralState extends State<MenuLateral> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ListaTest()),
+                                  builder: (context) => const ListaTest()),
                             );
                             listCreated = true;
                           } else {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Listas()),
+                              MaterialPageRoute(
+                                  builder: (context) => const Listas()),
                             );
                           }
                         },
@@ -174,7 +178,9 @@ class _MenuLateralState extends State<MenuLateral> {
                   ),
                   onPressed: () {
                     FirebaseAuth.instance.signOut().then((value) {
-                      print("Signed Out");
+                      if (kDebugMode) {
+                        print("Signed Out");
+                      }
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -18,21 +18,17 @@ class _FetchDataState extends State<FetchData> {
       appBar: AppBar(
         title: const Text('Datos de bd'),
       ),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
         child: FirebaseAnimatedList(
           query: dbRef,
-          itemBuilder: (BuildContext context, DataSnapshot snapshot, Animation<double> animation, int index) {
+          itemBuilder: (BuildContext context, DataSnapshot snapshot,
+              Animation<double> animation, int index) {
             return ListTile(
-                title: Text(snapshot.child('contraseña').value.toString())
-            );
+                title: Text(snapshot.child('contraseña').value.toString()));
           },
         ),
       ),
     );
   }
-  
-
 }
-
-
