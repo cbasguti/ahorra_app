@@ -1,12 +1,11 @@
-import 'package:ahorra_app/start/welcome.dart';
-import 'package:ahorra_app/vistas/listas_test.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../database_service.dart';
+import '../../service/auth/auth_service.dart';
+import '../../service/database_service.dart';
+import '../listas_test.dart';
 import '../listas.dart';
+import '../start/welcome.dart';
 
 class MenuLateral extends StatefulWidget {
   const MenuLateral({super.key});
@@ -16,37 +15,12 @@ class MenuLateral extends StatefulWidget {
 }
 
 class MenuLateralState extends State<MenuLateral> {
+  final _dbService = DatabaseService();
+  final _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     bool listCreated = false;
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final String? userEmail = user?.email;
-    final DatabaseReference dbRef =
-        FirebaseDatabase.instance.ref().child('usuarios');
-    String userId = 'Usuario';
-
-    Future<String> getUsername() async {
-      final snapshot = await dbRef.get();
-      final values = snapshot.value as Map<dynamic, dynamic>;
-      values.forEach((key, value) {
-        if (value['correo'] == userEmail) {
-          userId = value['nombre'];
-        }
-      });
-
-      String userIdNew = userId;
-      return userIdNew;
-    }
-
-    Future<int> getLists() async {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      final User? user = auth.currentUser;
-      final String? userEmail = user?.email;
-      final dbService = DatabaseService();
-      final count = await dbService.getListsCount(userEmail!);
-      return count;
-    }
 
     return Container(
       color: Colors.grey.shade500,
@@ -70,7 +44,7 @@ class MenuLateralState extends State<MenuLateral> {
                   width: 10,
                 ),
                 FutureBuilder<String>(
-                  future: getUsername(),
+                  future: _dbService.getUsername(),
                   builder:
                       (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.hasData) {
@@ -98,12 +72,12 @@ class MenuLateralState extends State<MenuLateral> {
                   height: 20,
                 ),
                 FutureBuilder<int>(
-                  future: getLists(),
+                  future: _dbService.getListCount(),
                   builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                     if (snapshot.hasData) {
                       return GestureDetector(
                         onTap: () {
-                          getLists();
+                          _dbService.getListCount();
                           if (snapshot.data == 0 && listCreated == false) {
                             Navigator.push(
                               context,
@@ -177,7 +151,7 @@ class MenuLateralState extends State<MenuLateral> {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    FirebaseAuth.instance.signOut().then((value) {
+                    _authService.cerrarSesion().then((value) {
                       if (kDebugMode) {
                         print("Signed Out");
                       }

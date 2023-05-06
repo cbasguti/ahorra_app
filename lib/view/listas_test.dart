@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../database_service.dart';
+import '../service/database_service.dart';
 import 'listas.dart';
 
 class ListaTest extends StatefulWidget {

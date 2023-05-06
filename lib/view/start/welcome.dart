@@ -1,6 +1,7 @@
-import 'package:ahorra_app/login.dart';
-import 'package:ahorra_app/widget/registro.dart';
 import 'package:flutter/material.dart';
+
+import '../../widget/registro.dart';
+import '../login.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);

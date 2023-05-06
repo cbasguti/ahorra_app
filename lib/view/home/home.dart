@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ahorra_app/vistas/my_bottom_nav_bar.dart';
-import 'package:ahorra_app/vistas/home/body.dart';
+
+import '../../widget/my_bottom_nav_bar.dart';
+import 'body.dart';
 
 class MenuPrincipal extends StatefulWidget {
   const MenuPrincipal({super.key});

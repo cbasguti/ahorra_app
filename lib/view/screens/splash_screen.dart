@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:ahorra_app/start/welcome.dart';
 import 'package:flutter/material.dart';
+
+import '../start/welcome.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,21 +1,21 @@
 import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
+import 'auth/auth_service.dart';
 
 class DatabaseService {
-  final DatabaseReference _dbRef =
-      FirebaseDatabase.instance.ref().child('usuarios');
+  final _dbRef = FirebaseDatabase.instance.ref().child('usuarios');
+  final _auth = AuthService();
   late final String _userKey;
 
   DatabaseService() {
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final User? user = auth.currentUser;
-    final String? userEmail = user?.email;
-
-    _getUserKey(userEmail);
+    _getUserKey();
   }
 
-  Future<void> _getUserKey(String? userEmail) async {
+  Future<void> _getUserKey() async {
+    final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
     final values = snapshot.value as Map<dynamic, dynamic>;
     values.forEach((key, value) {
@@ -25,14 +25,26 @@ class DatabaseService {
     });
   }
 
+  Future<void> printEmails() async {
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    values.forEach((key, value) {
+      if (kDebugMode) {
+        print(value['correo']);
+      }
+    });
+  }
+
   Future<void> crearNuevaLista(String titulo) async {
     final newDbRef = _dbRef.child('$_userKey/listas');
     newDbRef.push().set({'titulo': titulo});
   }
 
-  Future<int> getListsCount(String userEmail) async {
+  Future<int> getListCount() async {
+    final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
     final values = snapshot.value as Map<dynamic, dynamic>;
+
     int count = 0;
     values.forEach((key, value) {
       if (value['correo'] == userEmail) {
@@ -44,10 +56,14 @@ class DatabaseService {
         }
       }
     });
+    if (kDebugMode) {
+      print('DatabaseService.getLists: $count');
+    }
     return count;
   }
 
-  Future<List> getLists(String userEmail) async {
+  Future<List> getLists() async {
+    final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
     final values = snapshot.value as Map<dynamic, dynamic>;
     List lists = [];
@@ -62,5 +78,18 @@ class DatabaseService {
       }
     });
     return lists;
+  }
+
+  Future<String> getUsername() async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    String userId = '';
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        userId = value['nombre'];
+      }
+    });
+    return userId;
   }
 }

@@ -1,10 +1,10 @@
-import 'package:ahorra_app/main.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../model/usuario.dart';
+import '../service/auth/auth_service.dart';
 
 class Registro extends StatefulWidget {
   const Registro({super.key});
@@ -19,11 +19,12 @@ class RegistroState extends State<Registro> {
   final _telefonoController = TextEditingController();
   final _correoController = TextEditingController();
   final _contrasenaController = TextEditingController();
-
   late DatabaseReference dbRef;
+  late AuthService _authService;
   @override
   void initState() {
     super.initState();
+    _authService = AuthService();
     dbRef = FirebaseDatabase.instance.ref().child('usuarios');
   }
 
@@ -123,10 +124,10 @@ class RegistroState extends State<Registro> {
                                 telefono: _telefonoController.text,
                               );
                               dbRef.push().set(usuario.toMap());
-                              FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                      email: _correoController.text,
-                                      password: _contrasenaController.text)
+                              _authService
+                                  .registrarUsuario(
+                                      correo: _correoController.text,
+                                      contrasena: _contrasenaController.text)
                                   .then((value) {
                                 Navigator.push(
                                     context,

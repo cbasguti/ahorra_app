@@ -1,9 +1,10 @@
-import 'package:ahorra_app/vistas/Sidebar/sidebar.dart';
-import 'package:ahorra_app/vistas/home/home.dart';
-import 'package:ahorra_app/widget/registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../vistas/Sidebar/sidebar.dart';
+import '../widget/registro.dart';
+import 'home/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -105,9 +106,9 @@ class LoginPageState extends State<LoginPage> {
                                           MaterialPageRoute(
                                               builder: (context) => Scaffold(
                                                     body: Stack(
-                                                      children: [
+                                                      children: const [
                                                         MenuLateral(),
-                                                        const MenuPrincipal(),
+                                                        MenuPrincipal(),
                                                       ],
                                                     ),
                                                   )));

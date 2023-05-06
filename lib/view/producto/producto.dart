@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:ahorra_app/vistas/home/home.dart';
 import 'package:flutter/material.dart';
 
+import '../../widget/listas_popup.dart';
 import '../Sidebar/sidebar.dart';
+import '../home/home.dart';
 
 class DetallesProducto extends StatefulWidget {
   const DetallesProducto({
@@ -22,7 +23,7 @@ class DetallesProducto extends StatefulWidget {
 }
 
 class _DetallesProductoState extends State<DetallesProducto> {
-  int _cantidad = 0;
+  int _cantidad = 1;
   final List<String> _tiendas =
       List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
 
@@ -60,9 +61,9 @@ class _DetallesProductoState extends State<DetallesProducto> {
                   MaterialPageRoute(
                     builder: (context) => Scaffold(
                       body: Stack(
-                        children: [
+                        children: const [
                           MenuLateral(),
-                          const MenuPrincipal(),
+                          MenuPrincipal(),
                         ],
                       ),
                     ),
@@ -186,13 +187,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                 color: Color(0xFF254587),
                                               ),
                                             ),
-                                            const Text(
-                                              'Añadir a una lista',
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color(0xFF254587),
-                                              ),
-                                            ),
+                                            const ListasPopUp()
                                           ],
                                         ),
                                       ],

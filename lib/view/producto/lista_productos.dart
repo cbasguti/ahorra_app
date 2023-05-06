@@ -1,9 +1,9 @@
-import 'package:ahorra_app/vistas/producto/producto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import '../Sidebar/sidebar.dart';
 import '../home/home.dart';
+import 'producto.dart';
 
 class ListaProductos extends StatefulWidget {
   final String collectionName;
@@ -102,9 +102,9 @@ class _ListaProductosState extends State<ListaProductos> {
                 MaterialPageRoute(
                   builder: (context) => Scaffold(
                     body: Stack(
-                      children: [
+                      children: const [
                         MenuLateral(),
-                        const MenuPrincipal(),
+                        MenuPrincipal(),
                       ],
                     ),
                   ),

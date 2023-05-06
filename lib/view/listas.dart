@@ -1,8 +1,7 @@
-import 'package:ahorra_app/vistas/listas_detalles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../database_service.dart';
+import '../service/database_service.dart';
+import 'listas_detalles.dart';
 
 class Listas extends StatefulWidget {
   const Listas({super.key});
@@ -14,23 +13,7 @@ class Listas extends StatefulWidget {
 class ListasState extends State<Listas> {
   @override
   Widget build(BuildContext context) {
-    Future<int> getLists() async {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      final User? user = auth.currentUser;
-      final String? userEmail = user?.email;
-      final dbService = DatabaseService();
-      final nListas = await dbService.getListsCount(userEmail!);
-      return nListas;
-    }
-
-    Future<List> getListObject() async {
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      final User? user = auth.currentUser;
-      final String? userEmail = user?.email;
-      final dbService = DatabaseService();
-      final listas = await dbService.getLists(userEmail!);
-      return listas;
-    }
+    final dbService = DatabaseService();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +26,7 @@ class ListasState extends State<Listas> {
         children: [
           const SizedBox(height: 25.0),
           FutureBuilder<int>(
-            future: getLists(),
+            future: dbService.getListCount(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
                 return Container(
@@ -57,14 +40,14 @@ class ListasState extends State<Listas> {
             },
           ),
           FutureBuilder<List>(
-            future: getListObject(),
+            future: dbService.getLists(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               if (snapshot.hasData) {
                 return Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      getLists();
+                      dbService.getLists();
                       return Card(
                         child: ListTile(
                           title: Text(snapshot.data![index].toString()),
