@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/view/sidebar/sidebar.dart';
 import 'package:ahorra_app/widget/listas_popup.dart';
@@ -8,14 +9,10 @@ import 'package:flutter/material.dart';
 class DetallesProducto extends StatefulWidget {
   const DetallesProducto({
     Key? key,
-    required this.imagen,
-    required this.nombre,
-    required this.tienda,
-    required this.precio,
+    required this.producto,
   }) : super(key: key);
 
-  final String imagen, nombre, tienda;
-  final int precio;
+  final Producto producto;
 
   @override
   State<DetallesProducto> createState() => _DetallesProductoState();
@@ -51,7 +48,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
             foregroundColor: Colors.black,
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: Text(widget.nombre),
+            title: Text(widget.producto.nombre),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
@@ -85,7 +82,8 @@ class _DetallesProductoState extends State<DetallesProducto> {
               child: ListView(
                 children: [
                   Image.network(
-                    widget.imagen, //Acá poner el path de la imagen del producto
+                    widget.producto
+                        .imagen, //Acá poner el path de la imagen del producto
                     width: 250,
                     height: 250,
                     fit: BoxFit.contain,
@@ -116,14 +114,15 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '\$${widget.precio}',
+                                            '\$${widget.producto.getLowestPrice()}',
                                             style: const TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
-                                            widget.tienda,
+                                            widget.producto
+                                                .getLowestPriceStore(),
                                             style: const TextStyle(
                                               fontSize: 20,
                                             ),
@@ -186,7 +185,9 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                 color: Color(0xFF254587),
                                               ),
                                             ),
-                                            const ListasPopUp()
+                                            ListasPopUp(
+                                              cantidad: _cantidad,
+                                            ),
                                           ],
                                         ),
                                       ],
@@ -268,7 +269,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                           alignment: Alignment
                                                               .bottomRight,
                                                           child: Image.asset(
-                                                            'assets/image/menu/marcas/logo_exito.png',
+                                                            'assets/image/menu/marcas/logo_${widget.producto.getStoreByIndex(index)}.png',
                                                             width: 60,
                                                             height: 60,
                                                             fit: BoxFit.cover,
@@ -286,7 +287,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                             .spaceAround,
                                                     children: [
                                                       Text(
-                                                        '\$${widget.precio}',
+                                                        '\$${widget.producto.getPriceByIndex(index)}',
                                                         style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,

@@ -1,5 +1,6 @@
+import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/view/home/home.dart';
-import 'package:ahorra_app/view/producto/producto.dart';
+import 'package:ahorra_app/view/producto/producto_detalle.dart';
 import 'package:ahorra_app/view/sidebar/sidebar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ListaProductos extends StatefulWidget {
 class _ListaProductosState extends State<ListaProductos> {
   int _nProductos = 0;
   String _busqueda = '';
-  List<Map<dynamic, dynamic>> _productos = [];
+  final List<Producto> _productosLista = [];
 
   @override
   void initState() {
@@ -60,7 +61,6 @@ class _ListaProductosState extends State<ListaProductos> {
     }
     setState(() {
       _nProductos = count;
-      _productos = productos;
     });
   }
 
@@ -75,11 +75,18 @@ class _ListaProductosState extends State<ListaProductos> {
     for (var element in snapshot.children) {
       final values = element.value as Map<dynamic, dynamic>;
       productos.add(values);
+      Producto producto = Producto(
+        id: count,
+        nombre: values['nombre'],
+        imagen: values['image_path'],
+        categoria: widget.collectionName,
+        precios: values['precios'],
+      );
+      _productosLista.add(producto);
       count++;
     }
     setState(() {
       _nProductos = count;
-      _productos = productos;
     });
   }
 
@@ -158,12 +165,9 @@ class _ListaProductosState extends State<ListaProductos> {
                   childAspectRatio: 1 / 1.66,
                 ),
                 itemBuilder: (context, index) {
-                  final producto = _productos[index];
+                  final producto = _productosLista[index];
                   return Productos(
-                    imagen: producto['image_path'] ?? '',
-                    nombre: producto['nombre'] ?? '',
-                    tienda: "Exito",
-                    precio: producto['precios']['euro'] ?? 0,
+                    producto: producto,
                   );
                 },
               ),
@@ -178,14 +182,10 @@ class _ListaProductosState extends State<ListaProductos> {
 class Productos extends StatelessWidget {
   const Productos({
     Key? key,
-    required this.imagen,
-    required this.nombre,
-    required this.tienda,
-    required this.precio,
+    required this.producto,
   }) : super(key: key);
 
-  final String imagen, nombre, tienda;
-  final int precio;
+  final Producto producto;
 
   @override
   Widget build(BuildContext context) {
@@ -205,15 +205,12 @@ class Productos extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DetallesProducto(
-                    imagen: imagen,
-                    tienda: tienda,
-                    nombre: nombre,
-                    precio: precio,
+                    producto: producto,
                   ),
                 ),
               );
             },
-            child: Image(image: NetworkImage(imagen)),
+            child: Image(image: NetworkImage(producto.imagen)),
           ),
           GestureDetector(
             onTap: () {
@@ -221,10 +218,7 @@ class Productos extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DetallesProducto(
-                    imagen: imagen,
-                    tienda: tienda,
-                    nombre: nombre,
-                    precio: precio,
+                    producto: producto,
                   ),
                 ),
               );
@@ -272,11 +266,11 @@ class Productos extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "$nombre\n".toUpperCase(),
+                                text: "${producto.nombre}\n".toUpperCase(),
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                               TextSpan(
-                                text: '\$$precio',
+                                text: '\$2000',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge

@@ -1,9 +1,15 @@
+import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/database_service.dart';
 import 'package:ahorra_app/view/listas/listas_vacia.dart';
 import 'package:flutter/material.dart';
 
 class ListasPopUp extends StatefulWidget {
-  const ListasPopUp({super.key});
+  const ListasPopUp({
+    Key? key,
+    required this.cantidad,
+  }) : super(key: key);
+
+  final int cantidad;
 
   @override
   ListasPopUpState createState() => ListasPopUpState();
@@ -42,6 +48,19 @@ class ListasPopUpState extends State<ListasPopUp> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
+                                _dbService.addProductoToLista(
+                                    snapshot.data![index].toString(),
+                                    Producto(
+                                        id: 0,
+                                        nombre: 'leche',
+                                        imagen: 'url',
+                                        categoria: 'Lacteos',
+                                        precios: {
+                                          'Jumbo': 1000,
+                                          'Lider': 2000,
+                                          'Tottus': 3000
+                                        }),
+                                    widget.cantidad);
                                 Navigator.pop(context);
                                 showDialog(
                                   context: context,
