@@ -18,12 +18,19 @@ class MenuPrincipalState extends State<MenuPrincipal> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      transform: Matrix4.translationValues(xOffset, yOffset, 0)
-        ..scale(isDrawerOpen ? 0.85 : 1.00),
+      transform: Matrix4.translationValues(xOffset, yOffset, 0),
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(40),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.7),
+            spreadRadius: 2,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Scaffold(
         appBar: buildAppBar(),
@@ -32,6 +39,7 @@ class MenuPrincipalState extends State<MenuPrincipal> {
       ),
     );
   }
+
 
   AppBar buildAppBar() {
     return AppBar(
@@ -52,8 +60,8 @@ class MenuPrincipalState extends State<MenuPrincipal> {
               child: const Icon(Icons.menu),
               onTap: () {
                 setState(() {
-                  xOffset = 290;
-                  yOffset = 80;
+                  xOffset = 300;
+                  yOffset = 0;
                   isDrawerOpen = true;
                 });
               },

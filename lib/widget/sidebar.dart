@@ -22,54 +22,66 @@ class MenuLateralState extends State<MenuLateral> {
     bool listCreated = false;
 
     return Container(
-      color: Colors.grey.shade500,
+      color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(top: 200, left: 40, bottom: 70),
+        padding: const EdgeInsets.only(top: 100, left: 40, bottom: 70),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Row(
               children: <Widget>[
-                CircleAvatar(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: const Image(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/image/usuario.png'),
-                    ),
+                const Expanded(
+                  flex: 1,
+                  child: Image(
+                    fit: BoxFit.fitHeight,
+                    image: AssetImage('assets/image/user.png'),
+                    height: 80,
+                    width: 80,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                FutureBuilder<String>(
-                  future: _dbService.getUsername(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return Text(
-                        (snapshot.data ?? 'error'),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold),
-                      );
-                    } else {
-                      return const CircularProgressIndicator();
-                    }
-                  },
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FutureBuilder<String>(
+                        future: _dbService.getUsername(),
+                        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                              (snapshot.data ?? 'error'),
+                              style: const TextStyle(
+                                color: Color(0xFF082652),
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          } else {
+                            return const CircularProgressIndicator();
+                          }
+                        },
+                      ),
+                      Text(
+                        'Este es tu perfil',
+                        style: TextStyle(
+                          color: Colors.grey[400], // Color gris claro
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
             Column(
               children: <Widget>[
                 const NewRow(
-                  text: 'Perfil',
-                  icon: Icons.person_outline,
+                  text: 'Información',
+                  icon: Icons.info_outline,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
                 FutureBuilder<int>(
                   future: _dbService.getListCount(),
                   builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
@@ -102,44 +114,46 @@ class MenuLateralState extends State<MenuLateral> {
                     }
                   },
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
                 const NewRow(
                   text: 'Preguntas',
                   icon: Icons.question_mark_outlined,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const NewRow(
+                /*
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
+                NewRow(
                   text: 'Favoritos',
                   icon: Icons.favorite_border,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                */
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
                 const NewRow(
                   text: 'Programados',
                   icon: Icons.alarm,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
                 const NewRow(
                   text: 'Configuración',
                   icon: Icons.settings,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 1),
+                const SizedBox(height: 6),
               ],
             ),
             Row(
               children: <Widget>[
-                Icon(
+                const Icon(
                   Icons.cancel,
-                  color: Colors.white.withOpacity(0.5),
+                  color: Color.fromRGBO(9, 28, 63, 0.75),
                 ),
                 const SizedBox(
                   width: 10,
@@ -147,7 +161,10 @@ class MenuLateralState extends State<MenuLateral> {
                 ElevatedButton(
                   child: const Text(
                     'Cerrar Sesion',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Color.fromRGBO(9, 28, 63, 0.75)),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[100],
                   ),
                   onPressed: () {
                     _authService.cerrarSesion().then((value) {
@@ -186,14 +203,22 @@ class NewRow extends StatelessWidget {
       children: <Widget>[
         Icon(
           icon,
-          color: Colors.white,
+          color: Color.fromRGBO(9, 28, 63, 0.75),
         ),
         const SizedBox(
           width: 20,
         ),
         Text(
           text,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(
+            fontFamily: 'Overpass',
+            fontWeight: FontWeight.w500,
+            fontSize: 15.0,
+            fontStyle: FontStyle.normal,
+            height: 1.33,
+            letterSpacing: -0.24,
+            color: Color.fromRGBO(9, 28, 63, 0.75),
+          )
         )
       ],
     );
