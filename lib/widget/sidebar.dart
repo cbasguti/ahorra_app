@@ -47,7 +47,8 @@ class MenuLateralState extends State<MenuLateral> {
                     children: [
                       FutureBuilder<String>(
                         future: _dbService.getUsername(),
-                        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
                           if (snapshot.hasData) {
                             return Text(
                               (snapshot.data ?? 'error'),
@@ -81,7 +82,7 @@ class MenuLateralState extends State<MenuLateral> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => InformacionScreen()),
+                          builder: (context) => const InformacionScreen()),
                     );
                   },
                   child: const NewRow(
@@ -173,10 +174,6 @@ class MenuLateralState extends State<MenuLateral> {
                   width: 10,
                 ),
                 ElevatedButton(
-                  child: const Text(
-                    'Cerrar Sesion',
-                    style: TextStyle(color: Color.fromRGBO(9, 28, 63, 0.75)),
-                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey[300],
                   ),
@@ -191,6 +188,10 @@ class MenuLateralState extends State<MenuLateral> {
                               builder: (context) => const WelcomePage()));
                     });
                   },
+                  child: const Text(
+                    'Cerrar Sesion',
+                    style: TextStyle(color: Color.fromRGBO(9, 28, 63, 0.75)),
+                  ),
                 ),
               ],
             )
@@ -217,23 +218,21 @@ class NewRow extends StatelessWidget {
       children: <Widget>[
         Icon(
           icon,
-          color: Color.fromRGBO(9, 28, 63, 0.75),
+          color: const Color.fromRGBO(9, 28, 63, 0.75),
         ),
         const SizedBox(
           width: 20,
         ),
-        Text(
-          text,
-          style: const TextStyle(
-            fontFamily: 'Overpass',
-            fontWeight: FontWeight.w500,
-            fontSize: 15.0,
-            fontStyle: FontStyle.normal,
-            height: 1.33,
-            letterSpacing: -0.24,
-            color: Color.fromRGBO(9, 28, 63, 0.75),
-          )
-        )
+        Text(text,
+            style: const TextStyle(
+              fontFamily: 'Overpass',
+              fontWeight: FontWeight.w500,
+              fontSize: 15.0,
+              fontStyle: FontStyle.normal,
+              height: 1.33,
+              letterSpacing: -0.24,
+              color: Color.fromRGBO(9, 28, 63, 0.75),
+            ))
       ],
     );
   }

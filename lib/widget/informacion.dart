@@ -11,8 +11,7 @@ class InformacionScreen extends StatefulWidget {
 }
 
 class _InformacionScreenState extends State<InformacionScreen> {
-
-  final TextStyle myTextStyle = TextStyle(
+  final TextStyle myTextStyle = const TextStyle(
     fontFamily: 'Overpass',
     fontWeight: FontWeight.w500,
     fontSize: 16,
@@ -31,16 +30,16 @@ class _InformacionScreenState extends State<InformacionScreen> {
           foregroundColor: Colors.black,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text('Información'),
+          title: const Text('Información'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Scaffold(
+                  builder: (context) => const Scaffold(
                     body: Stack(
-                      children: const [
+                      children: [
                         MenuLateral(),
                         MenuPrincipal(),
                       ],
@@ -56,7 +55,7 @@ class _InformacionScreenState extends State<InformacionScreen> {
           child: Column(
             children: [
               Image.asset('assets/image/splash/logodark.png', height: 200),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const Text(
                 'Es una aplicación móvil que facilita la tarea de hacer compras en cualquier supermercado o tienda, permitiendo a los usuarios personalizar sus listas de compras, comparar precios de diferentes supermercados o tiendas y recibir sugerencias de productos relevantes.',
                 style: TextStyle(
@@ -69,21 +68,25 @@ class _InformacionScreenState extends State<InformacionScreen> {
                   color: Color.fromRGBO(9, 28, 63, 0.75),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Column(
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/image/logo_udea.png', width: 70), // Reemplazar con la imagen correspondiente
-                      SizedBox(width: 16),
+                      Image.asset('assets/image/logo_udea.png',
+                          width:
+                              70), // Reemplazar con la imagen correspondiente
+                      const SizedBox(width: 16),
                       Expanded(
                         child: ListView(
                           shrinkWrap: true,
                           children: [
                             Text('Sara Uribe Zapata', style: myTextStyle),
                             Text('Diego Jose Luis Botia', style: myTextStyle),
-                            Text('Juan Esteban Salas Flórez', style: myTextStyle),
-                            Text('Sebastian Gutierrez Jaramillo', style: myTextStyle),
+                            Text('Juan Esteban Salas Flórez',
+                                style: myTextStyle),
+                            Text('Sebastian Gutierrez Jaramillo',
+                                style: myTextStyle),
                           ],
                         ),
                       ),

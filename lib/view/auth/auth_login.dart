@@ -103,9 +103,10 @@ class LoginPageState extends State<LoginPage> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Scaffold(
+                                              builder: (context) =>
+                                                  const Scaffold(
                                                     body: Stack(
-                                                      children: const [
+                                                      children: [
                                                         MenuLateral(),
                                                         MenuPrincipal(),
                                                       ],

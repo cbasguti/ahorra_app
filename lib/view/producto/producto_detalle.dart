@@ -55,9 +55,9 @@ class _DetallesProductoState extends State<DetallesProducto> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Scaffold(
+                    builder: (context) => const Scaffold(
                       body: Stack(
-                        children: const [
+                        children: [
                           MenuLateral(),
                           MenuPrincipal(),
                         ],

@@ -27,12 +27,12 @@ class ListaTestState extends State<ListaTest> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     '¡Aún no tienes listas!',
                     style: TextStyle(

@@ -1,8 +1,8 @@
 import 'package:ahorra_app/model/producto.dart';
+import 'package:ahorra_app/service/database_service.dart';
 import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/view/producto/producto_detalle.dart';
 import 'package:ahorra_app/widget/sidebar.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class ListaProductos extends StatefulWidget {
@@ -19,74 +19,48 @@ class ListaProductos extends StatefulWidget {
 
 class _ListaProductosState extends State<ListaProductos> {
   int _nProductos = 0;
-  String _busqueda = '';
-  final List<Producto> _productosLista = [];
+  List<Producto> _productosLista = [];
+  final DatabaseService _databaseService = DatabaseService();
 
   @override
   void initState() {
     super.initState();
-    getProducts();
+    initList();
   }
 
-  void _actualizarBusqueda(String busqueda) {
+  void _actualizarBusqueda(String busqueda) async {
+    int productsCount = 0;
+    List<Producto> productos = [];
+    if (widget.collectionName == 'Todos los productos') {
+      productsCount = await _databaseService.searchCountAll(busqueda);
+      productos = await _databaseService.searchAll(busqueda);
+    } else {
+      productsCount = await _databaseService.searchCountByCategory(
+          busqueda, widget.collectionName);
+      productos = await _databaseService.searchByCategory(
+          busqueda, widget.collectionName);
+    }
     setState(() {
-      _busqueda = busqueda;
-      getProductsBySearch(busqueda);
+      _nProductos = productsCount;
+      _productosLista = productos;
     });
   }
 
-  Future<void> getProductsBySearch(String busqueda) async {
-    final dbRef = FirebaseDatabase.instance
-        .ref()
-        .child('productos')
-        .child(widget.collectionName);
-    final snapshot = await dbRef.get();
-    bool cumple = false;
-    int count = 0;
-    List<Map<dynamic, dynamic>> productos = [];
-    for (var element in snapshot.children) {
-      final values = element.value as Map<dynamic, dynamic>;
-      values.forEach((key, value) {
-        if (key == 'nombre') {
-          if (RegExp(_busqueda, caseSensitive: false).hasMatch(value)) {
-            cumple = true;
-            count++;
-          }
-        }
-      });
-      if (cumple) {
-        productos.add(values);
-      }
-      cumple = false;
+  Future<void> initList() async {
+    int productsCount = 0;
+    List<Producto> productos = [];
+    if (widget.collectionName == 'Todos los productos') {
+      productsCount = await _databaseService.getAllProductsCount();
+      productos = await _databaseService.getAllProducts();
+    } else {
+      productsCount = await _databaseService
+          .getProductsCountByCategory(widget.collectionName);
+      productos =
+          await _databaseService.getProductsByCategory(widget.collectionName);
     }
     setState(() {
-      _nProductos = count;
-    });
-  }
-
-  Future<void> getProducts() async {
-    final dbRef = FirebaseDatabase.instance
-        .ref()
-        .child('productos')
-        .child(widget.collectionName);
-    final snapshot = await dbRef.get();
-    int count = 0;
-    List<Map<dynamic, dynamic>> productos = [];
-    for (var element in snapshot.children) {
-      final values = element.value as Map<dynamic, dynamic>;
-      productos.add(values);
-      Producto producto = Producto(
-        id: count,
-        nombre: values['nombre'],
-        imagen: values['image_path'],
-        categoria: widget.collectionName,
-        precios: values['precios'],
-      );
-      _productosLista.add(producto);
-      count++;
-    }
-    setState(() {
-      _nProductos = count;
+      _nProductos = productsCount;
+      _productosLista = productos;
     });
   }
 
@@ -106,9 +80,9 @@ class _ListaProductosState extends State<ListaProductos> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Scaffold(
+                  builder: (context) => const Scaffold(
                     body: Stack(
-                      children: const [
+                      children: [
                         MenuLateral(),
                         MenuPrincipal(),
                       ],

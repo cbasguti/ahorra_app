@@ -231,4 +231,126 @@ class DatabaseService {
     }
     return productosLista;
   }
+
+  Future<List<Producto>> getAllProducts() async {
+    final snapshot = await _productosRef.get();
+    List<Producto> productos = [];
+    for (var category in snapshot.children) {
+      List<Producto> productosCategoria =
+          await getProductsByCategory(category.key);
+      productos.addAll(productosCategoria);
+    }
+    return productos;
+  }
+
+  Future<List<Producto>> getProductsByCategory(String? category) async {
+    final dbRef = _productosRef.child(category!);
+    final snapshot = await dbRef.get();
+    int count = 0;
+    List<Producto> productos = [];
+    for (var element in snapshot.children) {
+      final values = element.value as Map<dynamic, dynamic>;
+      Producto producto = Producto(
+        id: count,
+        nombre: values['nombre'],
+        imagen: values['image_path'],
+        categoria: category,
+        precios: values['precios'],
+      );
+      productos.add(producto);
+      count++;
+    }
+    return productos;
+  }
+
+  Future<int> getAllProductsCount() async {
+    final snapshot = await _productosRef.get();
+    int count = 0;
+    for (var category in snapshot.children) {
+      int categoryCount = await getProductsCountByCategory(category.key);
+      count += categoryCount;
+    }
+    return count;
+  }
+
+  Future<int> getProductsCountByCategory(String? category) async {
+    final dbRef = _productosRef.child(category!);
+    final snapshot = await dbRef.get();
+    int count = 0;
+    // ignore: unused_local_variable
+    for (var element in snapshot.children) {
+      count++;
+    }
+    return count;
+  }
+
+  Future<List<Producto>> searchByCategory(
+      String busqueda, String? category) async {
+    final dbRef = _productosRef.child(category!);
+    final snapshot = await dbRef.get();
+    int count = 0;
+    bool cumple = false;
+    List<Producto> productos = [];
+    for (var element in snapshot.children) {
+      final values = element.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (key == 'nombre') {
+          if (RegExp(busqueda, caseSensitive: false).hasMatch(value)) {
+            cumple = true;
+            count++;
+          }
+        }
+      });
+      if (cumple) {
+        Producto producto = Producto(
+          id: count,
+          nombre: values['nombre'],
+          imagen: values['image_path'],
+          categoria: category,
+          precios: values['precios'],
+        );
+        productos.add(producto);
+      }
+      cumple = false;
+    }
+    return productos;
+  }
+
+  Future<List<Producto>> searchAll(String busqueda) async {
+    final snapshot = await _productosRef.get();
+    List<Producto> productos = [];
+    for (var category in snapshot.children) {
+      List<Producto> productosCategoria =
+          await searchByCategory(busqueda, category.key);
+      productos.addAll(productosCategoria);
+    }
+    return productos;
+  }
+
+  Future<int> searchCountByCategory(String busqueda, String? category) async {
+    final dbRef = _productosRef.child(category!);
+    final snapshot = await dbRef.get();
+    int count = 0;
+    for (var element in snapshot.children) {
+      final values = element.value as Map<dynamic, dynamic>;
+      values.forEach((key, value) {
+        if (key == 'nombre') {
+          if (RegExp(busqueda, caseSensitive: false).hasMatch(value)) {
+            count++;
+          }
+        }
+      });
+    }
+    return count;
+  }
+
+  Future<int> searchCountAll(String busqueda) async {
+    final snapshot = await _productosRef.get();
+    int count = 0;
+    for (var category in snapshot.children) {
+      int categoryCount = await searchCountByCategory(busqueda, category.key);
+      count += categoryCount;
+    }
+    return count;
+  }
 }
