@@ -80,9 +80,9 @@ class _ListaProductosState extends State<ListaProductos> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const Scaffold(
+                  builder: (context) => Scaffold(
                     body: Stack(
-                      children: [
+                      children: const [
                         MenuLateral(),
                         MenuPrincipal(),
                       ],

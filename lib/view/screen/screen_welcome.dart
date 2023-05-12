@@ -20,14 +20,14 @@ class WelcomePage extends StatelessWidget {
                 'assets/image/start/compradora.png',
               ),
             ),
-            const Expanded(
+            Expanded(
               flex: 1,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       '¡Te damos la bienvenida!',
                       style: TextStyle(
