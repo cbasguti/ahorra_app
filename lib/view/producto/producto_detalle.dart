@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ahorra_app/helper/utils.dart';
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/widget/sidebar.dart';
@@ -114,7 +115,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '\$${widget.producto.getLowestPrice()}',
+                                            '${formatPrice(widget.producto.getLowestPrice())}',
                                             style: const TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
@@ -288,7 +289,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                             .spaceAround,
                                                     children: [
                                                       Text(
-                                                        '\$${widget.producto.getPriceByIndex(index)}',
+                                                        '${formatPrice(widget.producto.getPriceByIndex(index))}',
                                                         style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,

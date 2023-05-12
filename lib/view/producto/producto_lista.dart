@@ -1,3 +1,4 @@
+import 'package:ahorra_app/helper/utils.dart';
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/database_service.dart';
 import 'package:ahorra_app/view/home/home.dart';
@@ -244,7 +245,8 @@ class ProductosCard extends StatelessWidget {
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
                               TextSpan(
-                                text: '\$${producto.getLowestPrice()}',
+                                text:
+                                    '${formatPrice(producto.getLowestPrice())}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge

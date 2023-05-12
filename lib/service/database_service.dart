@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:ahorra_app/helper/utils.dart';
+import 'package:ahorra_app/model/listado.dart';
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/auth/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -190,6 +192,76 @@ class DatabaseService {
     return lists;
   }
 
+  Future<String> getProductsPrice(String lista) async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+
+    int totalPrice = 0;
+    List productosLista = [];
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        if (value['listas'] != null) {
+          final listas = value['listas'] as Map<dynamic, dynamic>;
+          listas.forEach((key, value) {
+            if (value['titulo'] == lista) {
+              if (value['productos'] != null) {
+                final productos = value['productos'] as Map<dynamic, dynamic>;
+                productos.forEach((key, value) {
+                  productosLista.add(value['categoria_id'] +
+                      '_' +
+                      value['cantidad'].toString());
+                });
+              }
+            }
+          });
+        }
+      }
+    });
+
+    for (var element in productosLista) {
+      final String categoria = element.split('_')[0];
+      final String id = element.split('_')[1];
+      final String cantidad = element.split('_')[2];
+      final productoRef = _productosRef.child(categoria).child(id);
+      final snapshot = await productoRef.get();
+      final values = snapshot.value as Map<dynamic, dynamic>;
+      Producto producto = Producto(
+          id: int.parse(id),
+          nombre: values['nombre'],
+          categoria: categoria,
+          precios: values['precios'],
+          imagen: values['image_path'],
+          cantidad: int.parse(cantidad));
+      totalPrice += (producto.getLowestPrice() * int.parse(cantidad));
+    }
+
+    String result = formatPrice(totalPrice);
+    return result;
+  }
+
+  Future<List<Listado>> getListados() async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    List<Listado> lists = [];
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        if (value['listas'] != null) {
+          final listas = value['listas'] as Map<dynamic, dynamic>;
+          listas.forEach((key, value) async {
+            Listado lista = Listado(
+                nombre: value['titulo'],
+                precio: 0,
+                imagen: 'https://i.ibb.co/6t98mmT/lista-de-deseos.png');
+            lists.add(lista);
+          });
+        }
+      }
+    });
+    return lists;
+  }
+
   Future<String> getUsername() async {
     final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
@@ -202,15 +274,6 @@ class DatabaseService {
     });
     return userId;
   }
-
-  /* Future<int> getProducts() async {
-    final dbProductos =
-        FirebaseDatabase.instance.ref().child('productos').child('Ofertas');
-    dbProductos.once().then((event) {
-      nProductos = event.snapshot.children.length;
-    });
-    return nProductos;
-  } */
 
   Future<List<Producto>> getDetails() async {
     final dbRef = _productosRef.child('Ofertas');

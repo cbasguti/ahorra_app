@@ -1,3 +1,4 @@
+import 'package:ahorra_app/helper/utils.dart';
 import 'package:ahorra_app/model/listado_detalle.dart';
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/database_service.dart';
@@ -7,9 +8,10 @@ class ListasDetalles extends StatefulWidget {
   const ListasDetalles({
     Key? key,
     required this.lista,
+    required this.precioTotal,
   }) : super(key: key);
 
-  final String lista;
+  final String lista, precioTotal;
 
   @override
   ListasDetallesState createState() => ListasDetallesState();
@@ -51,16 +53,7 @@ class ListasDetallesState extends State<ListasDetalles> {
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 16.0),
             child: Text(
-              'Precio total: ${calcularPrecio()} ',
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(3.0),
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(left: 16.0),
-            child: const Text(
-              'Descuentos: 20000 ',
+              'Precio total: ${widget.precioTotal}',
               textAlign: TextAlign.left,
             ),
           ),
@@ -103,6 +96,12 @@ class ListasDetallesState extends State<ListasDetalles> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         DetalleLista listado2 = detalleList[index];
+                        String precio =
+                            formatPrice(snapshot.data![index].getLowestPrice());
+                        String nombre = snapshot.data![index].nombre;
+                        String imgUrl = snapshot.data![index].imagen;
+                        int? cantidad = snapshot.data![index].cantidad;
+
                         return Container(
                           constraints: const BoxConstraints(maxWidth: 600.0),
                           padding: const EdgeInsets.all(8.0),
@@ -111,16 +110,14 @@ class ListasDetallesState extends State<ListasDetalles> {
                               Expanded(
                                 child: ListTile(
                                   title: Text(
-                                    snapshot.data![index].nombre,
+                                    nombre,
                                     style: const TextStyle(
                                       color: Color(0xFF254587),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  subtitle: Text(
-                                      'Precio unitario: ${snapshot.data![index].getLowestPrice()}'),
-                                  leading: Image.network(
-                                      snapshot.data![index].imagen),
+                                  subtitle: Text('Precio unitario: $precio'),
+                                  leading: Image.network(imgUrl),
                                 ),
                               ),
                               Expanded(
@@ -147,7 +144,7 @@ class ListasDetallesState extends State<ListasDetalles> {
                                           ),
                                         ),
                                         Text(
-                                          '${snapshot.data![index].cantidad}',
+                                          '$cantidad',
                                           style: const TextStyle(fontSize: 24),
                                         ),
                                         IconButton(
@@ -178,13 +175,5 @@ class ListasDetallesState extends State<ListasDetalles> {
         ],
       ),
     );
-  }
-
-  int calcularPrecio() {
-    int precio = 0;
-    for (int i = 0; i < detalleList.length; i++) {
-      precio += detalleList[i].precio * detalleList[i].cantidad;
-    }
-    return precio;
   }
 }
