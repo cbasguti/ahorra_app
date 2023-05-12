@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ahorra_app/view/producto/producto_lista.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +127,14 @@ class HeaderConBusqueda extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: TextField(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ListaProductos(collectionName: 'Todos los productos'),
+                            ),
+                          );
+                        },
                         onChanged: (value) {},
                         decoration: InputDecoration(
                           hintText: "Busca aquí tus productos",
