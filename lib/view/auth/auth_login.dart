@@ -4,6 +4,7 @@ import 'package:ahorra_app/view/auth/auth_registro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -99,12 +100,15 @@ class LoginPageState extends State<LoginPage> {
                                         .signInWithEmailAndPassword(
                                             email: _emailController.text,
                                             password: _passwordController.text)
-                                        .then((value) {
-                                      Navigator.push(
+                                        .then((value) async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.setBool('isLoggedIn', true);
+                                      Navigator.of(context).pop();
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Scaffold(
+                                              builder: (context) => Scaffold(
                                                     body: Stack(
                                                       children: const [
                                                         MenuLateral(),

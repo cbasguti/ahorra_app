@@ -128,10 +128,13 @@ class RegistroState extends State<Registro> {
                                       correo: _correoController.text,
                                       contrasena: _contrasenaController.text)
                                   .then((value) {
-                                Navigator.push(
+                                Navigator.of(context).pop();
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const MyApp()));
+                                        builder: (context) => MyApp(
+                                              isLoggedIn: false,
+                                            )));
                               }).onError((error, stackTrace) {
                                 if (kDebugMode) {
                                   print("Error ${error.toString()}");

@@ -16,7 +16,7 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Espera 3 segundos antes de navegar a la siguiente pantalla
     Timer(const Duration(seconds: 2), () {
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation1, animation2) => const WelcomePage(),
@@ -28,6 +28,7 @@ class SplashScreenState extends State<SplashScreen> {
           },
           transitionDuration: const Duration(milliseconds: 500),
         ),
+        (route) => false,
       );
     });
   }

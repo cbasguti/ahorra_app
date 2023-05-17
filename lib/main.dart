@@ -1,18 +1,31 @@
 import 'package:ahorra_app/service/firebase_options.dart';
+import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/view/screen/screen_splash.dart';
+import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicializar Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  // Verificar el estado de inicio de sesión almacenado en shared_preferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  // Navegar a la pantalla adecuada según el estado de inicio de sesión
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  MyApp({required this.isLoggedIn});
 
   // This widget is the root of your application.
   @override
@@ -36,7 +49,14 @@ class MyApp extends StatelessWidget {
           },
         ),
       ),
-      home: const SplashScreen(),
+      home: isLoggedIn
+          ? Stack(
+              children: const [
+                MenuLateral(),
+                MenuPrincipal(),
+              ],
+            )
+          : const SplashScreen(),
     );
   }
 }

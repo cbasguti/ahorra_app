@@ -1,8 +1,4 @@
-import 'package:ahorra_app/model/producto.dart';
-import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:flutter/material.dart';
-
-import '../view/home/home.dart';
 
 class CheckLista extends StatefulWidget {
   const CheckLista({Key? key}) : super(key: key);
@@ -98,7 +94,8 @@ class ProductoCheck extends StatelessWidget {
           height: 100,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isChecked ? Colors.green.withOpacity(0.5) : Colors.transparent,
+            color:
+                isChecked ? Colors.green.withOpacity(0.5) : Colors.transparent,
             image: DecorationImage(
               image: AssetImage(imagePath),
               fit: BoxFit.cover,
@@ -145,7 +142,8 @@ class ProductoCheck extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 25,
-              backgroundImage: AssetImage('assets/image/menu/marcas/logo_lapeña.png'),
+              backgroundImage:
+                  AssetImage('assets/image/menu/marcas/logo_lapeña.png'),
             ),
             SizedBox(width: 50),
             Container(

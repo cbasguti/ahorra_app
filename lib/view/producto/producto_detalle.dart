@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:ahorra_app/helper/utils.dart';
 import 'package:ahorra_app/model/producto.dart';
-import 'package:ahorra_app/view/home/home.dart';
-import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:ahorra_app/widget/listas_popup.dart';
 import 'package:flutter/material.dart';
 

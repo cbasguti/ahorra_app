@@ -1,9 +1,7 @@
 import 'package:ahorra_app/helper/utils.dart';
 import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/database_service.dart';
-import 'package:ahorra_app/view/home/home.dart';
 import 'package:ahorra_app/view/producto/producto_detalle.dart';
-import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:flutter/material.dart';
 
 class ListaProductos extends StatefulWidget {
