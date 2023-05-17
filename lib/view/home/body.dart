@@ -5,6 +5,8 @@ import 'package:ahorra_app/view/home/home_ofertas.dart';
 import 'package:ahorra_app/view/home/home_seccion.dart';
 import 'package:flutter/material.dart';
 
+import '../../widget/lista_categorias.dart';
+
 class Body extends StatelessWidget {
   const Body({super.key});
 
@@ -16,9 +18,16 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeaderConBusqueda(size: size),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: TituloConInterlineado(texto: "Categorías"),
+          TituloYBoton(
+            titulo: "Categorias",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListaCategorias(),
+                ),
+              );
+            },
           ),
           const CategoriasDestacadas(),
           TituloYBoton(titulo: "Ofertas del día", press: () {}),

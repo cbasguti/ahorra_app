@@ -7,7 +7,7 @@ class TituloYBoton extends StatelessWidget {
     required this.press,
   }) : super(key: key);
   final String titulo;
-  final Function press;
+  final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class TituloYBoton extends StatelessWidget {
               ),
               backgroundColor: const Color(0xFF254587),
             ),
-            onPressed: () {},
+            onPressed: press,
             child: const Text(
               "Más",
               style: TextStyle(color: Colors.white),
