@@ -19,19 +19,22 @@ class ListasDetalles extends StatefulWidget {
 
 class ListasDetallesState extends State<ListasDetalles> {
   int _cantidad = 1;
+  final _dbService = DatabaseService();
 
-  void _incrementCounter() {
+  Future<void> _incrementCounter(String lista, Producto producto) async {
+    await _dbService.addProductoToLista(lista, producto, 1);
+    await _dbService.getProductCount(widget.lista);
     setState(() {
       _cantidad++;
     });
   }
 
-  void _decrementCounter() {
-    if (_cantidad > 0) {
-      setState(() {
-        _cantidad--;
-      });
-    }
+  Future<void> _decrementCounter(String lista, Producto producto) async {
+    await _dbService.removeProductoFromLista(lista, producto, 1);
+    await _dbService.getProductCount(widget.lista);
+    setState(() {
+      _cantidad++;
+    });
   }
 
   @override
@@ -101,6 +104,7 @@ class ListasDetallesState extends State<ListasDetalles> {
                         String nombre = snapshot.data![index].nombre;
                         String imgUrl = snapshot.data![index].imagen;
                         int? cantidad = snapshot.data![index].cantidad;
+                        Producto producto = snapshot.data![index];
 
                         return Container(
                           constraints: const BoxConstraints(maxWidth: 600.0),
@@ -134,7 +138,10 @@ class ListasDetallesState extends State<ListasDetalles> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconButton(
-                                          onPressed: _decrementCounter,
+                                          onPressed: () {
+                                            _decrementCounter(
+                                                widget.lista, producto);
+                                          },
                                           icon: CircleAvatar(
                                             backgroundColor: Colors.grey[600],
                                             child: const Icon(
@@ -148,7 +155,10 @@ class ListasDetallesState extends State<ListasDetalles> {
                                           style: const TextStyle(fontSize: 24),
                                         ),
                                         IconButton(
-                                          onPressed: _incrementCounter,
+                                          onPressed: () {
+                                            _incrementCounter(
+                                                widget.lista, producto);
+                                          },
                                           icon: const CircleAvatar(
                                             backgroundColor: Color(0xFF254587),
                                             child: Icon(

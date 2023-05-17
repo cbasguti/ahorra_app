@@ -83,6 +83,40 @@ class DatabaseService {
     });
   }
 
+  Future<void> removeProductoFromLista(
+      String lista, Producto producto, int cantidad) async {
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+
+    values.forEach((key, value) async {
+      if (value['titulo'] == lista) {
+        final productDbRef = listaDbRef.child(key).child('productos');
+        final snapshot2 = await productDbRef.get();
+
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+
+          values2.forEach((key, value) {
+            if (value['categoria_id'] ==
+                '${producto.categoria}_${producto.id}') {
+              final int cantidadActual = value['cantidad'] as int;
+              final int cantidadNueva = cantidadActual - cantidad;
+
+              if (cantidadNueva <= 0) {
+                // Si la cantidad resultante es menor o igual a cero, se elimina el producto
+                productDbRef.child(key).remove();
+              } else {
+                // Si la cantidad resultante es mayor que cero, se actualiza la cantidad
+                productDbRef.child(key).update({'cantidad': cantidadNueva});
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+
   Future<int> getListCount() async {
     final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
