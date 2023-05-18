@@ -69,11 +69,14 @@ class ListasDetallesState extends State<ListasDetalles> {
             ),
           ),
           const SizedBox(height: 8.0),
-          FutureBuilder<int>(
-              future: dbService.getProductCount(widget.lista),
-              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
+        FutureBuilder<int>(
+          future: dbService.getProductCount(widget.lista),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.hasData) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
                     padding: const EdgeInsets.all(3.0),
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: 16.0),
@@ -84,11 +87,34 @@ class ListasDetallesState extends State<ListasDetalles> {
                         color: Colors.black26,
                       ),
                     ),
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              }),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.add_box_outlined,
+                        color: Color(0xFF254587),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Lógica para añadir más productos
+                        },
+                        child: Text(
+                          'Añadir más',
+                          style: TextStyle(
+                            color: Color(0xFF254587),
+
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
+        ),
           FutureBuilder<List<Producto>>(
               future: dbService.getProducts(widget.lista),
               builder: (BuildContext context,
