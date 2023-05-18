@@ -3,10 +3,11 @@ import 'package:ahorra_app/view/home/home_categorias.dart';
 import 'package:ahorra_app/view/home/home_marcas.dart';
 import 'package:ahorra_app/view/home/home_ofertas.dart';
 import 'package:ahorra_app/view/home/home_seccion.dart';
+import 'package:ahorra_app/widget/check_lista.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/lista_categorias.dart';
-import '../../widget/listas_check.dart';
+import '../../widget/check_lista.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -37,7 +38,7 @@ class Body extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CheckLista(),
+                  builder: (context) => ListaCheck(),
                 ),
               );
             },
