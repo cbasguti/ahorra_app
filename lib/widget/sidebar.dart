@@ -4,6 +4,7 @@ import 'package:ahorra_app/view/listas/listas.dart';
 import 'package:ahorra_app/view/listas/listas_vacia.dart';
 import 'package:ahorra_app/view/screen/screen_welcome.dart';
 import 'package:ahorra_app/widget/informacion.dart';
+import 'package:ahorra_app/widget/contactanos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -145,6 +146,22 @@ class MenuLateralState extends State<MenuLateral> {
                   icon: Icons.favorite_border,
                 ),
                 */
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 2),
+                const SizedBox(height: 6),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConctactanosScreen()),
+                    );
+                  },
+                  child: const NewRow(
+                    text: 'Contactanos',
+                    icon: Icons.comment,
+                  ),
+                ),
                 const SizedBox(height: 6),
                 Divider(color: Colors.grey[300], thickness: 2),
                 const SizedBox(height: 6),
