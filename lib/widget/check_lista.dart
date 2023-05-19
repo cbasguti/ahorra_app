@@ -1,17 +1,25 @@
-import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:flutter/material.dart';
-
-import '../view/home/home.dart';
+import '../helper/utils.dart';
 import 'check_producto.dart';
+import 'package:ahorra_app/helper/utils.dart';
+import 'package:ahorra_app/model/listado_detalle.dart';
+import 'package:ahorra_app/model/producto.dart';
+import 'package:ahorra_app/service/database_service.dart';
 
 class ListaCheck extends StatefulWidget {
-  const ListaCheck({Key? key}) : super(key: key);
+  const ListaCheck({
+    Key? key,
+    required this.lista,
+  }) : super(key: key);
+
+  final String lista;
 
   @override
   State<ListaCheck> createState() => _ListaCheckState();
 }
 
 class _ListaCheckState extends State<ListaCheck> {
+  final dbService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class _ListaCheckState extends State<ListaCheck> {
           foregroundColor: Colors.black,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Nombre de la Lista (CHECKSTEST)'), // TODO: OBTENER EL NOMBRE DE LA LISTA
+          title: Text(widget.lista), // TODO: OBTENER EL NOMBRE DE LA LISTA
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -34,18 +42,35 @@ class _ListaCheckState extends State<ListaCheck> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: ListView.builder(
-                itemCount: 8, // TODO: NUMERO DE PRODUCTOS QUEMADOS
-                itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: ProductoCheck( // TODO: PARAMETROS QUEMADOS DEL PRODUCTO
-                      imagePath: 'assets/image/menu/productos/producto1.png',
-                      productName: "HIT DE MORA",
-                      price: 3000,
-                      quantity: 10,
-                    ),
-                  );
+              child: FutureBuilder<List<Producto>>(
+                future: dbService.getProducts(widget.lista),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Producto>> snapshot) {
+                  if (snapshot.hasData) {
+                    final productos = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        String precio =
+                        formatPrice(snapshot.data![index].getLowestPrice());
+                        String nombre = snapshot.data![index].nombre;
+                        String imgUrl = snapshot.data![index].imagen;
+                        int? cantidad = snapshot.data![index].cantidad;
+
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10.0),
+                          child: ProductoCheck(
+                            imagen: imgUrl,
+                            nombre: nombre,
+                            precio: precio,
+                            cantidad: cantidad,
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
                 },
               ),
             ),
@@ -53,30 +78,35 @@ class _ListaCheckState extends State<ListaCheck> {
               bottom: 10,
               left: 20,
               right: 20,
-              child: Container(
-                padding: const EdgeInsets.all(15.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFF254587),
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: const Center(
-                  child: Text(
-                    'TERMINAR',
-                    style: TextStyle(
-                      fontFamily: 'Overpass',
-                      fontSize: 18,
-                      fontStyle: FontStyle.normal,
-                      letterSpacing: -0.24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF254587),
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.4),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'TERMINAR',
+                      style: TextStyle(
+                        fontFamily: 'Overpass',
+                        fontSize: 18,
+                        fontStyle: FontStyle.normal,
+                        letterSpacing: -0.24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

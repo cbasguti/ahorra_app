@@ -1,7 +1,6 @@
 import 'package:ahorra_app/service/auth/auth_service.dart';
 import 'package:ahorra_app/service/database_service.dart';
 import 'package:ahorra_app/view/listas/listas.dart';
-import 'package:ahorra_app/view/listas/listas_programados.dart';
 import 'package:ahorra_app/view/listas/listas_vacia.dart';
 import 'package:ahorra_app/view/screen/screen_welcome.dart';
 import 'package:ahorra_app/widget/informacion.dart';
@@ -146,41 +145,6 @@ class MenuLateralState extends State<MenuLateral> {
                   icon: Icons.favorite_border,
                 ),
                 */
-                const SizedBox(height: 6),
-                Divider(color: Colors.grey[300], thickness: 2),
-                const SizedBox(height: 6),
-                FutureBuilder<int>(
-                future: _dbService.getListCount(),
-                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                if (snapshot.hasData) {
-                return GestureDetector(
-                    onTap: () {
-                    _dbService.getListCount();
-                    if (snapshot.data == 0 && listCreated == false) {
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                    builder: (context) => const ListaTest()),
-                );
-                listCreated = true;
-                } else {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                builder: (context) => const ListasProgram()),
-                );
-                }
-                },
-                    child: const NewRow(
-                      text: 'Programados',
-                      icon: Icons.alarm,
-                    ),
-                  );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                  },
-                  ),
                 const SizedBox(height: 6),
                 Divider(color: Colors.grey[300], thickness: 2),
                 const SizedBox(height: 6),

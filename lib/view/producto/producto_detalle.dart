@@ -206,12 +206,9 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                   SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        for (int index = 0;
-                                            index < min(5, _tiendas.length);
-                                            index++)
+                                        for (int index = 0; index < min(5, _tiendas.length); index++)
                                           GestureDetector(
                                             onTap: () {
                                               setState(() {
@@ -222,13 +219,11 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                               width: 100,
                                               height: 60,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
+                                                borderRadius: BorderRadius.circular(5),
                                                 color: Colors.white,
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
+                                                    color: Colors.grey.withOpacity(0.3),
                                                     spreadRadius: 2,
                                                     blurRadius: 3,
                                                     offset: const Offset(0, 2),
@@ -236,9 +231,9 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                 ],
                                                 border: _selectedIndex == index
                                                     ? Border.all(
-                                                        color: Colors.yellow,
-                                                        width: 2,
-                                                      )
+                                                  color: Colors.yellow,
+                                                  width: 3,
+                                                )
                                                     : null,
                                               ),
                                               child: Stack(
@@ -246,16 +241,11 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                   Opacity(
                                                     opacity: 0.4,
                                                     child: ClipRect(
-                                                      clipBehavior:
-                                                          Clip.antiAlias,
-                                                      child:
-                                                          FractionalTranslation(
-                                                        translation:
-                                                            const Offset(
-                                                                0.0, 0.3),
+                                                      clipBehavior: Clip.antiAlias,
+                                                      child: FractionalTranslation(
+                                                        translation: const Offset(0.0, 0.3),
                                                         child: Align(
-                                                          alignment: Alignment
-                                                              .bottomRight,
+                                                          alignment: Alignment.bottomRight,
                                                           child: Image.asset(
                                                             'assets/image/menu/marcas/logo_${widget.producto.getStoreByIndex(index)}.png',
                                                             width: 60,
@@ -267,21 +257,15 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                                     ),
                                                   ),
                                                   Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
                                                       Text(
                                                         '${formatPrice(widget.producto.getPriceByIndex(index))}',
                                                         style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                                          fontWeight: FontWeight.bold,
                                                           fontSize: 20,
-                                                          color:
-                                                              Color(0xFF254587),
+                                                          color: Color(0xFF254587),
                                                         ),
                                                       ),
                                                     ],
@@ -290,12 +274,11 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                               ),
                                             ),
                                           ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
+                                        SizedBox(height: 20),
                                       ],
                                     ),
                                   ),
+
                                   const SizedBox(height: 20),
                                   const Text(
                                     "Detalles del Productos",

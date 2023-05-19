@@ -73,20 +73,16 @@ class _InformacionScreenState extends State<InformacionScreen> {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/image/logo_udea.png',
-                          width:
-                              70), // Reemplazar con la imagen correspondiente
+                      Image.asset('assets/image/logo_udea.png', width: 70), // TODO: Reemplazar con la imagen correspondiente
                       const SizedBox(width: 16),
                       Expanded(
                         child: ListView(
                           shrinkWrap: true,
                           children: [
                             Text('Sara Uribe Zapata', style: myTextStyle),
-                            Text('Diego Jose Luis Botia', style: myTextStyle),
-                            Text('Juan Esteban Salas Flórez',
-                                style: myTextStyle),
-                            Text('Sebastian Gutierrez Jaramillo',
-                                style: myTextStyle),
+                            Text('Juan Esteban Salas Flórez', style: myTextStyle),
+                            Text('Sebastian Gutierrez Jaramillo', style: myTextStyle),
+                            Text('Diego Jose Luis Botia Valderrama', style: myTextStyle),
                           ],
                         ),
                       ),

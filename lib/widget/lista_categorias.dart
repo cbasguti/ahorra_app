@@ -53,19 +53,7 @@ class ListaCategorias extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  body: Stack(
-                    children: const [
-                      MenuLateral(),
-                      MenuPrincipal(),
-                    ],
-                  ),
-                ),
-              ),
-            );
+            Navigator.pop(context);
           },
         ),
       ),

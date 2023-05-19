@@ -4,6 +4,8 @@ import 'package:ahorra_app/view/listas/listas_detalles.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../widget/check_lista.dart';
+
 class Listas extends StatefulWidget {
   const Listas({super.key});
 
@@ -31,9 +33,16 @@ class ListasState extends State<Listas> {
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
                 return Container(
-                  padding: const EdgeInsets.all(3.0),
+                  padding: EdgeInsets.only(left: 15),
+                  alignment: Alignment.centerLeft,
                   child: Text(
-                      'Tiene un total de ${snapshot.data} listas guardadas'),
+                    'Tienes ${snapshot.data} listas guardadas',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                      fontFamily: 'Overpass',
+                    ),
+                  ),
                 );
               } else {
                 return const CircularProgressIndicator();
@@ -55,30 +64,91 @@ class ListasState extends State<Listas> {
                       String imgUrl = snapshot.data![index].imagen.toString();
                       late String total;
                       return Card(
-                        child: ListTile(
-                          title: Text(nombreLista),
-                          subtitle: FutureBuilder<String>(
-                            future: dbService.getProductsPrice(nombreLista),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.hasData) {
-                                total = snapshot.data!;
-                                return Text('Total: ${snapshot.data}');
-                              } else {
-                                return const CircularProgressIndicator();
-                              }
-                            },
-                          ),
-                          leading: Image.network(imgUrl),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ListasDetalles(
-                                          lista: nombreLista,
-                                          precioTotal: total,
-                                        )));
-                          },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  nombreLista,
+                                  style: TextStyle(
+                                    color: Color(0xFF254587),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Overpass',
+                                  ),
+                                ),
+                                subtitle: FutureBuilder<String>(
+                                  future:
+                                      dbService.getProductsPrice(nombreLista),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    if (snapshot.hasData) {
+                                      total = snapshot.data!;
+                                      return Text(
+                                        'Total: ${snapshot.data}',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                          fontFamily: 'Overpass',
+                                        ),
+                                      );
+                                    } else {
+                                      return const CircularProgressIndicator();
+                                    }
+                                  },
+                                ),
+                                leading: Image.network(imgUrl),
+                              ),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(height: 10),
+                                Container(
+                                  width: 100,
+                                  height: 30,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ListasDetalles(
+                                                    lista: nombreLista,
+                                                    precioTotal: total,
+                                                  )));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      primary: Color(0xFF254587),
+                                    ),
+                                    child: Text('Editar'),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  width: 100,
+                                  height: 30,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ListaCheck(lista: nombreLista),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      primary: Color(0xFF309E43),
+                                    ),
+                                    child: Text('Comenzar'),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -88,54 +158,6 @@ class ListasState extends State<Listas> {
                 return const CircularProgressIndicator();
               }
             },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  String nuevaLista = '';
-
-                  return AlertDialog(
-                    title: const Text('Crear nueva lista'),
-                    content: TextField(
-                      autofocus: true,
-                      decoration:
-                          const InputDecoration(hintText: 'Nombre de la lista'),
-                      onChanged: (value) {
-                        nuevaLista = value;
-                      },
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          dbService.crearNuevaLista(nuevaLista);
-                          Navigator.of(context).pop();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Listas()),
-                          );
-                        },
-                        child: const Text('Crear'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              textStyle: const TextStyle(
-                fontFamily: 'Overpass',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-              fixedSize: const Size(300, 40),
-            ),
-            child: const Text('CREAR UNA LISTA'),
           ),
         ],
       ),

@@ -35,7 +35,6 @@ class MenuPrincipalState extends State<MenuPrincipal> {
       child: Scaffold(
         appBar: buildAppBar(),
         body: const Body(),
-        bottomNavigationBar: const MyBottomNavBar(),
       ),
     );
   }

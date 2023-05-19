@@ -7,7 +7,6 @@ import 'package:ahorra_app/widget/check_lista.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/lista_categorias.dart';
-import '../../widget/check_lista.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -33,15 +32,8 @@ class Body extends StatelessWidget {
           ),
           const CategoriasDestacadas(),
           TituloYBoton(
-            titulo: "CHECK",
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ListaCheck(),
-                ),
-              );
-            },
+            titulo: "Ofertas Destacadas",
+            press: () {},
           ),
           const OfertasDelDia(),
           TituloYBoton(titulo: "Nuestras Marcas", press: () {}),

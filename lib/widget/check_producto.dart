@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 class ProductoCheck extends StatefulWidget {
   const ProductoCheck({
     Key? key,
-    required this.imagePath,
-    required this.productName,
-    required this.price,
-    required this.quantity,
+    required this.imagen,
+    required this.nombre,
+    required this.precio,
+    required this.cantidad,
   }) : super(key: key);
 
-  final String imagePath;
-  final String productName;
-  final double price;
-  final int quantity;
+  final String imagen, nombre, precio;
+  final int? cantidad;
 
   @override
   State<ProductoCheck> createState() => _ProductoCheckState();
@@ -53,8 +51,8 @@ class _ProductoCheckState extends State<ProductoCheck> {
               Container(
                 width: 100,
                 height: 100,
-                child: Image.asset(
-                  widget.imagePath,
+                child: Image.network(
+                  widget.imagen,
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
@@ -68,7 +66,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.productName,
+                      widget.nombre,
                       style: TextStyle(
                         fontFamily: 'Overpass',
                         fontSize: 18,
@@ -83,7 +81,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                       ),
                     ),
                     Text(
-                      '\$${widget.price}',
+                      widget.precio,
                       style: TextStyle(
                         fontFamily: 'Overpass',
                         fontSize: 16,
@@ -102,7 +100,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      'assets/image/menu/marcas/logo_exito.png',
+                      'assets/image/menu/marcas/logo_exito.png', // TODO: OBTENER LA TIENDA EL PRODUCTO AGREGADO
                       width: 50,
                       height: 50,
                       fit: BoxFit.contain,
@@ -118,7 +116,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.quantity.toString(),
+                        widget.cantidad.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

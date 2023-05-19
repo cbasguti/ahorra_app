@@ -4,6 +4,8 @@ import 'package:ahorra_app/model/producto.dart';
 import 'package:ahorra_app/service/database_service.dart';
 import 'package:flutter/material.dart';
 
+import '../../widget/lista_categorias.dart';
+
 class ListasDetalles extends StatefulWidget {
   const ListasDetalles({
     Key? key,
@@ -45,7 +47,9 @@ class ListasDetallesState extends State<ListasDetalles> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text('Mis Listas', style: TextStyle(color: Colors.black)),
+        title: Text(
+            widget.lista,
+            style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Column(
@@ -96,7 +100,12 @@ class ListasDetallesState extends State<ListasDetalles> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          // Lógica para añadir más productos
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ListaCategorias(),
+                            ),
+                          );
                         },
                         child: Text(
                           'Añadir más',
