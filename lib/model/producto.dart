@@ -29,6 +29,13 @@ class Producto {
     return lowestPrice;
   }
 
+  void organizePricesAscending() {
+    final sortedEntries = precios.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+
+    precios = Map.fromEntries(sortedEntries);
+  }
+
   // Get price by index
   int getPriceByIndex(int index) {
     int i = 0;

@@ -20,14 +20,21 @@ class ListasDetalles extends StatefulWidget {
 }
 
 class ListasDetallesState extends State<ListasDetalles> {
-  int _cantidad = 1;
+  int _precioTotal = 0;
   final _dbService = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+    _precioTotal =
+        int.parse(widget.precioTotal.replaceAll(r'$', '').replaceAll('.', ''));
+  }
 
   Future<void> _incrementCounter(String lista, Producto producto) async {
     await _dbService.addProductoToLista(lista, producto, 1);
     await _dbService.getProductCount(widget.lista);
     setState(() {
-      _cantidad++;
+      _precioTotal += producto.getLowestPrice();
     });
   }
 
@@ -35,21 +42,18 @@ class ListasDetallesState extends State<ListasDetalles> {
     await _dbService.removeProductoFromLista(lista, producto, 1);
     await _dbService.getProductCount(widget.lista);
     setState(() {
-      _cantidad++;
+      _precioTotal -= producto.getLowestPrice();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final dbService = DatabaseService();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(
-            widget.lista,
-            style: TextStyle(color: Colors.black)),
+        title: Text(widget.lista, style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Column(
@@ -60,7 +64,7 @@ class ListasDetallesState extends State<ListasDetalles> {
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 16.0),
             child: Text(
-              'Precio total: ${widget.precioTotal}',
+              'Precio total: ${formatPrice(_precioTotal)}',
               textAlign: TextAlign.left,
             ),
           ),
@@ -73,57 +77,56 @@ class ListasDetallesState extends State<ListasDetalles> {
             ),
           ),
           const SizedBox(height: 8.0),
-        FutureBuilder<int>(
-          future: dbService.getProductCount(widget.lista),
-          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-            if (snapshot.hasData) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(3.0),
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      '${snapshot.data} productos',
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Colors.black26,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.add_box_outlined,
-                        color: Color(0xFF254587),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ListaCategorias(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Añadir más',
-                          style: TextStyle(
-                            color: Color(0xFF254587),
-
-                          ),
+          FutureBuilder<int>(
+            future: dbService.getProductCount(widget.lista),
+            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+              if (snapshot.hasData) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(3.0),
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        '${snapshot.data} productos',
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Colors.black26,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.add_box_outlined,
+                          color: Color(0xFF254587),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ListaCategorias(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Añadir más',
+                            style: TextStyle(
+                              color: Color(0xFF254587),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
           FutureBuilder<List<Producto>>(
               future: dbService.getProducts(widget.lista),
               builder: (BuildContext context,
