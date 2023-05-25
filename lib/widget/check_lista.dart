@@ -52,18 +52,23 @@ class _ListaCheckState extends State<ListaCheck> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         String precio =
-                        formatPrice(snapshot.data![index].getLowestPrice());
+                            formatPrice(snapshot.data![index].getLowestPrice());
                         String nombre = snapshot.data![index].nombre;
+                        int productoId = snapshot.data![index].id;
+                        String categoria = snapshot.data![index].categoria;
                         String imgUrl = snapshot.data![index].imagen;
                         int? cantidad = snapshot.data![index].cantidad;
 
                         return Padding(
                           padding: EdgeInsets.only(bottom: 10.0),
                           child: ProductoCheck(
+                            lista: widget.lista,
                             imagen: imgUrl,
                             nombre: nombre,
                             precio: precio,
                             cantidad: cantidad,
+                            categoria: categoria,
+                            productoId: productoId,
                           ),
                         );
                       },
