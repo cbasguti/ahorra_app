@@ -11,7 +11,7 @@ class DatabaseService {
   final _dbRef = FirebaseDatabase.instance.ref().child('usuarios');
   final _productosRef = FirebaseDatabase.instance.ref().child('productos');
   final _auth = AuthService();
-  late final String _userKey;
+  String _userKey = '-NUfJz0guxDHYdm-ei8v';
 
   DatabaseService() {
     _getUserKey();
@@ -77,10 +77,66 @@ class DatabaseService {
           productDbRef.push().set({
             'categoria_id': '${producto.categoria}_${producto.id}',
             'cantidad': cantidad,
+            'checked': false,
           });
         }
       }
     });
+  }
+
+  Future<void> checkProduct(
+      String lista, String categoria, int id, bool checked) async {
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    late final DatabaseReference productDbRef;
+
+    values.forEach((key, value) async {
+      if (value['titulo'] == lista) {
+        productDbRef = listaDbRef.child(key).child('productos');
+
+        final snapshot2 = await productDbRef.get();
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+          values2.forEach((key, value) {
+            if (value['categoria_id'] == '${categoria}_$id') {
+              productDbRef.child(key).update({'checked': checked});
+            }
+          });
+        }
+      }
+    });
+  }
+
+  Future<bool> isChecked(String lista, String categoria, int id) async {
+    await _getUserKey();
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    late final DatabaseReference productDbRef;
+    bool isChecked = false;
+
+    await Future.forEach(values.entries, (entry) async {
+      final key = entry.key;
+      final value = entry.value;
+
+      if (value['titulo'] == lista) {
+        productDbRef = listaDbRef.child(key).child('productos');
+        final snapshot2 = await productDbRef.get();
+
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+
+          values2.forEach((key, value) {
+            if (value['categoria_id'] == '${categoria}_$id') {
+              isChecked = value['checked'] ?? false;
+            }
+          });
+        }
+      }
+    });
+
+    return isChecked;
   }
 
   Future<void> removeProductoFromLista(

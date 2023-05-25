@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
+import '../service/database_service.dart';
+
 class ProductoCheck extends StatefulWidget {
   const ProductoCheck({
     Key? key,
+    required this.lista,
     required this.imagen,
     required this.nombre,
     required this.precio,
     required this.cantidad,
+    required this.categoria,
+    required this.productoId,
   }) : super(key: key);
 
-  final String imagen, nombre, precio;
-  final int? cantidad;
+  final String lista, imagen, nombre, precio, categoria;
+  final int? cantidad, productoId;
 
   @override
   State<ProductoCheck> createState() => _ProductoCheckState();
@@ -18,6 +23,22 @@ class ProductoCheck extends StatefulWidget {
 
 class _ProductoCheckState extends State<ProductoCheck> {
   bool isChecked = false;
+  final dbService = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+    loadCheckedStatus(); // Llama a la función para cargar el estado inicial de isChecked
+  }
+
+  Future<void> loadCheckedStatus() async {
+    // Llama a la función isChecked y actualiza el estado isChecked en consecuencia
+    final checked = await dbService.isChecked(
+        widget.lista, widget.categoria, widget.productoId!);
+    setState(() {
+      isChecked = checked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +67,8 @@ class _ProductoCheckState extends State<ProductoCheck> {
                   setState(() {
                     isChecked = value!;
                   });
+                  dbService.checkProduct(widget.lista, widget.categoria,
+                      widget.productoId!, value!);
                 },
               ),
               Container(
@@ -133,7 +156,8 @@ class _ProductoCheckState extends State<ProductoCheck> {
           IgnorePointer(
             ignoring: true,
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(Colors.green.withOpacity(0.5), BlendMode.srcATop),
+              colorFilter: ColorFilter.mode(
+                  Colors.green.withOpacity(0.5), BlendMode.srcATop),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 100,
