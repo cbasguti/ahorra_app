@@ -5,6 +5,7 @@ class Producto {
   String categoria;
   Map precios;
   int? cantidad;
+  String? tiendaSeleccionada;
 
   Producto({
     required this.id,
@@ -13,6 +14,7 @@ class Producto {
     required this.categoria,
     required this.precios,
     this.cantidad,
+    this.tiendaSeleccionada,
   });
 
   // Getter for prices
@@ -60,6 +62,14 @@ class Producto {
       }
     });
     return lowestPriceStore;
+  }
+
+  // Get price for a specific store
+  int getPriceForStore(String storeName) {
+    if (precios.containsKey(storeName)) {
+      return precios[storeName];
+    }
+    return 0; // or any default value you want to return if the store is not found
   }
 
   // Get Store by index
