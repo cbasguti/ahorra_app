@@ -24,6 +24,15 @@ class _DetallesProductoState extends State<DetallesProducto> {
   final List<String> _tiendas =
       List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedPrice = widget.producto.getLowestPrice();
+    print(widget.producto.getLowestPrice());
+    _selectedStore = widget.producto.getLowestPriceStore();
+    print(widget.producto.getLowestPriceStore());
+  }
+
   void _incrementCounter() {
     setState(() {
       _cantidad++;
