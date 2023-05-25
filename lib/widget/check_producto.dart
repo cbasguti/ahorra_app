@@ -12,9 +12,10 @@ class ProductoCheck extends StatefulWidget {
     required this.cantidad,
     required this.categoria,
     required this.productoId,
+    required this.tienda,
   }) : super(key: key);
 
-  final String lista, imagen, nombre, precio, categoria;
+  final String lista, imagen, nombre, precio, categoria, tienda;
   final int? cantidad, productoId;
 
   @override
@@ -123,7 +124,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      'assets/image/menu/marcas/logo_exito.png', // TODO: OBTENER LA TIENDA EL PRODUCTO AGREGADO
+                      'assets/image/menu/marcas/logo_${widget.tienda}.png', // TODO: OBTENER LA TIENDA EL PRODUCTO AGREGADO
                       width: 50,
                       height: 50,
                       fit: BoxFit.contain,

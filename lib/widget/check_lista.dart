@@ -51,8 +51,10 @@ class _ListaCheckState extends State<ListaCheck> {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        String precio =
-                            formatPrice(snapshot.data![index].getLowestPrice());
+                        String? tienda =
+                            snapshot.data![index].tiendaSeleccionada;
+                        String precio = formatPrice(
+                            snapshot.data![index].getPriceForStore(tienda!));
                         String nombre = snapshot.data![index].nombre;
                         int productoId = snapshot.data![index].id;
                         String categoria = snapshot.data![index].categoria;
@@ -69,6 +71,7 @@ class _ListaCheckState extends State<ListaCheck> {
                             cantidad: cantidad,
                             categoria: categoria,
                             productoId: productoId,
+                            tienda: tienda,
                           ),
                         );
                       },
