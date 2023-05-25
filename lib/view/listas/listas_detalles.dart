@@ -34,7 +34,7 @@ class ListasDetallesState extends State<ListasDetalles> {
     await _dbService.addProductoToLista(lista, producto, 1);
     await _dbService.getProductCount(widget.lista);
     setState(() {
-      _precioTotal += producto.getLowestPrice();
+      _precioTotal += producto.getPriceForStore(producto.tiendaSeleccionada!);
     });
   }
 
@@ -42,7 +42,7 @@ class ListasDetallesState extends State<ListasDetalles> {
     await _dbService.removeProductoFromLista(lista, producto, 1);
     await _dbService.getProductCount(widget.lista);
     setState(() {
-      _precioTotal -= producto.getLowestPrice();
+      _precioTotal -= producto.getPriceForStore(producto.tiendaSeleccionada!);
     });
   }
 
@@ -137,13 +137,14 @@ class ListasDetallesState extends State<ListasDetalles> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         DetalleLista listado2 = detalleList[index];
-                        String precio =
-                            formatPrice(snapshot.data![index].getLowestPrice());
+                        String? tienda =
+                            snapshot.data![index].tiendaSeleccionada;
+                        String precio = formatPrice(
+                            snapshot.data![index].getPriceForStore(tienda!));
                         String nombre = snapshot.data![index].nombre;
                         String imgUrl = snapshot.data![index].imagen;
                         int? cantidad = snapshot.data![index].cantidad;
                         Producto producto = snapshot.data![index];
-
                         return Container(
                           constraints: const BoxConstraints(maxWidth: 600.0),
                           padding: const EdgeInsets.all(8.0),
@@ -165,8 +166,8 @@ class ListasDetallesState extends State<ListasDetalles> {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    Image.network(
-                                      listado2.tienda,
+                                    Image.asset(
+                                      'assets/image/menu/marcas/logo_$tienda.png',
                                       width: 30,
                                       height: 30,
                                     ),

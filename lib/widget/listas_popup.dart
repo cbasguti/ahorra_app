@@ -7,11 +7,13 @@ class ListasPopUp extends StatefulWidget {
   const ListasPopUp({
     Key? key,
     required this.producto,
+    required this.selectedStore,
     required this.cantidad,
   }) : super(key: key);
 
   final Producto producto;
   final int cantidad;
+  final String selectedStore;
 
   @override
   ListasPopUpState createState() => ListasPopUpState();
@@ -23,6 +25,7 @@ class ListasPopUpState extends State<ListasPopUp> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.selectedStore);
     return FutureBuilder<List>(
       future: _dbService.getLists(),
       builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
@@ -50,10 +53,11 @@ class ListasPopUpState extends State<ListasPopUp> {
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
-                                _dbService.addProductoToLista(
+                                _dbService.addProductoWithStore(
                                     snapshot.data![index].toString(),
                                     widget.producto,
-                                    widget.cantidad);
+                                    widget.cantidad,
+                                    widget.selectedStore);
                                 Navigator.pop(context);
                                 showDialog(
                                   context: context,

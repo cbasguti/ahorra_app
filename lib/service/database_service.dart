@@ -84,6 +84,76 @@ class DatabaseService {
     });
   }
 
+  Future<void> addProductoWithStore(
+      String lista, Producto producto, int cantidad, String tienda) async {
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    late final DatabaseReference productDbRef;
+
+    bool productoExiste = false;
+
+    values.forEach((key, value) async {
+      if (value['titulo'] == lista) {
+        productDbRef = listaDbRef.child(key).child('productos');
+
+        final snapshot2 = await productDbRef.get();
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+          values2.forEach((key, value) {
+            if (value['categoria_id'] ==
+                '${producto.categoria}_${producto.id}') {
+              final int cantidadActual = value['cantidad'] as int;
+              final int cantidadNueva = cantidadActual + cantidad;
+              productDbRef.child(key).update({'cantidad': cantidadNueva});
+              productoExiste = true;
+            }
+          });
+        }
+
+        if (!productoExiste) {
+          productDbRef.push().set({
+            'categoria_id': '${producto.categoria}_${producto.id}',
+            'cantidad': cantidad,
+            'checked': false,
+            'tienda': tienda,
+          });
+        }
+      }
+    });
+  }
+
+  Future<String> getTiendaFromProducto(String lista, String categoriaId) async {
+    await _getUserKey();
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    late final DatabaseReference productDbRef;
+    String selectedStore = '';
+
+    await Future.forEach(values.entries, (entry) async {
+      final key = entry.key;
+      final value = entry.value;
+
+      if (value['titulo'] == lista) {
+        productDbRef = listaDbRef.child(key).child('productos');
+        final snapshot2 = await productDbRef.get();
+
+        if (snapshot2.value != null) {
+          final values2 = snapshot2.value as Map<dynamic, dynamic>;
+
+          values2.forEach((key, value) {
+            if (value['categoria_id'] == categoriaId) {
+              selectedStore = value['tienda'] ?? false;
+            }
+          });
+        }
+      }
+    });
+
+    return selectedStore;
+  }
+
   Future<void> checkProduct(
       String lista, String categoria, int id, bool checked) async {
     final listaDbRef = _dbRef.child(_userKey).child('listas');
@@ -225,6 +295,7 @@ class DatabaseService {
 
     List productosLista = [];
     List<Producto> productos = [];
+
     values.forEach((key, value) {
       if (value['correo'] == userEmail) {
         if (value['listas'] != null) {
@@ -234,9 +305,17 @@ class DatabaseService {
               if (value['productos'] != null) {
                 final productos = value['productos'] as Map<dynamic, dynamic>;
                 productos.forEach((key, value) {
-                  productosLista.add(value['categoria_id'] +
-                      '_' +
-                      value['cantidad'].toString());
+                  final categoriaId = value['categoria_id'];
+                  final cantidad = value['cantidad'].toString();
+                  final tienda = value['tienda'];
+
+                  final productoData = {
+                    'categoria_id': categoriaId,
+                    'cantidad': cantidad,
+                    'tienda': tienda,
+                  };
+
+                  productosLista.add(productoData);
                 });
               }
             }
@@ -246,19 +325,24 @@ class DatabaseService {
     });
 
     for (var element in productosLista) {
-      final String categoria = element.split('_')[0];
-      final String id = element.split('_')[1];
-      final String cantidad = element.split('_')[2];
+      final String categoria = element['categoria_id'].split('_')[0];
+      final String id = element['categoria_id'].split('_')[1];
+      final String cantidad = element['cantidad'];
+      final tienda = element['tienda'];
+
       final productoRef = _productosRef.child(categoria).child(id);
       final snapshot = await productoRef.get();
       final values = snapshot.value as Map<dynamic, dynamic>;
+
       productos.add(Producto(
-          id: int.parse(id),
-          nombre: values['nombre'],
-          categoria: categoria,
-          precios: values['precios'],
-          imagen: values['image_path'],
-          cantidad: int.parse(cantidad)));
+        id: int.parse(id),
+        nombre: values['nombre'],
+        categoria: categoria,
+        precios: values['precios'],
+        imagen: values['image_path'],
+        cantidad: int.parse(cantidad),
+        tiendaSeleccionada: tienda,
+      ));
     }
 
     return productos;
@@ -298,9 +382,17 @@ class DatabaseService {
               if (value['productos'] != null) {
                 final productos = value['productos'] as Map<dynamic, dynamic>;
                 productos.forEach((key, value) {
-                  productosLista.add(value['categoria_id'] +
-                      '_' +
-                      value['cantidad'].toString());
+                  final categoriaId = value['categoria_id'];
+                  final cantidad = value['cantidad'].toString();
+                  final tienda = value['tienda'];
+
+                  final productoData = {
+                    'categoria_id': categoriaId,
+                    'cantidad': cantidad,
+                    'tienda': tienda,
+                  };
+
+                  productosLista.add(productoData);
                 });
               }
             }
@@ -310,9 +402,11 @@ class DatabaseService {
     });
 
     for (var element in productosLista) {
-      final String categoria = element.split('_')[0];
-      final String id = element.split('_')[1];
-      final String cantidad = element.split('_')[2];
+      final String categoria = element['categoria_id'].split('_')[0];
+      final String id = element['categoria_id'].split('_')[1];
+      final String cantidad = element['cantidad'];
+      final tienda = element['tienda'];
+
       final productoRef = _productosRef.child(categoria).child(id);
       final snapshot = await productoRef.get();
       final values = snapshot.value as Map<dynamic, dynamic>;
@@ -322,8 +416,9 @@ class DatabaseService {
           categoria: categoria,
           precios: values['precios'],
           imagen: values['image_path'],
-          cantidad: int.parse(cantidad));
-      totalPrice += (producto.getLowestPrice() * int.parse(cantidad));
+          cantidad: int.parse(cantidad),
+          tiendaSeleccionada: tienda);
+      totalPrice += (producto.getPriceForStore(tienda) * int.parse(cantidad));
     }
 
     String result = formatPrice(totalPrice);

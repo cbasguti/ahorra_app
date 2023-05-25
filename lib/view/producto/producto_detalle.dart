@@ -20,17 +20,15 @@ class DetallesProducto extends StatefulWidget {
 class _DetallesProductoState extends State<DetallesProducto> {
   int _cantidad = 1;
   int _selectedPrice = 0;
-  String _selectedStore = 'Seleccione una tienda';
-  final List<String> _tiendas =
-      List.generate(4, (index) => "assets/image/menu/marcas/logo_d1.png");
+  int _nTiendas = 0;
+  String _selectedStore = '';
 
   @override
   void initState() {
     super.initState();
     _selectedPrice = widget.producto.getLowestPrice();
-    print(widget.producto.getLowestPrice());
     _selectedStore = widget.producto.getLowestPriceStore();
-    print(widget.producto.getLowestPriceStore());
+    _nTiendas = widget.producto.precios.length;
   }
 
   void _incrementCounter() {
@@ -186,6 +184,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                             ListasPopUp(
                                               producto: widget.producto,
                                               cantidad: _cantidad,
+                                              selectedStore: _selectedStore,
                                             ),
                                           ],
                                         ),
@@ -221,7 +220,7 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         for (int index = 0;
-                                            index < min(5, _tiendas.length);
+                                            index < _nTiendas;
                                             index++)
                                           Row(
                                             children: [
