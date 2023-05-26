@@ -214,7 +214,7 @@ class ProductosCard extends StatelessWidget {
                             'assets/image/menu/marcas/logo_${producto.getLowestPriceStore()}.png', // Que no sea estatica
                             width: 60,
                             height: 60,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),

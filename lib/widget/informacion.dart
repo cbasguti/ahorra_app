@@ -61,7 +61,7 @@ class _InformacionScreenState extends State<InformacionScreen> {
                 children: [
                   Row(
                     children: [
-                      Image.asset('assets/image/logo_udea.png', width: 70), // TODO: Reemplazar con la imagen correspondiente
+                      Image.asset('assets/image/logo_udea.png', width: 70),
                       const SizedBox(width: 16),
                       Expanded(
                         child: ListView(
