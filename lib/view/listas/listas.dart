@@ -5,6 +5,8 @@ import 'package:ahorra_app/view/listas/listas_detalles.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/check_lista.dart';
+import '../../widget/sidebar.dart';
+import '../home/home.dart';
 
 class Listas extends StatefulWidget {
   const Listas({super.key});
@@ -24,6 +26,24 @@ class ListasState extends State<Listas> {
         elevation: 0,
         title: const Text('Mis Listas', style: TextStyle(color: Colors.black)),
         iconTheme: const IconThemeData(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Scaffold(
+                  body: Stack(
+                    children: const [
+                      MenuLateral(),
+                      MenuPrincipal(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
       body: Column(
         children: [

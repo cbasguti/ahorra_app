@@ -91,10 +91,6 @@ class MenuLateralState extends State<MenuLateral> {
                     icon: Icons.info_outline,
                   ),
                 ),
-                /* const NewRow(
-                  text: 'Información',
-                  icon: Icons.info_outline,
-                ),*/
                 const SizedBox(height: 6),
                 Divider(color: Colors.grey[300], thickness: 2),
                 const SizedBox(height: 6),
