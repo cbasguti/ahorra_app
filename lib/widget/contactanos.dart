@@ -1,5 +1,6 @@
 import 'package:ahorra_app/widget/sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:ahorra_app/service/database_service.dart';
 
 import '../view/home/home.dart';
 
@@ -13,6 +14,7 @@ class ConctactanosScreen extends StatefulWidget {
 class _ConctactanosScreenState extends State<ConctactanosScreen> {
   final TextEditingController correoController = TextEditingController();
   final TextEditingController comentarioController = TextEditingController();
+  final _dbService = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,8 @@ class _ConctactanosScreenState extends State<ConctactanosScreen> {
                 child: TextField(
                   controller: comentarioController,
                   decoration: InputDecoration(
-                    hintText: 'Comentarios, Sugerencias, Quejas o Recomendaciones',
+                    hintText:
+                        'Comentarios, Sugerencias, Quejas o Recomendaciones',
                   ),
                   maxLines: 15,
                 ),
@@ -58,7 +61,17 @@ class _ConctactanosScreenState extends State<ConctactanosScreen> {
                 onPressed: () {
                   String name = correoController.text;
                   String comments = comentarioController.text;
-                  // TODO: ENVIAR COMENTARIOS
+                  _dbService.addCommentToDatabase(name, comments);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AlertDialog(
+                        content: Text('Comentario añadido con éxito'),
+                      );
+                    },
+                  ).then((value) {
+                    Navigator.pop(context);
+                  });
                 },
                 child: Text('Enviar'),
               ),

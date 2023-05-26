@@ -104,7 +104,8 @@ class ListasDetallesState extends State<ListasDetalles> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.of(context).pop();
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ListaCategorias(),

@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 class DatabaseService {
   final _dbRef = FirebaseDatabase.instance.ref().child('usuarios');
   final _productosRef = FirebaseDatabase.instance.ref().child('productos');
+  final _feedbackRef = FirebaseDatabase.instance.ref().child('feedback');
   final _auth = AuthService();
   String _userKey = '-NUfJz0guxDHYdm-ei8v';
 
@@ -590,6 +591,13 @@ class DatabaseService {
       });
     }
     return count;
+  }
+
+  Future<void> addCommentToDatabase(String name, String comment) async {
+    _feedbackRef.push().set({
+      'nombre': name,
+      'comentario': comment,
+    });
   }
 
   Future<int> searchCountAll(String busqueda) async {
