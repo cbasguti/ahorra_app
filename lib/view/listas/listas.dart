@@ -154,8 +154,10 @@ class ListasState extends State<Listas> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ListaCheck(lista: nombreLista),
+                                          builder: (context) => ListaCheck(
+                                            lista: nombreLista,
+                                            precioTotal: total,
+                                          ),
                                         ),
                                       );
                                     },

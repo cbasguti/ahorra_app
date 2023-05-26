@@ -210,6 +210,65 @@ class DatabaseService {
     return isChecked;
   }
 
+  Future<int> currentTotal(String lista) async {
+    final String? userEmail = _auth.currentUserEmail;
+    final snapshot = await _dbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+
+    int totalPrice = 0;
+    List productosLista = [];
+    values.forEach((key, value) {
+      if (value['correo'] == userEmail) {
+        if (value['listas'] != null) {
+          final listas = value['listas'] as Map<dynamic, dynamic>;
+          listas.forEach((key, value) {
+            if (value['titulo'] == lista) {
+              if (value['productos'] != null) {
+                final productos = value['productos'] as Map<dynamic, dynamic>;
+                productos.forEach((key, value) {
+                  final categoriaId = value['categoria_id'];
+                  final cantidad = value['cantidad'].toString();
+                  final tienda = value['tienda'];
+
+                  final productoData = {
+                    'categoria_id': categoriaId,
+                    'cantidad': cantidad,
+                    'tienda': tienda,
+                  };
+
+                  if (value['checked'] == true) {
+                    productosLista.add(productoData);
+                  }
+                });
+              }
+            }
+          });
+        }
+      }
+    });
+
+    for (var element in productosLista) {
+      final String categoria = element['categoria_id'].split('_')[0];
+      final String id = element['categoria_id'].split('_')[1];
+      final String cantidad = element['cantidad'];
+      final tienda = element['tienda'];
+
+      final productoRef = _productosRef.child(categoria).child(id);
+      final snapshot = await productoRef.get();
+      final values = snapshot.value as Map<dynamic, dynamic>;
+      Producto producto = Producto(
+          id: int.parse(id),
+          nombre: values['nombre'],
+          categoria: categoria,
+          precios: values['precios'],
+          imagen: values['image_path'],
+          cantidad: int.parse(cantidad),
+          tiendaSeleccionada: tienda);
+      totalPrice += (producto.getPriceForStore(tienda) * int.parse(cantidad));
+    }
+    return totalPrice;
+  }
+
   Future<void> removeProductoFromLista(
       String lista, Producto producto, int cantidad) async {
     final listaDbRef = _dbRef.child(_userKey).child('listas');

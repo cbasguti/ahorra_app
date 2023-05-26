@@ -10,16 +10,31 @@ class ListaCheck extends StatefulWidget {
   const ListaCheck({
     Key? key,
     required this.lista,
+    required this.precioTotal,
   }) : super(key: key);
 
-  final String lista;
+  final String lista, precioTotal;
 
   @override
   State<ListaCheck> createState() => _ListaCheckState();
 }
 
 class _ListaCheckState extends State<ListaCheck> {
+  int _precioAcumulado = 0;
   final dbService = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+    _updateTotal();
+  }
+
+  Future<void> _updateTotal() async {
+    final precioNuevo = await dbService.currentTotal(widget.lista);
+    setState(() {
+      _precioAcumulado = precioNuevo;
+    });
+  }
 
   final myStyle = const TextStyle(
     color: Colors.grey,
@@ -51,18 +66,12 @@ class _ListaCheckState extends State<ListaCheck> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Precio total:',
-                    style: myStyle
-                  ),
+                  Text('Precio total:', style: myStyle),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: EdgeInsets.only(left: 20.0),
-                      child: Text(
-                        '160000', //TODO: CAMBIAR EL VALOR QUEMADO
-                        style: myStyle
-                      ),
+                      child: Text('${widget.precioTotal}', style: myStyle),
                     ),
                   ),
                 ],
@@ -73,18 +82,13 @@ class _ListaCheckState extends State<ListaCheck> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                      'Precio acumulado:',
-                      style: myStyle
-                  ),
+                  Text('Precio acumulado:', style: myStyle),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: EdgeInsets.only(left: 20.0),
-                      child: Text(
-                          '9000', //TODO: CAMBIAR EL VALOR QUEMADO
-                          style: myStyle
-                      ),
+                      child:
+                          Text(formatPrice(_precioAcumulado), style: myStyle),
                     ),
                   ),
                 ],
@@ -107,11 +111,12 @@ class _ListaCheckState extends State<ListaCheck> {
                             itemBuilder: (context, index) {
                               String? tienda =
                                   snapshot.data![index].tiendaSeleccionada;
-                              String precio = formatPrice(
-                                  snapshot.data![index].getPriceForStore(tienda!));
+                              String precio = formatPrice(snapshot.data![index]
+                                  .getPriceForStore(tienda!));
                               String nombre = snapshot.data![index].nombre;
                               int productoId = snapshot.data![index].id;
-                              String categoria = snapshot.data![index].categoria;
+                              String categoria =
+                                  snapshot.data![index].categoria;
                               String imgUrl = snapshot.data![index].imagen;
                               int? cantidad = snapshot.data![index].cantidad;
                               return Padding(
@@ -125,6 +130,7 @@ class _ListaCheckState extends State<ListaCheck> {
                                   categoria: categoria,
                                   productoId: productoId,
                                   tienda: tienda,
+                                  updateTotal: _updateTotal,
                                 ),
                               );
                             },

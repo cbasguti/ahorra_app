@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../service/database_service.dart';
 
 class ProductoCheck extends StatefulWidget {
-  const ProductoCheck({
+  ProductoCheck({
     Key? key,
     required this.lista,
     required this.imagen,
@@ -13,8 +13,10 @@ class ProductoCheck extends StatefulWidget {
     required this.categoria,
     required this.productoId,
     required this.tienda,
+    required this.updateTotal,
   }) : super(key: key);
 
+  Function updateTotal;
   final String lista, imagen, nombre, precio, categoria, tienda;
   final int? cantidad, productoId;
 
@@ -30,15 +32,22 @@ class _ProductoCheckState extends State<ProductoCheck> {
   void initState() {
     super.initState();
     loadCheckedStatus(); // Llama a la función para cargar el estado inicial de isChecked
+    updatePrice(); // Actualiza el precio total de la lista
   }
 
   Future<void> loadCheckedStatus() async {
     // Llama a la función isChecked y actualiza el estado isChecked en consecuencia
     final checked = await dbService.isChecked(
         widget.lista, widget.categoria, widget.productoId!);
+    await updatePrice();
     setState(() {
       isChecked = checked;
     });
+  }
+
+  Future<void> updatePrice() async {
+    // Actualiza el precio total de la lista
+    widget.updateTotal();
   }
 
   @override
@@ -68,6 +77,7 @@ class _ProductoCheckState extends State<ProductoCheck> {
                   setState(() {
                     isChecked = value!;
                   });
+                  updatePrice();
                   dbService.checkProduct(widget.lista, widget.categoria,
                       widget.productoId!, value!);
                 },
