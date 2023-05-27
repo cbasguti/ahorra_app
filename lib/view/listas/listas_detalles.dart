@@ -87,6 +87,14 @@ class ListasDetallesState extends State<ListasDetalles> {
             }
           },
         ),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.delete,
+                  color: Color(0xFF254587),
+                ))
+          ]
       ),
       body: Column(
         children: [

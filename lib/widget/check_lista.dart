@@ -58,6 +58,14 @@ class _ListaCheckState extends State<ListaCheck> {
               Navigator.pop(context);
             },
           ),
+            actions: [
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.check_box_outline_blank,
+                    color: Color(0xFF254587),
+                  ))
+            ]
         ),
         body: Column(
           children: [

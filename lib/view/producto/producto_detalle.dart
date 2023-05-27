@@ -71,7 +71,8 @@ class _DetallesProductoState extends State<DetallesProducto> {
                     Icons.favorite,
                     color: Color(0xFF254587),
                   ))
-            ]),
+            ]
+        ),
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
