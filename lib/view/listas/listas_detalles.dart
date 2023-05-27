@@ -54,48 +54,55 @@ class ListasDetallesState extends State<ListasDetalles> {
     final dbService = DatabaseService();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(widget.lista, style: TextStyle(color: Colors.black)),
-        iconTheme: const IconThemeData(color: Colors.black),
-        leading: FutureBuilder<int>(
-          future: _dbService.getListCount(),
-          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-            if (snapshot.hasData) {
-              return GestureDetector(
-                onTap: () {
-                  _dbService.getListCount();
-                  if (snapshot.data == 0 && listCreated == false) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ListaTest()),
-                    );
-                    listCreated = true;
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Listas()),
-                    );
-                  }
-                },
-                child: const Icon(Icons.arrow_back),
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text(widget.lista, style: TextStyle(color: Colors.black)),
+          iconTheme: const IconThemeData(color: Colors.black),
+          leading: FutureBuilder<int>(
+            future: _dbService.getListCount(),
+            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+              if (snapshot.hasData) {
+                return GestureDetector(
+                  onTap: () {
+                    _dbService.getListCount();
+                    if (snapshot.data == 0 && listCreated == false) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ListaTest()),
+                      );
+                      listCreated = true;
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Listas()),
+                      );
+                    }
+                  },
+                  child: const Icon(Icons.arrow_back),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  dbService.removeLista(widget.lista).then((value) => {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Listas(),
+                          ),
+                        )
+                      });
+                },
                 icon: const Icon(
                   Icons.delete,
                   color: Color(0xFF254587),
                 ))
-          ]
-      ),
+          ]),
       body: Column(
         children: [
           const SizedBox(height: 25.0),

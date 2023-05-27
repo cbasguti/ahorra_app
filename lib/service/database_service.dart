@@ -303,6 +303,17 @@ class DatabaseService {
     });
   }
 
+  Future<void> removeLista(String lista) async {
+    final listaDbRef = _dbRef.child(_userKey).child('listas');
+    final snapshot = await listaDbRef.get();
+    final values = snapshot.value as Map<dynamic, dynamic>;
+    values.forEach((key, value) async {
+      if (value['titulo'] == lista) {
+        listaDbRef.child(key).remove();
+      }
+    });
+  }
+
   Future<int> getListCount() async {
     final String? userEmail = _auth.currentUserEmail;
     final snapshot = await _dbRef.get();
