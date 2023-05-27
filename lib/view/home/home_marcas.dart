@@ -24,7 +24,7 @@ class NuestrasMarcas extends StatelessWidget {
             press: () {},
           ),
           CartaDeMarca(
-            imagen: "assets/image/menu/marcas/logo_d1.png",
+            imagen: "assets/image/menu/marcas/logo_carulla.png",
             press: () {},
           ),
         ],

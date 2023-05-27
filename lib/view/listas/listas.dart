@@ -182,6 +182,53 @@ class ListasState extends State<Listas> {
               }
             },
           ),
+          ElevatedButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  String nuevaLista = '';
+                  return AlertDialog(
+                    title: const Text('Crear nueva lista'),
+                    content: TextField(
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                          hintText: 'Nombre de la lista'),
+                      onChanged: (value) {
+                        nuevaLista = value;
+                      },
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          dbService.crearNuevaLista(nuevaLista);
+                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Listas()),
+                          );
+                        },
+                        child: const Text('Crear'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              textStyle: const TextStyle(
+                fontFamily: 'Overpass',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              fixedSize: const Size(double.infinity, 40),
+            ),
+            child: const Text('CREAR UNA LISTA'),
+          ),
         ],
       ),
     );

@@ -41,7 +41,7 @@ class _ConctactanosScreenState extends State<ConctactanosScreen> {
               TextField(
                 controller: correoController,
                 decoration: InputDecoration(
-                  hintText: 'Correo',
+                  hintText: 'Nombre',
                 ),
                 maxLines: 1,
               ),
