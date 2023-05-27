@@ -7,6 +7,8 @@ import 'package:ahorra_app/widget/informacion.dart';
 import 'package:ahorra_app/widget/contactanos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuLateral extends StatefulWidget {
   const MenuLateral({super.key});
@@ -184,14 +186,14 @@ class MenuLateralState extends State<MenuLateral> {
                     backgroundColor: Colors.grey[300],
                   ),
                   onPressed: () {
-                    _authService.cerrarSesion().then((value) {
+                    _authService.cerrarSesion().then((value) async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setBool('isLoggedIn', false);
                       if (kDebugMode) {
                         print("Signed Out");
                       }
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const WelcomePage()));
+                      SystemNavigator.pop(); // Cerrar la aplicación
                     });
                   },
                   child: const Text(
