@@ -57,81 +57,29 @@ class WelcomePage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Registro(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Registro(),
                         ),
-                        textStyle: const TextStyle(
-                          fontFamily: 'Overpass',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        fixedSize: const Size(300, 10),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text('REGISTRARSE CON CORREO'),
+                      textStyle: const TextStyle(
+                        fontFamily: 'Overpass',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      fixedSize: const Size(300, 50),
                     ),
+                    child: const Text('REGISTRARSE CON CORREO'),
                   ),
                   const SizedBox(height: 10),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        'assets/image/start/logo_facebook.png',
-                        height: 24,
-                      ),
-                      label: const Text('CONTINUAR CON FACEBOOK'),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: const Color(0xFF090F47),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: const BorderSide(width: 1, color: Colors.grey),
-                        ),
-                        textStyle: const TextStyle(
-                          fontFamily: 'Overpass',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        fixedSize: const Size(300, 10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        'assets/image/start/logo_google.png',
-                        height: 24,
-                      ),
-                      label: const Text('CONTINUAR CON GMAIL'),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: const Color(0xFF090F47),
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: const BorderSide(width: 1, color: Colors.grey),
-                        ),
-                        textStyle: const TextStyle(
-                          fontFamily: 'Overpass',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        fixedSize: const Size(300, 10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
