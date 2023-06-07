@@ -350,10 +350,10 @@ class _DetallesProductoState extends State<DetallesProducto> {
                                         ),
                                       ),
                                       const SizedBox(height: 20),
-                                      const Text(
-                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                                      Text(
+                                        widget.producto.descripcion ?? "",
                                         textAlign: TextAlign.start,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 15,
                                         ),

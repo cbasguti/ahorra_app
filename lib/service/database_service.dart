@@ -413,6 +413,7 @@ class DatabaseService {
         imagen: values['image_path'],
         cantidad: int.parse(cantidad),
         tiendaSeleccionada: tienda,
+        descripcion: values['descripcion'],
       ));
     }
 
@@ -488,6 +489,7 @@ class DatabaseService {
           precios: values['precios'],
           imagen: values['image_path'],
           cantidad: int.parse(cantidad),
+          descripcion: values['descripcion'],
           tiendaSeleccionada: tienda);
       totalPrice += (producto.getPriceForStore(tienda) * int.parse(cantidad));
     }
@@ -544,6 +546,7 @@ class DatabaseService {
         imagen: values['image_path'],
         categoria: 'Ofertas',
         precios: values['precios'],
+        descripcion: values['descripcion'],
       );
       count++;
       productosLista.add(producto);
@@ -575,6 +578,7 @@ class DatabaseService {
         imagen: values['image_path'],
         categoria: category,
         precios: values['precios'],
+        descripcion: values['descripcion'],
       );
       productos.add(producto);
       count++;
@@ -627,6 +631,7 @@ class DatabaseService {
           imagen: values['image_path'],
           categoria: category,
           precios: values['precios'],
+          descripcion: values['descripcion'],
         );
         productos.add(producto);
       }

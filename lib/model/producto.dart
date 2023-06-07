@@ -6,6 +6,7 @@ class Producto {
   Map precios;
   int? cantidad;
   String? tiendaSeleccionada;
+  String? descripcion;
 
   Producto({
     required this.id,
@@ -15,6 +16,7 @@ class Producto {
     required this.precios,
     this.cantidad,
     this.tiendaSeleccionada,
+    this.descripcion,
   });
 
   // Getter for prices
