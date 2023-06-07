@@ -38,11 +38,12 @@ class MenuLateralState extends State<MenuLateral> {
                   flex: 1,
                   child: Image(
                     fit: BoxFit.fitHeight,
-                    image: AssetImage('assets/image/user.png'),
-                    height: 80,
-                    width: 80,
+                    image: AssetImage('assets/image/user_blue.png'),
+                    height: 70,
+                    width: 70,
                   ),
                 ),
+                const SizedBox(width: 8),
                 Expanded(
                   flex: 4,
                   child: Column(

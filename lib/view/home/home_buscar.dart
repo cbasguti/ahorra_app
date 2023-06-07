@@ -78,9 +78,10 @@ class HeaderConBusqueda extends StatelessWidget {
                             const CircleAvatar(
                               backgroundColor: Colors.transparent,
                               backgroundImage:
-                                  AssetImage('assets/image/user.png'),
+                                  AssetImage('assets/image/user_white.png'),
                               radius: 28.0,
                             ),
+                            const SizedBox(height: 6),
                             Text(
                               'Hola, ${snapshot.data ?? 'error'}',
                               style: Theme.of(context)

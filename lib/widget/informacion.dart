@@ -56,6 +56,28 @@ class _InformacionScreenState extends State<InformacionScreen> {
                   color: Color.fromRGBO(9, 28, 63, 0.75),
                 ),
               ),
+              const SizedBox(height: 50),
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Image.asset('assets/image/logo_udea.png', width: 90),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: [
+                            Text('Sara Uribe Zapata', style: myTextStyle),
+                            Text('Juan Esteban Salas Flórez', style: myTextStyle),
+                            Text('Sebastian Gutierrez Jaramillo', style: myTextStyle),
+                            Text('Diego Jose Luis Botia Valderrama', style: myTextStyle),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
         ),

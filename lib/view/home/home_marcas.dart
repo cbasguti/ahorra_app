@@ -27,6 +27,10 @@ class NuestrasMarcas extends StatelessWidget {
             imagen: "assets/image/menu/marcas/logo_carulla.png",
             press: () {},
           ),
+          CartaDeMarca(
+            imagen: "assets/image/menu/marcas/logo_jumbo.png",
+            press: () {},
+          ),
         ],
       ),
     );
