@@ -7,6 +7,7 @@ import 'package:ahorra_app/widget/check_lista.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/lista_categorias.dart';
+import '../../widget/lista_marcas.dart';
 
 class Body extends StatelessWidget {
   const Body({super.key});
@@ -36,7 +37,17 @@ class Body extends StatelessWidget {
             press: () {},
           ),
           const OfertasDelDia(),
-          TituloYBoton(titulo: "Nuestras Marcas", press: () {}),
+          TituloYBoton(
+            titulo: "Nuestras Marcas",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListaMarcas(),
+                ),
+              );
+            },
+          ),
           const NuestrasMarcas(),
           const SizedBox(height: 20.0),
         ],
