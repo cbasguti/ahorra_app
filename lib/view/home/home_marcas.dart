@@ -1,3 +1,4 @@
+import 'package:ahorra_app/view/producto/producto_marca.dart';
 import 'package:flutter/material.dart';
 
 class NuestrasMarcas extends StatelessWidget {
@@ -13,23 +14,68 @@ class NuestrasMarcas extends StatelessWidget {
         children: <Widget>[
           CartaDeMarca(
             imagen: "assets/image/menu/marcas/logo_exito.png",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductosMarca(
+                      store: 'Éxito',
+                      image: "assets/image/menu/marcas/logo_exito.png"),
+                ),
+              );
+            },
           ),
           CartaDeMarca(
             imagen: "assets/image/menu/marcas/logo_euro.png",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductosMarca(
+                      store: 'Euro',
+                      image: "assets/image/menu/marcas/logo_euro.png"),
+                ),
+              );
+            },
           ),
           CartaDeMarca(
             imagen: "assets/image/menu/marcas/logo_makro.png",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductosMarca(
+                      store: 'Makro',
+                      image: "assets/image/menu/marcas/logo_makro.png"),
+                ),
+              );
+            },
           ),
           CartaDeMarca(
             imagen: "assets/image/menu/marcas/logo_carulla.png",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductosMarca(
+                      store: 'Carulla',
+                      image: "assets/image/menu/marcas/logo_carulla.png"),
+                ),
+              );
+            },
           ),
           CartaDeMarca(
             imagen: "assets/image/menu/marcas/logo_jumbo.png",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProductosMarca(
+                      store: 'Jumbo',
+                      image: "assets/image/menu/marcas/logo_jumbo.png"),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -49,7 +95,7 @@ class CartaDeMarca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      //onTap: press,
+      onTap: () => press(),
       child: Container(
         margin: const EdgeInsets.only(
           left: 20.0,
