@@ -10,6 +10,8 @@ class ListaMarcas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String prueba = "Entra a lista_marca";
+    print(prueba);
     List<String> marcas = [
       "Éxito",
       "Euro",

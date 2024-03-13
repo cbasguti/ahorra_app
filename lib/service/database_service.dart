@@ -565,6 +565,21 @@ class DatabaseService {
     return productos;
   }
 
+  Future<List<Producto>> getProductsByStore(String? store) async {
+    final snapshot = await _productosRef.get();
+    List<Producto> productos = [];
+    for (var category in snapshot.children) {
+      List<Producto> productosCategoria =
+          await getProductsByCategory(category.key);
+      for (var producto in productosCategoria) {
+        if (producto.precios.containsKey(store)) {
+          productos.add(producto);
+        }
+      }
+    }
+    return productos;
+  }
+
   Future<List<Producto>> getProductsByCategory(String? category) async {
     final dbRef = _productosRef.child(category!);
     final snapshot = await dbRef.get();
@@ -592,6 +607,20 @@ class DatabaseService {
     for (var category in snapshot.children) {
       int categoryCount = await getProductsCountByCategory(category.key);
       count += categoryCount;
+    }
+    return count;
+  }
+
+  Future<int> getProductsCountByStore(String? store) async {
+    final snapshot = await _productosRef.get();
+    int count = 0;
+    for (var category in snapshot.children) {
+      List<Producto> productosCategoria = await getAllProducts();
+      for (var producto in productosCategoria) {
+        if (producto.precios.containsKey(store)) {
+          count++;
+        }
+      }
     }
     return count;
   }
@@ -636,6 +665,21 @@ class DatabaseService {
         productos.add(producto);
       }
       cumple = false;
+    }
+    return productos;
+  }
+
+  Future<List<Producto>> searchByStore(String busqueda, String? store) async {
+    final snapshot = await _productosRef.get();
+    List<Producto> productos = [];
+    for (var category in snapshot.children) {
+      List<Producto> productosCategoria =
+          await searchByCategory(busqueda, category.key);
+      for (var producto in productosCategoria) {
+        if (producto.precios.containsKey(store)) {
+          productos.add(producto);
+        }
+      }
     }
     return productos;
   }

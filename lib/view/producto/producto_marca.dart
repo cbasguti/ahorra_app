@@ -32,30 +32,45 @@ class _ProductosMarcaState extends State<ProductosMarca> {
   void _actualizarBusqueda(String busqueda) async {
     int productsCount = 0;
     List<Producto> productos = [];
-    productsCount = await _databaseService.searchCountByCategory(
-        busqueda, widget.store); //TODO: Cambiar a searchCountByStore
-    productos = await _databaseService.searchByCategory(
-        busqueda, widget.store); //TODO: Cambiar a searchByStore
-    setState(() {
-      _nProductos = productsCount;
-      _productosLista = productos;
-    });
+    String storeNormalized = quitarAcentosYMinusculas(widget.store);
+    productos = await _databaseService.searchByStore(busqueda, storeNormalized);
+    if (mounted) {
+      setState(() {
+        _nProductos = productos.length;
+        _productosLista = productos;
+      });
+    }
+  }
+
+  String quitarAcentosYMinusculas(String texto) {
+    String textoSinAcentos = texto
+        .replaceAll(RegExp(r'[áÁ]'), 'a')
+        .replaceAll(RegExp(r'[éÉ]'), 'e')
+        .replaceAll(RegExp(r'[íÍ]'), 'i')
+        .replaceAll(RegExp(r'[óÓ]'), 'o')
+        .replaceAll(RegExp(r'[úÚüÜ]'), 'u');
+    String textoNormalizado = textoSinAcentos.toLowerCase();
+    return textoNormalizado;
   }
 
   Future<void> initList() async {
     int productsCount = 0;
     List<Producto> productos = [];
-    productsCount =
-        await _databaseService.getProductsCountByCategory(widget.store);
-    productos = await _databaseService.getProductsByCategory(widget.store);
-    setState(() {
-      _nProductos = productsCount;
-      _productosLista = productos;
-    });
+    String storeNormalized = quitarAcentosYMinusculas(widget.store);
+    productos = await _databaseService.getProductsByStore(storeNormalized);
+    if (mounted) {
+      setState(() {
+        _nProductos = productos.length;
+        _productosLista = productos;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    String prueba = "Entra a producto_marca";
+    String storeNormalized = quitarAcentosYMinusculas(widget.store);
+    print(storeNormalized);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey.shade300,
