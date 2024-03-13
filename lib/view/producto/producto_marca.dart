@@ -140,6 +140,7 @@ class _ProductosMarcaState extends State<ProductosMarca> {
                 itemBuilder: (context, index) {
                   final producto = _productosLista[index];
                   return ProductosCard(
+                    store: storeNormalized,
                     producto: producto,
                   );
                 },
@@ -155,10 +156,12 @@ class _ProductosMarcaState extends State<ProductosMarca> {
 class ProductosCard extends StatelessWidget {
   const ProductosCard({
     Key? key,
+    required this.store,
     required this.producto,
   }) : super(key: key);
 
   final Producto producto;
+  final String store;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +226,7 @@ class ProductosCard extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: Image.asset(
-                            'assets/image/menu/marcas/logo_${producto.getLowestPriceStore()}.png', // Que no sea estatica
+                            'assets/image/menu/marcas/logo_${store}.png', // Que no sea estatica
                             width: 60,
                             height: 60,
                             fit: BoxFit.contain,
@@ -244,7 +247,7 @@ class ProductosCard extends StatelessWidget {
                               ),
                               TextSpan(
                                 text:
-                                    '${formatPrice(producto.getLowestPrice())}',
+                                    '${formatPrice(producto.getPriceForStore(store))}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge
