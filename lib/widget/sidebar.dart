@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../view/chefbot/chefbot.dart';
+
 class MenuLateral extends StatefulWidget {
   const MenuLateral({super.key});
 
@@ -159,6 +161,21 @@ class MenuLateralState extends State<MenuLateral> {
                   child: const NewRow(
                     text: 'Contactanos',
                     icon: Icons.comment,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Divider(color: Colors.grey[300], thickness: 2),
+                const SizedBox(height: 6),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChefBot()),
+                    );
+                  },
+                  child: const NewRow(
+                    text: 'Chef',
+                    icon: Icons.fastfood,
                   ),
                 ),
                 const SizedBox(height: 6),

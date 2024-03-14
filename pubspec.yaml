@@ -79,6 +79,7 @@ flutter:
     - assets/image/start/compradora.png
     - assets/image/start/logo_facebook.png
     - assets/image/start/logo_google.png
+    - assets/image/chefbot/chefbot.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
