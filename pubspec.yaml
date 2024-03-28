@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.0.1
   intl: ^0.18.1
   shared_preferences: ^2.1.1
+  dart_openai: ^4.0.0
 
 dev_dependencies:
   flutter_test:
